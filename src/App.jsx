@@ -1,7 +1,11 @@
+import AboutUsIntro from "./components/greeting/AboutUsIntro";
+import Mentors from "./components/mentors/mentors";
+
 function App() {
   return (
     <>
-      <h1 class="text-3xl font-bold underline">Hello world!</h1>
+      <AboutUsIntro />
+      <Mentors/>
     </>
   );
 }

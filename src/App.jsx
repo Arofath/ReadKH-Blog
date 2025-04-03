@@ -3,10 +3,54 @@ import SearchComponent from "./components/search/SearchComponent";
 import ContentCardComponent from "./components/card/ContentCardComponent";
 import ReadKHBanner from "./components/banner/ReadKhBanner";
 import BlogCardGrid from "./components/card/BlogCardGrid";
+import React,{ useState, useEffect } from "react";
 
 function App() {
+
+  const [blogs, setBlogs] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/blogs`);
+
+        if (!response.ok) {
+          throw new Error(`HTTP Error: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log(result);
+
+        if (result?.blogs && Array.isArray(result.blogs)) {
+          setBlogs(result.blogs); // Extract blogs array from response
+        } else {
+          throw new Error("Invalid response format");
+        }
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchBlogs();
+  }, []);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+
   return (
     <>
+    <div>
+      <h1>Blog List</h1>
+      <ul>
+        {blogs.map((blog, index) => (
+          <li key={index}>{blog.title}</li>
+        ))}
+      </ul>
+    </div>
       <div className="ml-4">
         <div>
           <ScrollableCategories />

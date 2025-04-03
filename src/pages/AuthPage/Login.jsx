@@ -1,12 +1,22 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router";
 
-export const Login = () => {
+export default function Login() {
+  const [showPassword, setShowPassword] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   const navigate = useNavigate();
 
   // State to manage form inputs
   const [formData, setFormData] = useState({
-    username: "",  // Using "username" instead of "email"
+    username: "", // Using "username" instead of "email"
     password: "",
   });
 
@@ -19,10 +29,10 @@ export const Login = () => {
     });
   };
 
-  // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission
-
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    // Handle login logic here
+    console.log("Login attempt with:", { username, password, rememberMe });
     // Prepare login data
     const loginData = {
       username: formData.username, // Using "username"
@@ -50,106 +60,124 @@ export const Login = () => {
   };
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-900">
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <a
-          href="#"
-          className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
-        >
-          <img
-            className="w-8 h-8 mr-2"
-            src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
-            alt="logo"
-          />
-          Flowbite
-        </a>
-        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-              Sign in to your account
-            </h1>
-            <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
-              <div>
-                <label
-                  htmlFor="username"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Your Username
-                </label>
+    <div className="flex items-center justify-center min-h-screen bg-gray-50">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl p-4">
+        {/* Login Form */}
+        <div className="bg-white p-8 rounded-lg shadow-sm border border-gray-100">
+          <div className="mb-8">
+            <h2 className="text-2xl font-medium text-gray-700">Welcome !</h2>
+
+            <div className="mt-6">
+              <h1 className="text-3xl font-semibold text-gray-700">
+                Sign in to
+              </h1>
+              <p className="text-lg font-medium text-gray-600 mt-1">READKH</p>
+            </div>
+          </div>
+
+          <form onSubmit={handleLogin}>
+            <div className="mb-6">
+              <label htmlFor="username" className="block text-gray-700 mb-2">
+                Username
+              </label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                required
+                placeholder="Enter your username"
+                className="w-full px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brown-300"
+                value={formData.username}
+                onChange={handleInputChange}
+              />
+            </div>
+
+            <div className="mb-6">
+              <label htmlFor="password" className="block text-gray-700 mb-2">
+                Password
+              </label>
+              <div className="relative">
                 <input
-                  type="text" // Updated to "text"
-                  name="username"
-                  id="username"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Enter your username"
-                  required
-                  value={formData.username} // Using "username"
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="password"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Password
-                </label>
-                <input
-                  type="password"
-                  name="password"
+                  type={showPassword ? "text" : "password"}
                   id="password"
-                  placeholder="••••••••"
+                  name="password"
+                  required
+                  placeholder="Enter your Password"
+                  className="w-full px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brown-300"
                   value={formData.password}
                   onChange={handleInputChange}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required
                 />
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-start">
-                  <div className="flex items-center h-5">
-                    <input
-                      id="remember"
-                      aria-describedby="remember"
-                      type="checkbox"
-                      className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                    />
-                  </div>
-                  <div className="ml-3 text-sm">
-                    <label
-                      htmlFor="remember"
-                      className="text-gray-500 dark:text-gray-300"
-                    >
-                      Remember me
-                    </label>
-                  </div>
-                </div>
-                <a
-                  href="#"
-                  className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
+                <button
+                  type="button"
+                  className="absolute right-4 top-3 text-gray-500"
+                  onClick={togglePasswordVisibility}
                 >
-                  Forgot password?
-                </a>
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
               </div>
-              <button
-                type="submit"
-                className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+            </div>
+
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  id="remember"
+                  className="h-4 w-4 text-brown-500 focus:ring-brown-400 border-gray-300 rounded"
+                  checked={rememberMe}
+                  onChange={() => setRememberMe(!rememberMe)}
+                />
+                <label
+                  htmlFor="remember"
+                  className="ml-2 text-sm text-gray-600"
+                >
+                  Remembebr me
+                </label>
+              </div>
+
+              <a href="#" className="text-sm text-gray-600 hover:underline">
+                Forgot Password ?
+              </a>
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-brown-400 hover:bg-gray-500 bg-[#A27B5C] text-white py-3 rounded-full transition-colors"
+            >
+              Login
+            </button>
+          </form>
+
+          <div className="mt-6 text-center">
+            <p className="text-gray-600">
+              Don't have an Account ?{" "}
+              <a
+                href="#"
+                className="text-[#A27B5C] hover:underline font-medium"
               >
-                Sign in
-              </button>
-              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                Don’t have an account yet?{" "}
-                <a
-                  href="#"
-                  className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                >
-                  Sign up
-                </a>
-              </p>
-            </form>
+                Register
+              </a>
+            </p>
+          </div>
+        </div>
+
+        {/* Logo Section */}
+        <div className="hidden md:flex items-center justify-center">
+          <div className="text-center">
+            <div className="flex justify-center mb-6">
+              <div className="relative">
+                <img
+                  src="src\img\logo.png"
+                  alt="ReadKH Notebooks"
+                  className="mx-20"
+                />
+                <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                  <div className="text-xl font-bold"></div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
-};
+}

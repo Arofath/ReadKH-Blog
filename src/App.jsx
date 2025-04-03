@@ -43,14 +43,14 @@ function App() {
 
   return (
     <>
-    <div>
+    {/* <div>
       <h1>Blog List</h1>
       <ul>
         {blogs.map((blog, index) => (
           <li key={index}>{blog.title}</li>
         ))}
       </ul>
-    </div>
+    </div> */}
       <div className="ml-4">
         <div>
           <ScrollableCategories />

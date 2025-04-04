@@ -1,21 +1,29 @@
 import React, { useRef, useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const categories = [
-  "For You",
-  "Lifestyle",
-  "Technology",
-  "Education",
-  "Pop Culture",
-  "Personal Finance & Budgeting",
-  "Programming Language",
-  "Cooking Skill & Technique",
-];
-
-const ScrollableCategories = () => {
+const ScrollableCategories = ({ setSelectedCategory }) => {
+  const [categories, setCategories] = useState([]);
   const scrollRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/categories`);
+        if (response.ok) {
+          const data = await response.json();
+          setCategories(data);
+        } else {
+          console.error("Failed to fetch categories");
+        }
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -68,26 +76,21 @@ const ScrollableCategories = () => {
     <div className="flex items-center justify-center w-full mt-5">
       {/* Left Scroll Button */}
       {canScrollLeft && (
-        <button
-          onClick={() => scroll("left")}
-          className="rounded-full z-10 flex hover:cursor-pointer"
-        >
+        <button onClick={() => scroll("left")} className="rounded-full z-10 flex hover:cursor-pointer">
           <ChevronLeft className="w-5 h-5 text-[#3f4e4f]" />
         </button>
       )}
 
       {/* Scrollable Categories */}
       <div className="w-full max-w-full overflow-hidden mx-2">
-        <div
-          ref={scrollRef}
-          className="flex space-x-3 overflow-x-auto scrollbar-hide py-2"
-        >
-          {categories.map((category, index) => (
+        <div ref={scrollRef} className="flex space-x-3 overflow-x-auto scrollbar-hide py-2">
+          {categories.map((category) => (
             <div
-              key={index}
+              key={category.id}
               className="px-4 py-2 text-[#3f4e4f] rounded-full cursor-pointer hover:text-[#a27b5c] transition whitespace-nowrap"
+              onClick={() => setSelectedCategory(category.id)}
             >
-              {category}
+              {category.name}
             </div>
           ))}
         </div>
@@ -95,11 +98,8 @@ const ScrollableCategories = () => {
 
       {/* Right Scroll Button */}
       {canScrollRight && (
-        <button
-          onClick={() => scroll("right")}
-          className="p-2 rounded-full z-10 flex hover:cursor-pointer"
-        >
-          <ChevronRight className="w-5 h-5 text-[#3f4e4f] " />
+        <button onClick={() => scroll("right")} className="p-2 rounded-full z-10 flex hover:cursor-pointer">
+          <ChevronRight className="w-5 h-5 text-[#3f4e4f]" />
         </button>
       )}
     </div>

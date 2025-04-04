@@ -5,6 +5,7 @@ import "./index.css";
 import App from "./App.jsx";
 import RootLayout from "./components/layout/RootLayout.jsx";
 import Login from "./pages/AuthPage/Login.jsx";
+import BlogDetail from "./pages/BlogDetail.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -12,6 +13,8 @@ createRoot(document.getElementById("root")).render(
       <Routes>
         <Route element={<RootLayout />}>
           <Route path="/" element={<App />} />
+          <Route path="/blog/:id" element={<BlogDetail />} />
+          
         </Route>
         <Route path="/login" element={<Login />} />
         

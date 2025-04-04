@@ -3,18 +3,32 @@ import SearchComponent from "./components/search/SearchComponent";
 import ContentCardComponent from "./components/card/ContentCardComponent";
 import ReadKHBanner from "./components/banner/ReadKhBanner";
 import BlogCardGrid from "./components/card/BlogCardGrid";
-import React,{ useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 function App() {
-
   const [blogs, setBlogs] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState(""); // Category ID
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  // Set default category to "Lifestyle" (you'll need the category ID)
+  useEffect(() => {
+    // Set default to "Lifestyle" category (replace 'lifestyleCategoryId' with the correct ID)
+    const defaultCategoryId = "5aa8924c-7cf0-4916-b104-51c56607b56d"; // This should be the actual ID of the "Lifestyle" category
+    setSelectedCategory(defaultCategoryId);
+  }, []);
 
   useEffect(() => {
     const fetchBlogs = async () => {
+      if (!selectedCategory) return; // Don't fetch if no category selected
+
+      setIsLoading(true);
+      setError(null);
+
       try {
-        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/blogs`);
+        const response = await fetch(
+          `${import.meta.env.VITE_BASE_URL}/blogs?category_id=${selectedCategory}`
+        );
 
         if (!response.ok) {
           throw new Error(`HTTP Error: ${response.status}`);
@@ -24,7 +38,7 @@ function App() {
         console.log(result);
 
         if (result?.blogs && Array.isArray(result.blogs)) {
-          setBlogs(result.blogs); // Extract blogs array from response
+          setBlogs(result.blogs);
         } else {
           throw new Error("Invalid response format");
         }
@@ -36,44 +50,35 @@ function App() {
     };
 
     fetchBlogs();
-  }, []);
+  }, [selectedCategory]); // Re-fetch when category changes
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  const blogList = blogs.map((data) => (
+    <ContentCardComponent
+      key={data.id}
+      title={data.title}
+      content={data.content}
+      thumbnail={data.thumbnail}
+      id={data.id}
+      date={data.created_at}
+    />
+  ));
+
+  // if (isLoading) return <div>Loading...</div>;
+  // if (error) return <div>Error: {error}</div>;
 
   return (
     <>
-    {/* <div>
-      <h1>Blog List</h1>
-      <ul>
-        {blogs.map((blog, index) => (
-          <li key={index}>{blog.title}</li>
-        ))}
-      </ul>
-    </div> */}
       <div className="ml-4">
         <div>
-          <ScrollableCategories />
+          {/* Category Selector */}
+          <ScrollableCategories setSelectedCategory={setSelectedCategory} />
         </div>
         <div>
           <SearchComponent />
         </div>
         <div>
-          <ContentCardComponent
-            imgContent={
-              "https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png"
-            }
-          />
-          <ContentCardComponent
-            imgContent={
-              "https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW1hZ2V8ZW58MHx8MHx8fDA%3D"
-            }
-          />
-          <ContentCardComponent
-            imgContent={
-              "https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?cs=srgb&dl=pexels-anjana-c-169994-674010.jpg&fm=jpg"
-            }
-          />
+          {/* Render the blog list */}
+          {blogList}
         </div>
         <div>
           <ReadKHBanner />

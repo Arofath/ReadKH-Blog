@@ -1,7 +1,14 @@
 import React from "react";
+import { NavLink } from "react-router";
 
-const ContentCardComponent = ({ imgContent }) => {
+import DOMPurify from "dompurify";
+
+
+const ContentCardComponent = ({ thumbnail, title, content,id }) => {
   return (
+    <>
+    <NavLink
+            to={`/blog/${id}`} > 
     <div className="w-full mx-auto my-8 hover:cursor-pointer">
       {" "}
       {/* Set to w-full for full-width */}
@@ -9,9 +16,11 @@ const ContentCardComponent = ({ imgContent }) => {
         {/* Card content */}
         <div className="flex flex-row space-x-4 mb-4">
           {/* Left side - Image */}
+          
           <div className="w-96 h-64 flex-shrink-0">
+            
             <img
-              src={imgContent}
+              src={thumbnail}
               alt="Image"
               className="w-full h-full object-cover rounded-lg"
             />
@@ -21,11 +30,11 @@ const ContentCardComponent = ({ imgContent }) => {
           <div className="flex-1 flex flex-col justify-between">
             <div>
               {/* Author info */}
-              <div className="flex items-center mb-2">
+              <div className="flex items-center mb-2 ">
                 <img
-                  src="https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3"
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6BkMQEKHWILXy8SzbX5aocWP6YWv0mZnSDA&s"
                   alt="Profile picture"
-                  className="w-12 h-12 rounded-full mr-3"
+                  className="w-12 h-12 rounded-full mr-3 object-fit-cover"
                 />
                 <div>
                   <div className="font-medium text-gray-900">Olivia Rhye</div>
@@ -35,15 +44,15 @@ const ContentCardComponent = ({ imgContent }) => {
 
               {/* Article title */}
               <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                The Impact of Technology on the Workplace: How
+                {title}
               </h2>
 
-              {/* High claim description with line-clamp-3 */}
-              <p className="text-gray-600 mb-4 line-clamp-2">
-                Groundbreaking innovations are revolutionizing work dynamics.
-                Experience unparalleled productivity and a transformative future
-                that redefines every industry standard.
-              </p>
+               {/* High claim description with line-clamp-3 */}
+              <p
+                className="text-gray-600 mb-4 line-clamp-4"
+                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }}
+              ></p>
+            
             </div>
 
             {/* Bookmark icon aligned to the end */}
@@ -72,6 +81,8 @@ const ContentCardComponent = ({ imgContent }) => {
         <div className="border-b border-gray-200"></div>
       </div>
     </div>
+    </NavLink>
+   </>
   );
 };
 

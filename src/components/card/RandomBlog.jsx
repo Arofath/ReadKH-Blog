@@ -6,7 +6,7 @@ const ArticleCard = ({ image, title, excerpt, author, date, avatarUrl }) => {
       {/* Article Image */}
       <div className="w-full h-48 overflow-hidden">
         <img
-          src={image || "/api/placeholder/400/320"}
+          src={image ||  "/api/placeholder/400/320"}
           alt={title}
           className="w-full h-full object-cover"
         />
@@ -19,7 +19,7 @@ const ArticleCard = ({ image, title, excerpt, author, date, avatarUrl }) => {
           <div className="flex items-center space-x-3">
             <div className="h-10 w-10 rounded-full overflow-hidden">
               <img
-                src={avatarUrl || "/api/placeholder/100/100"}
+                src={avatarUrl ||  "/api/placeholder/100/100"}
                 alt={author}
                 className="h-full w-full object-cover"
               />
@@ -62,9 +62,8 @@ const ArticleCard = ({ image, title, excerpt, author, date, avatarUrl }) => {
     </div>
   );
 };
-
 // Demo with example cards
-const BlogCardGrid = () => {
+const RandomBlog = () => {
   const articles = [
     {
       image:
@@ -113,4 +112,4 @@ const BlogCardGrid = () => {
   );
 };
 
-export default BlogCardGrid;
+export default RandomBlog;

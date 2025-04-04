@@ -2,7 +2,7 @@ import ScrollableCategories from "./components/Categories/CategoriesComponent";
 import SearchComponent from "./components/search/SearchComponent";
 import ContentCardComponent from "./components/card/ContentCardComponent";
 import ReadKHBanner from "./components/banner/ReadKhBanner";
-import BlogCardGrid from "./components/card/BlogCardGrid";
+import RandomBlog from "./components/card/RandomBlog";
 import React, { useState, useEffect } from "react";
 
 function App() {
@@ -84,8 +84,7 @@ function App() {
           <ReadKHBanner />
         </div>
         <div>
-          <BlogCardGrid />
-          <BlogCardGrid />
+          <RandomBlog />
         </div>
       </div>
     </>

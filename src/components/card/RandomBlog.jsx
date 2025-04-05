@@ -112,7 +112,7 @@ const ArticleCard = ({ thumbnail, title, content, id }) => {
   
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Authorization", `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYmM2MzY2MDctYTljYS00NjFkLWE4NGYtZjczMmFlNDNhYjQ5IiwiZXhwIjoxNzQzODQ5ODQ4fQ.yD-d5I9wQu2yxjDnYgru4OaX8dzkR41yAj2xUivIvCg`);
+    myHeaders.append("Authorization", `Bearer ${token}`);
   
     fetch(`https://readkh-api.istad.co/blogs/${id}/bookmark`, {
       method: "POST",

@@ -13,7 +13,7 @@ export default function ButtonSave() {
         onClick={toggleOpen}
       >
         <div className="flex items-center gap-2 sm:gap-3">
-          <Bookmark className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600" fill="currentColor" />
+          <Bookmark className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-400" fill="currentColor" />
           <span className="text-lg sm:text-xl md:text-2xl font-medium text-gray-800">
             Save
           </span>

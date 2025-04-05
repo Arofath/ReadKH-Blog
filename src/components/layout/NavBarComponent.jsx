@@ -52,16 +52,13 @@ export default function NavbarComponents({ setSelectedCategory }) {
     localStorage.removeItem("authToken");
     navigate("/");
   };
-  const confirmLogin = () => {
-    
-   <Login />
-  };
+
 
   const handleLogout = () => {
     setShowSignOutModal(true); // Just show modal
   };
 
-  ////////////////////
+
   // For Drop Down Profile
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);

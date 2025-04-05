@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Bookmark, ArrowDown } from "lucide-react";
-// import BlogCardGrid from "../card/BlogCardGrid";
+import { Bookmark } from "lucide-react";
 import RandomBlog from "../card/RandomBlog";
 
 export default function ButtonSave() {
@@ -16,14 +15,12 @@ export default function ButtonSave() {
         <div className="flex items-center gap-2 sm:gap-3">
           <Bookmark className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600" fill="currentColor" />
           <span className="text-lg sm:text-xl md:text-2xl font-medium text-gray-800">
-            Saved
+            Save
           </span>
         </div>
-        <ArrowDown 
-          className={`w-5 h-5 sm:w-6 sm:h-6 text-gray-600 transition-transform duration-300 ${
-            isOpen ? 'rotate-180' : ''
-          }`}
-        />
+
+        {/* Empty space to maintain layout */}
+        <div className="w-5 h-5 sm:w-6 sm:h-6" />
       </button>
 
       <div className={`w-6xl mx-auto my-4 transition-all duration-300 ${

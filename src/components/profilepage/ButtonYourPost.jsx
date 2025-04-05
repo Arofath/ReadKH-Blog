@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { ArrowDown } from "lucide-react";
 import DOMPurify from "dompurify";
+import { Bookmark } from "lucide-react";
 
 export default function ButtonYourPost() {
   const [blogs, setBlogs] = useState([]);
@@ -212,6 +213,17 @@ export default function ButtonYourPost() {
   if (error) return <p className="text-center text-gray-500 text-lg">Error: {error}</p>;
 
   return (
+    <>
+    <div className="mt-8 sm:mt-12 md:mt-16 lg:mt-20">
+      <div className="flex items-center justify-between w-full max-w-6xl mx-auto px-4 sm:px-6 py-3 sm:py-4 border-2 rounded-xl border-gray-300">
+        <div className="flex items-center gap-2 sm:gap-3">
+          {/* <Bookmark className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600" fill="currentColor" /> */}
+          <span className="text-lg sm:text-xl md:text-2xl font-medium text-gray-800">
+            Your Post
+          </span>
+        </div>
+      </div>
+    </div>
     <div className="container mx-auto px-4 py-6">
       {loading ? (
         <p className="text-center text-gray-600 text-lg">Loading blogs...</p>
@@ -313,5 +325,6 @@ export default function ButtonYourPost() {
         </>
       )}
     </div>
+    </>
   );
 }

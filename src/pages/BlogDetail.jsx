@@ -41,8 +41,8 @@ function BlogDetail() {
           src={blog.thumbnail || "/images/default.jpg"}
           alt="Blog Header"
         />
-        <h1 className="text-2xl font-bold mt-4">{blog.title}</h1>
-        <p className="text-gray-700 text-xl mt-4"  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog.content) }}>
+        <h1 className="text-2xl font-bold mt-4 ">{blog.title}</h1>
+        <p className="text-gray-700 text-xl mt-4 text-justify"  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog.content) }}>
        
           {/* {blog.content} */}
           </p>

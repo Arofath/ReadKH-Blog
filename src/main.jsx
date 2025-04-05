@@ -9,6 +9,7 @@ import BlogDetail from "./pages/BlogDetail.jsx";
 import AboutUs from "./pages/AboutUs.jsx";
 import Register from "./pages/AuthPage/Register.jsx";
 import Profile from "./pages/Profile.jsx";
+import CreatePost from "./pages/CreatePost/CreatePost.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -19,6 +20,7 @@ createRoot(document.getElementById("root")).render(
           <Route path="/blog/:id" element={<BlogDetail />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/create-post" element={<CreatePost />} />
 
         </Route>
         <Route path="/login" element={<Login />} />

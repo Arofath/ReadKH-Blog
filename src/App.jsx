@@ -4,6 +4,7 @@ import ContentCardComponent from "./components/card/ContentCardComponent";
 import ReadKHBanner from "./components/banner/ReadKhBanner";
 import RandomBlog from "./components/card/RandomBlog";
 import React, { useState, useEffect } from "react";
+import ButtonSave from "./components/profilepage/ButtonSave";
 
 function App() {
   const [blogs, setBlogs] = useState([]);
@@ -84,6 +85,8 @@ function App() {
           <ReadKHBanner />
         </div>
         <div>
+          {/* Render the random blog */}
+          {/* <ButtonSave /> */}
           <RandomBlog />
         </div>
       </div>

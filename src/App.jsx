@@ -12,12 +12,20 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Set default category to "Lifestyle" (you'll need the category ID)
-  useEffect(() => {
-    // Set default to "Lifestyle" category (replace 'lifestyleCategoryId' with the correct ID)
-    const defaultCategoryId = "5aa8924c-7cf0-4916-b104-51c56607b56d"; // This should be the actual ID of the "Lifestyle" category
-    setSelectedCategory(defaultCategoryId);
-  }, []);
+   // Set default category to "Lifestyle" (you'll need the category ID)
+   useEffect(() => {
+     // Check URL for category param
+     const params = new URLSearchParams(window.location.search);
+     const categoryParam = params.get("category");
+ 
+     if (categoryParam) {
+       setSelectedCategory(categoryParam);
+     } else {
+       // Your existing default category logic
+       const defaultCategoryId = "5aa8924c-7cf0-4916-b104-51c56607b56d";
+       setSelectedCategory(defaultCategoryId);
+     }
+   }, []);
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -72,7 +80,10 @@ function App() {
       <div className="ml-4">
         <div>
           {/* Category Selector */}
-          <ScrollableCategories setSelectedCategory={setSelectedCategory} />
+                    <ScrollableCategories
+                      setSelectedCategory={setSelectedCategory}
+                      selectedCategory={selectedCategory}
+                    />
         </div>
         <div>
           <SearchComponent />

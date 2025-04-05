@@ -192,7 +192,7 @@ const ContentCardComponent = ({ thumbnail, title, content, id }) => {
               <button
                 onClick={toggleBookmark}
                 className={`${
-                  bookmarked ? "text-yellow-400" : "text-gray-400"
+                  bookmarked ? " fill-amber-400" : "text-gray-400"
                 }  hover:cursor-pointer`}
               >
                 <svg

@@ -142,7 +142,7 @@ const ContentCardComponent = ({ thumbnail, title, content, id }) => {
           <NavLink to={`/blog/${id}`}>
             <div className="w-96 h-64 flex-shrink-0">
               <img
-                src={thumbnail}
+                src={thumbnail || "https://cdn1.iconfinder.com/data/icons/business-company-1/500/image-512.png"}
                 alt="Image"
                 className="w-full h-full object-cover rounded-lg"
               />
@@ -157,16 +157,16 @@ const ContentCardComponent = ({ thumbnail, title, content, id }) => {
                 {author && (
                   <div className="flex items-center mb-2">
                     <img
-                      src={author.profileimage}
+                      src={author.profileimage || "https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0="}
                       alt="Profile picture"
                       className="w-12 h-12 rounded-full mr-3 object-cover"
                     />
                     <div>
                       <div className="font-medium text-gray-900">
-                        {author.name}
+                        {author.name|| "Unknown"}
                       </div>
                       <div className="text-gray-500 text-sm">
-                        {author.date}
+                        {author.date || "created date"}
                       </div>
                     </div>
                   </div>
@@ -174,14 +174,14 @@ const ContentCardComponent = ({ thumbnail, title, content, id }) => {
 
                 {/* Title */}
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                  {title}
+                  {title || "No title"}
                 </h2>
 
                 {/* Content */}
                 <p
                   className="text-gray-600 mb-4 line-clamp-4"
                   dangerouslySetInnerHTML={{
-                    __html: DOMPurify.sanitize(content),
+                    __html: DOMPurify.sanitize(content || "No content"),
                   }}
                 ></p>
               </div>

@@ -3,8 +3,8 @@ import { SquarePen } from "lucide-react";
 import FormEditProfile from "../profilepage/FormEditProfile";
 
 const DEFAULT_PROFILE_DATA = {
-  name: "Olivia Rhye",
-  email: "olixxxe@gmail.com",
+  name: "",
+  email: "",
   password: "••••••••"
 };
 

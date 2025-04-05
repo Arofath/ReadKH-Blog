@@ -5,6 +5,7 @@ import { NavLink } from "react-router";
 import { useNavigate } from "react-router";
 import { Modal, ModalBody, ModalHeader } from "flowbite-react";
 import PopUpModalComponent from "../pop-up-modal/PopUpModal";
+import Login from "../../pages/AuthPage/Login";
 
 export default function NavbarComponents({ setSelectedCategory }) {
   const [bgColor, setBgColor] = useState("bg-white");
@@ -50,6 +51,10 @@ export default function NavbarComponents({ setSelectedCategory }) {
   const confirmLogout = () => {
     localStorage.removeItem("authToken");
     navigate("/");
+  };
+  const confirmLogin = () => {
+    
+   <Login />
   };
 
   const handleLogout = () => {
@@ -124,7 +129,7 @@ export default function NavbarComponents({ setSelectedCategory }) {
           {/* Right Section */}
           <div className="flex items-center space-x-4 md:space-x-6">
             {/* Categories Dropdown */}
-            <div className="relative group">
+            {/* <div className="relative group">
               <a
                 href="#"
                 className="text-gray-700 hover:text-[#A27B5C] text-sm md:text-base"
@@ -143,6 +148,18 @@ export default function NavbarComponents({ setSelectedCategory }) {
                   </button>
                 ))}
               </div>
+            </div> */}
+            <div>
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-yellow-400"
+                    : "text-gray-700 hover:text-[#A27B5C]"
+                }
+              >
+                Home
+              </NavLink>
             </div>
 
             <NavLink
@@ -167,7 +184,7 @@ export default function NavbarComponents({ setSelectedCategory }) {
             <div className="relative" ref={dropdownRef}>
               {/* Profile Image */}
               <img
-                src="https://images.squarespace-cdn.com/content/v1/5f15727d40eec17f4d5b6853/1679279210970-5AKPLBA4P79C56VTX4EN/unsplash-image-IKJrYtdFku8.jpg"
+                src="https://img.freepik.com/premium-vector/avatar-profile-icon-flat-style-male-user-profile-vector-illustration-isolated-background-man-profile-sign-business-concept_157943-38764.jpg"
                 alt="Profile"
                 className="h-8 w-8 rounded-full hover:cursor-pointer"
                 onClick={() => setIsOpen(!isOpen)}
@@ -200,6 +217,13 @@ export default function NavbarComponents({ setSelectedCategory }) {
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                     >
                       Sign Out
+                    </a>
+                    <div className="border-t border-gray-200 mt-1"></div>
+                    <a
+                      onClick={() => setShowLoginModal(true)}
+                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                    >
+                      Log in
                     </a>
                   </nav>
                 </div>

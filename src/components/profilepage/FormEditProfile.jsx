@@ -115,14 +115,16 @@ export default function FormEditProfile({ initialData, onSave, onCancel }) {
           </div>
         </div>
 
+        
+
         <div className="flex justify-between items-center mt-6">
-          <button
+          {/* <button
             type="button"
-            onClick={() => console.log("User logged out")}
+            onClick={() => confirmLogout()}
             className="px-4 py-2 text-gray-800 hover:text-[#A27B5C]"
           >
             Log out
-          </button>
+          </button> */}
 
           <div className="space-x-3">
             <button

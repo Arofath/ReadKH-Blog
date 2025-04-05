@@ -235,7 +235,7 @@ const BookmarkedBlogs = () => {
           ))
         ) : (
           <p className="col-span-3 text-center text-gray-500">
-            No bookmarked blogs found.
+            Your bookmaeks is nothing
           </p>
         )}
       </div>

@@ -6,6 +6,9 @@ import App from "./App.jsx";
 import RootLayout from "./components/layout/RootLayout.jsx";
 import Login from "./pages/AuthPage/Login.jsx";
 import BlogDetail from "./pages/BlogDetail.jsx";
+import AboutUs from "./pages/AboutUs.jsx";
+import Register from "./pages/AuthPage/Register.jsx";
+import Profile from "./pages/Profile.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -14,10 +17,13 @@ createRoot(document.getElementById("root")).render(
         <Route element={<RootLayout />}>
           <Route path="/" element={<App />} />
           <Route path="/blog/:id" element={<BlogDetail />} />
-          
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/profile" element={<Profile />} />
+
         </Route>
         <Route path="/login" element={<Login />} />
-        
+        <Route path="/register" element={<Register />} />
+      
       </Routes>
     </BrowserRouter>
   </StrictMode>

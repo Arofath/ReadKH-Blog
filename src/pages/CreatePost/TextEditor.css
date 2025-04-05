@@ -1,0 +1,39 @@
+.ql-container {
+    min-height: 250px !important; /* Adjust the height */
+  }
+  
+  .ql-toolbar.ql-snow {
+    background-color: #a27b5c;
+  }
+  
+  .responsive-editor .ql-container {
+    min-height: 200px;
+    height: auto;
+    max-height: 500px;
+    overflow: auto;
+  }
+  
+  /* Small screens (mobile) */
+  @media (max-width: 600px) {
+    .responsive-editor .ql-container {
+      min-height: 150px;
+      max-height: 400px;
+    }
+  }
+  
+  /* Medium screens (tablets) */
+  @media (min-width: 601px) and (max-width: 1024px) {
+    .responsive-editor .ql-container {
+      min-height: 250px;
+      max-height: 450px;
+    }
+  }
+  
+  /* Large screens (desktops) */
+  @media (min-width: 1025px) {
+    .responsive-editor .ql-container {
+      min-height: 300px;
+      max-height: 500px;
+    }
+  }
+  

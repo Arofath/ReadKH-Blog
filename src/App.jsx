@@ -5,11 +5,6 @@ import ReadKHBanner from "./components/banner/ReadKhBanner";
 import RandomBlog from "./components/card/RandomBlog";
 import React, { useState, useEffect } from "react";
 
-import AboutUsIntro from "./components/greeting/AboutUsIntro";
-import Mentors from "./components/mentors/Mentors";
-import Card from "./components/cards/Card";
-import Members from "./components/team-member/Members";
-
 function App() {
   const [blogs, setBlogs] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(""); // Category ID

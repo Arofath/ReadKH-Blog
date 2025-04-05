@@ -33,7 +33,7 @@ function BlogDetail() {
   }
 
   return (
-    <div className="bg-gray-100 min-h-screen px-5 flex justify-center">
+    <div className="bg-[#FDFCF7] min-h-screen px-5 flex justify-center">
       <div className="mx-auto text-black mt-4 max-w-3xl">
        
         <img
@@ -42,7 +42,7 @@ function BlogDetail() {
           alt="Blog Header"
         />
         <h1 className="text-2xl font-bold mt-4">{blog.title}</h1>
-        <p className="text-gray-700 mt-4"  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog.content) }}>
+        <p className="text-gray-700 text-xl mt-4"  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog.content) }}>
        
           {/* {blog.content} */}
           </p>

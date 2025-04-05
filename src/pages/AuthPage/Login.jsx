@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router";
+import { NavLink } from "react-router";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -150,12 +151,11 @@ export default function Login() {
           <div className="mt-6 text-center">
             <p className="text-gray-600">
               Don't have an Account ?{" "}
-              <a
-                href="#"
+              <NavLink to="/register"
                 className="text-[#A27B5C] hover:underline font-medium"
               >
                 Register
-              </a>
+              </NavLink>
             </p>
           </div>
         </div>

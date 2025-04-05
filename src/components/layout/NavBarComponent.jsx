@@ -38,7 +38,7 @@ export default function NavbarComponents() {
         <div className="flex items-center space-x-4">
           {/* Logo */}
           <div className="h-full flex items-center hover:cursor-pointer">
-            <NavLink to="https://www.youtube.com/">
+            <NavLink to="/">
               <img
                 src="src/img/logo.png"
                 alt="Logo"
@@ -102,7 +102,7 @@ export default function NavbarComponents() {
 
           {/* Profile Picture */}
           <img
-            src="https://media.licdn.com/dms/image/D4D12AQENkvRx8RBR8w/article-cover_image-shrink_720_1280/0/1682548841817?e=2147483647&v=beta&t=gtKEFL5W6SJ0I2MD-RXKPCYXJKlDBFuxJqQJBCLNog4"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6BkMQEKHWILXy8SzbX5aocWP6YWv0mZnSDA&s"
             alt="Profile"
             className="h-6 w-6 md:h-8 md:w-8 rounded-full border hover:cursor-pointer"
           />

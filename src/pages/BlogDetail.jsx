@@ -42,7 +42,7 @@ function BlogDetail() {
           alt="Blog Header"
         />
         <h1 className="text-2xl font-bold mt-4 ">{blog.title}</h1>
-        <p className="text-gray-700 text-xl mt-4 text-justify"  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog.content) }}>
+        <p className="text-gray-700 sm:text-sm sm:tracking-tight lg:tracking-normal lg:text-xl mt-4 text-justify"  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog.content) }}>
        
           {/* {blog.content} */}
           </p>

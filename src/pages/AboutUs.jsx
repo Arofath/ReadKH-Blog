@@ -67,7 +67,7 @@ function AboutUs() {
                   profile={"/images/team-member/huot_sreypov.JPG"}
                   name={"Huot Sreypov"}
                   team={"Sub Leader"}
-                  role={"API"}
+                  role={"API consumer"}
                   facebook={"https://www.facebook.com/share/1Jd42J4TvT/"}
                   github={"https://github.com/sreypov-hout"}
                 />
@@ -75,7 +75,7 @@ function AboutUs() {
                   profile={"/images/team-member/vy_hourtong.JPG"}
                   name={"Vy Hourtong"}
                   team={"Member"}
-                  role={"API"}
+                  role={"API consumer"}
                   facebook={"https://www.facebook.com/share/1Bea3eAiZz/?mibextid=wwXIfr"}
                   github={"https://github.com/Vyhourtong"}
                 />
@@ -87,7 +87,7 @@ function AboutUs() {
                   profile={"/images/team-member/sles_rofath.JPG"}
                   name={"Sles Rofath"}
                   team={"Member"}
-                  role={"Developer"}
+                  role={"Front-end developer"}
                   facebook={"https://www.facebook.com/arofath.stn"}
                   github={"https://github.com/Arofath"}
                 />
@@ -95,7 +95,7 @@ function AboutUs() {
                   profile={"/images/team-member/huon_thanun.JPG"}
                   name={"Huon Thanun"}
                   team={"Member"}
-                  role={"Developer"}
+                  role={"Front-end developer"}
                   facebook={"https://www.facebook.com/share/16QeYJfu5n/"}
                   github={"https://github.com/huon-thanun"}
                 />
@@ -103,7 +103,7 @@ function AboutUs() {
                   profile={"/images/team-member/chhay_davin.JPG"}
                   name={"Chhay Davin"}
                   team={"Member"}
-                  role={"Developer"}
+                  role={"Front-end Developer"}
                   facebook={"https://www.facebook.com/share/15JJ8AZQpA/?mibextid=qi2Omg"}
                   github={"https://github.com/ArthurLeyVin"}
                 />
@@ -115,7 +115,7 @@ function AboutUs() {
                   profile={"/images/team-member/heng_meymey.JPG"}
                   name={"Heng Meymey"}
                   team={"Member"}
-                  role={"Developer"}
+                  role={"Front-end developer"}
                   facebook={"https://www.facebook.com/jasmine.jessica462"}
                   github={"https://github.com/hengmeymey15"}
                   
@@ -132,7 +132,7 @@ function AboutUs() {
                   profile={"/images/team-member/khann_khanchana.JPG"}
                   name={"Khann Kanhchana"}
                   team={"Member"}
-                  role={"Developer"}
+                  role={"Front-end developer"}
                   facebook={"https://www.facebook.com/kanh.chana.9277?mibextid=LQQJ4d"}
                   github={"https://github.com/khannkanhchana"}
                 />

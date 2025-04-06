@@ -126,7 +126,7 @@ export default function NavbarComponents({ setSelectedCategory }) {
 
           {/* Mobile Menu Button */}
           <div className="flex md:hidden">
-            <button 
+            <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 text-gray-700"
             >
@@ -202,13 +202,25 @@ export default function NavbarComponents({ setSelectedCategory }) {
                     >
                       Sign Out
                     </a>
-                    <div className="border-t border-gray-200 mt-1"></div>
+                    {/* <div className="border-t border-gray-200 mt-1"></div>
                     <a
                       onClick={() => setShowLoginModal(true)}
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                     >
                       Log in
-                    </a>
+                    </a> */}
+                    {/* Only show login if user is NOT logged in */}
+                    {!localStorage.getItem("authToken") && (
+                      <>
+                        <div className="border-t border-gray-200 mt-1"></div>
+                        <a
+                          onClick={() => setShowLoginModal(true)}
+                          className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                        >
+                          Log in
+                        </a>
+                      </>
+                    )}
                   </nav>
                 </div>
               )}
@@ -218,7 +230,7 @@ export default function NavbarComponents({ setSelectedCategory }) {
 
         {/* Mobile Menu - Full screen overlay */}
         {mobileMenuOpen && (
-          <div 
+          <div
             ref={mobileMenuRef}
             className="fixed inset-0 top-14 sm:top-16 bg-white z-40 flex flex-col"
           >
@@ -330,8 +342,8 @@ export default function NavbarComponents({ setSelectedCategory }) {
               >
                 Yes, Sign Out
               </Button>
-              <Button 
-                color="gray" 
+              <Button
+                color="gray"
                 onClick={() => setShowSignOutModal(false)}
                 className="text-sm sm  sm:text-base"
               >

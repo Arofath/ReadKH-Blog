@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router-dom"; // Added useNavigate
 import DOMPurify from "dompurify";
 
 const ContentCardComponent = ({ thumbnail, title, content, id }) => {
   const [bookmarked, setBookmarked] = useState(false);
   const [author, setAuthor] = useState(null);
+  const navigate = useNavigate(); // Added navigate hook
 
   const datalist = [
     {
@@ -71,18 +72,13 @@ const ContentCardComponent = ({ thumbnail, title, content, id }) => {
 
   // Load author data from localStorage or generate new one
   useEffect(() => {
-    // Check if we have a stored author for this specific content ID
     const storedAuthors = JSON.parse(localStorage.getItem("contentAuthors")) || {};
     
     if (storedAuthors[id]) {
-      // Use the stored author if available
       setAuthor(storedAuthors[id]);
     } else {
-      // Generate a new random author and store it
       const random = datalist[Math.floor(Math.random() * datalist.length)];
       setAuthor(random);
-      
-      // Save to localStorage
       storedAuthors[id] = random;
       localStorage.setItem("contentAuthors", JSON.stringify(storedAuthors));
     }
@@ -97,11 +93,19 @@ const ContentCardComponent = ({ thumbnail, title, content, id }) => {
   }, [id]);
 
   const toggleBookmark = () => {
+    // Check if user is authenticated first
+    const authToken = localStorage.getItem("authToken");
+    if (!authToken) {
+      // navigate("/register");
+      return;
+    }
+
+    // If authenticated, proceed with existing bookmark logic
     const newBookmarked = !bookmarked;
     setBookmarked(newBookmarked);
   
     const myHeaders = new Headers();
-    const token = localStorage.getItem("authToken");
+    const token = authToken; // Use the token we already checked
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", `Bearer ${token}`);
     
@@ -115,7 +119,6 @@ const ContentCardComponent = ({ thumbnail, title, content, id }) => {
       .then((result) => {
         console.log("✅ Bookmark response:", result);
   
-        // Save to localStorage
         const storedBookmarks = JSON.parse(localStorage.getItem("bookmarkedIds")) || [];
   
         if (newBookmarked) {
@@ -133,13 +136,11 @@ const ContentCardComponent = ({ thumbnail, title, content, id }) => {
       })
       .catch((error) => console.error("❌ Bookmark error:", error));
   };
-  
+
   return (
     <div className="w-full mx-auto my-4 sm:my-6 md:my-8 hover:cursor-pointer">
       <div className="flex flex-col">
-        {/* Responsive layout: stack on small screens, side-by-side on md+ */}
         <div className="flex flex-col sm:flex-col md:flex-row md:space-x-4 mb-4">
-          {/* Image Section - Full width on small screens, fixed width on larger */}
           <NavLink to={`/blog/${id}`} className="w-full md:w-auto md:flex-shrink-0">
             <div className="w-full h-48 sm:h-56 md:h-64 md:w-64 lg:w-96">
               <img
@@ -150,11 +151,9 @@ const ContentCardComponent = ({ thumbnail, title, content, id }) => {
             </div>
           </NavLink>
 
-          {/* Content Section */}
           <div className="flex-1 flex flex-col justify-between mt-4 md:mt-0">
             <NavLink to={`/blog/${id}`}>
               <div>
-                {/* Author Info */}
                 {author && (
                   <div className="flex items-center mb-2">
                     <img
@@ -173,12 +172,10 @@ const ContentCardComponent = ({ thumbnail, title, content, id }) => {
                   </div>
                 )}
 
-                {/* Title */}
                 <h2 className="text-xl sm:text-xl md:text-2xl font-bold text-gray-900 mb-2">
                   {title || "No title"}
                 </h2>
 
-                {/* Content - Adjust line clamp for different screen sizes */}
                 <p
                   className="text-gray-600 mb-4 text-sm sm:text-base line-clamp-3 sm:line-clamp-3 md:line-clamp-4"
                   dangerouslySetInnerHTML={{
@@ -188,10 +185,9 @@ const ContentCardComponent = ({ thumbnail, title, content, id }) => {
               </div>
             </NavLink>
 
-            {/* Bookmark */}
             <div className="flex justify-start">
               <button
-                className="p-1 flex items-start justify-center"
+                className="p-1 flex items-start justify-center cursor-pointer"
                 onClick={toggleBookmark}
               >
                 <svg
@@ -213,7 +209,6 @@ const ContentCardComponent = ({ thumbnail, title, content, id }) => {
           </div>
         </div>
 
-        {/* Bottom border */}
         <div className="border-b border-gray-200 mt-2"></div>
       </div>
     </div>

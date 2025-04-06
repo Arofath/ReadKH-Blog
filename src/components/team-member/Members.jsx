@@ -11,7 +11,7 @@ export default function Members({ profile, name, team, role, facebook, github })
         </div>
         <h5 className="mt-3 text-lg font-bold text-[#A27B5C] uppercase">{name}</h5>
         <small className="text-sm text-gray-500 mt-2 uppercase">{team}</small>
-        <p className="text-base uppercase text-white mt-2 bg-[#A27B5C] w-45 py-2.5 rounded-3xl">
+        <p className="text-sm uppercase text-white mt-2 bg-[#A27B5C] w-45 py-2.5 rounded-3xl">
           {role}
         </p>
 

@@ -13,8 +13,7 @@ export default function FooterComponents() {
         {/* Logo Section */}
         <div className="flex flex-col items-start md:items-end">
           <img
-            // src="src/img/footer.png"
-            src="../../public/images/footer.png"
+            src="../images/logo/footer.png"
             alt="Logo"
             className="h-auto w-auto max-w-xs md:max-w-sm lg:max-w-md transition-transform duration-300 hover:-translate-y-2"
           />

@@ -6,7 +6,7 @@ const ReadKHBanner = () => {
       {/* Background Image */}
       <div className="absolute inset-0 w-full h-full bg-cover bg-center rounded-2xl">
         <img
-          src="https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg"
+          src="/images/readKh/readKh.png"
           alt="READKH Banner"
           className="w-full h-full object-cover rounded-2xl"
         />

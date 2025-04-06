@@ -106,7 +106,7 @@ export default function NavbarComponents({ setSelectedCategory }) {
             <div className="h-full flex items-center hover:cursor-pointer">
               <NavLink to="/">
                 <img
-                  src="src/img/logo.png"
+                  src="../images/logo/logo.png"
                   alt="Logo"
                   className="h-30 object-contain"
                 />

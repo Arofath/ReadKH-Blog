@@ -154,7 +154,7 @@ const ArticleCard = ({ thumbnail, title, content, id }) => {
         <img
           src={
             thumbnail ||
-            "https://www.themgroup.co.uk/wp-content/uploads/2020/12/landscape-placeholder-e1608289113759.png"
+            "https://cdn1.iconfinder.com/data/icons/business-company-1/500/image-512.png"
           }
           alt={title}
           className="w-full h-full object-cover"

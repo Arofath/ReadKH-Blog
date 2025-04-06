@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DOMPurify from "dompurify";
+import { Bookmark } from "lucide-react";
+
 
 const ArticleCard = ({ thumbnail, title, content, id, bookmarked, toggleBookmark }) => {
   const [author, setAuthor] = useState(null);
@@ -286,6 +288,17 @@ const BookmarkedBlogs = () => {
   }
 
   return (
+    <>
+    <div className="mt-8 sm:mt-12 md:mt-16 lg:mt-20">
+        <div className="flex items-center justify-between w-full max-w-6xl mx-auto px-4 sm:px-6 py-3 sm:py-4 border-2 rounded-xl border-gray-300">
+          <div className="flex items-center gap-2 sm:gap-3">
+          <Bookmark className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-400" fill="currentColor" />
+          <span className="text-lg sm:text-xl md:text-2xl font-medium text-gray-800">
+            Saved
+          </span>
+          </div>
+        </div>
+      </div>
     <div className="pt-6 bg-white w-full">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
         {articles.length > 0 ? (
@@ -298,11 +311,12 @@ const BookmarkedBlogs = () => {
           ))
         ) : (
           <p className="col-span-3 text-center text-gray-500">
-            Your bookmaeks is empty
+            Your bookmark is empty
           </p>
         )}
       </div>
     </div>
+    </>
   );
 };
 

@@ -105,7 +105,7 @@ export default function NavbarComponents({ setSelectedCategory }) {
                 <img
                   src="../images/logo/logo.png"
                   alt="Logo"
-                  className="h-8 sm:h-10 md:h-12 lg:h-14 object-contain"
+                  className=" h-27 object-contain"
                 />
               </NavLink>
             </div>

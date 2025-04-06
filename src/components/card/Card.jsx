@@ -1,52 +1,39 @@
 export default function Card() {
   return (
     <>
-      <section className="mt-6">
+    <section className="mt-6">
         <div className="flex items-center justify-center">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 p-6">
             <div className="flex flex-col items-center p-6 bg-[#FDFCF7] rounded-xl">
-              <img
-                src="/images/cards-images/advanced-ai.png"
-                alt="Advanced-Ai"
-              />
-              <h3 className="text-lg font-semibold mt-3">Advanced AI Models</h3>
-              <p className="text-center text-gray-600 text-sm">
-                Access multiple frontier models like Claude, GPT-4, Command R+,
-                and Mistral Large.
+              <h3 className="text-lg font-semibold text-[#A27B5C]">Our Mission</h3>
+              <p className=" text-center text-gray-600 text-sm mt-2">
+                To create a safe, inspiring space for writers and readers. We
+                empower young voices, preserve cultural stories, and support
+                self-expression through writing.
               </p>
             </div>
             <div className="flex flex-col items-center p-6 bg-[#FDFCF7] rounded-xl">
-              <img
-                className="mt-3 mb-2.5"
-                src="/images/cards-images/language-support.png"
-                alt="Language-support"
-              />
-              <h3 className="text-lg font-semibold mt-2">Multilingual Support</h3>
-              <p className="text-center text-gray-600 text-sm">
-                Write in any language and even provide instructions in your
-                native tongue.
+              <h3 className="text-lg font-semibold text-[#A27B5C]">Our Vision</h3>
+              <p className="text-center text-gray-600 text-sm mt-2">
+                A world where stories unite hearts, cultures, and generations.
+                We envision a future where everyone can share, learn, and grow
+                through storytelling.
               </p>
             </div>
             <div className="flex flex-col items-center p-6 bg-[#FDFCF7] rounded-xl">
-              <img
-                src="/images/cards-images/customize-writing.png"
-                alt="Customize-writing"
-              />
-              <h3 className="text-lg font-semibold mt-3">Customizable Writing</h3>
-              <p className="text-center text-gray-600 text-sm">
-                Define your unique writing style, genre, and narrative
-                structure.
+              <h3 className="text-xl font-semibold text-[#A27B5C]">Our Core Values</h3>
+              <p className="text-center text-gray-600 text-sm mt-2">
+                We celebrate creativity, empathy, and inclusiveness, welcoming
+                diverse voices and ideas. We support growth through learning,
+                reflection, and positive change.
               </p>
             </div>
             <div className="flex flex-col items-center p-6 bg-[#FDFCF7] rounded-xl">
-              <img
-                src="/images/cards-images/character-development.png"
-                alt="Caracter-development"
-              />
-              <h3 className="text-lg font-semibold mt-3">Character Development</h3>
-              <p className="text-center text-gray-600 text-sm">
-                Create deep, evolving characters with detailed backgrounds and
-                personalities.
+              <h3 className="text-lg font-semibold text-[#A27B5C]">Why We Started</h3>
+              <p className="text-center text-gray-600 text-sm mt-2">
+                ReadKH was founded by passionate students and creators to blend
+                personal growth, education, and cultural pride into one
+                platform.
               </p>
             </div>
           </div>

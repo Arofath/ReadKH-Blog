@@ -44,10 +44,10 @@ export default function Register() {
             return false;
         }
 
-        if (password.length < 6) {
-            setError("Password must be at least 6 characters.");
-            return false;
-        }
+        // if (password.length < 8) {
+        //     setError("Password must be at least 8 characters and contain at least one special character.");
+        //     return false;
+        // }
 
         if (password !== confirmPassword) {
             setError("Passwords do not match.");
@@ -82,7 +82,7 @@ export default function Register() {
 
             if (!response.ok) {
                 console.error("API error response:", result);
-                throw new Error(result.message || "Something went wrong please try again by chenking your data.");
+                throw new Error(result.message || "Password must be at least 8 characters, contain one special character & one number.");
             }
 
             console.log("Registration success:", result);

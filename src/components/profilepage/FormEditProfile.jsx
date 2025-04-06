@@ -71,7 +71,7 @@ export default function FormEditProfile({ initialData, onSave, onCancel }) {
              
               <button
                 type="button"
-                onClick={togglePasswordFields}
+                // onClick={togglePasswordFields}
                 className="text-sm text-[#A27B5C] hover:underline focus:outline-none"
               >
                 Change password

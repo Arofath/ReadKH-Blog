@@ -135,12 +135,13 @@ const ContentCardComponent = ({ thumbnail, title, content, id }) => {
   };
   
   return (
-    <div className="w-full mx-auto my-8 hover:cursor-pointer">
+    <div className="w-full mx-auto my-4 sm:my-6 md:my-8 hover:cursor-pointer">
       <div className="flex flex-col">
-        <div className="flex flex-row space-x-4 mb-4">
-          {/* Image Section */}
-          <NavLink to={`/blog/${id}`}>
-            <div className="w-96 h-64 flex-shrink-0">
+        {/* Responsive layout: stack on small screens, side-by-side on md+ */}
+        <div className="flex flex-col sm:flex-col md:flex-row md:space-x-4 mb-4">
+          {/* Image Section - Full width on small screens, fixed width on larger */}
+          <NavLink to={`/blog/${id}`} className="w-full md:w-auto md:flex-shrink-0">
+            <div className="w-full h-48 sm:h-56 md:h-64 md:w-64 lg:w-96">
               <img
                 src={thumbnail || "https://cdn1.iconfinder.com/data/icons/business-company-1/500/image-512.png"}
                 alt="Image"
@@ -150,7 +151,7 @@ const ContentCardComponent = ({ thumbnail, title, content, id }) => {
           </NavLink>
 
           {/* Content Section */}
-          <div className="flex-1 flex flex-col justify-between">
+          <div className="flex-1 flex flex-col justify-between mt-4 md:mt-0">
             <NavLink to={`/blog/${id}`}>
               <div>
                 {/* Author Info */}
@@ -159,13 +160,13 @@ const ContentCardComponent = ({ thumbnail, title, content, id }) => {
                     <img
                       src={author.profileimage || "https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0="}
                       alt="profile"
-                      className="w-12 h-12 rounded-full mr-3 object-cover"
+                      className="w-10 h-10 sm:w-12 sm:h-12 rounded-full mr-3 object-cover"
                     />
                     <div>
-                      <div className="font-medium text-gray-900">
-                        {author.name|| "Unknown"}
+                      <div className="font-medium text-gray-900 text-sm sm:text-base">
+                        {author.name || "Unknown"}
                       </div>
-                      <div className="text-gray-500 text-sm">
+                      <div className="text-gray-500 text-xs sm:text-sm">
                         {author.date || "created date"}
                       </div>
                     </div>
@@ -173,13 +174,13 @@ const ContentCardComponent = ({ thumbnail, title, content, id }) => {
                 )}
 
                 {/* Title */}
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                <h2 className="text-xl sm:text-xl md:text-2xl font-bold text-gray-900 mb-2">
                   {title || "No title"}
                 </h2>
 
-                {/* Content */}
+                {/* Content - Adjust line clamp for different screen sizes */}
                 <p
-                  className="text-gray-600 mb-4 line-clamp-4"
+                  className="text-gray-600 mb-4 text-sm sm:text-base line-clamp-3 sm:line-clamp-3 md:line-clamp-4"
                   dangerouslySetInnerHTML={{
                     __html: DOMPurify.sanitize(content || "No content"),
                   }}
@@ -189,53 +190,31 @@ const ContentCardComponent = ({ thumbnail, title, content, id }) => {
 
             {/* Bookmark */}
             <div className="flex justify-start">
-              {/* <button
+              <button
+                className="p-1 flex items-start justify-center"
                 onClick={toggleBookmark}
-                className={`${
-                  bookmarked ? { color: "#3b82f6" } : "text-gray-400"
-                }  hover:cursor-pointer`}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill=""
+                  width="20"
+                  height="20"
                   viewBox="0 0 24 24"
+                  fill={bookmarked ? "currentColor" : "none"}
                   stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className={`${bookmarked ? "text-yellow-400" : "text-gray-400"} sm:w-5 sm:h-5 md:w-6 md:h-6`}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
-                  />
+                  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
                 </svg>
-          
-              </button> */}
-              <button
-            className="p-1 flex items-start justify-center"
-            onClick={toggleBookmark}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill={bookmarked ? "currentColor" : "none"}
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className={bookmarked ? "text-yellow-400" : "text-gray-400"}
-            >
-              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-            </svg>
-          </button>
+              </button>
             </div>
           </div>
         </div>
 
         {/* Bottom border */}
-        <div className="border-b border-gray-200"></div>
+        <div className="border-b border-gray-200 mt-2"></div>
       </div>
     </div>
   );

@@ -166,7 +166,8 @@ export default function Login() {
             <div className="flex justify-center mb-6">
               <div className="relative">
                 <img
-                  src="src\img\logo.png"
+                  // src="src\img\logo.png"
+                  src="/images/logo/logo.png"
                   alt="ReadKH Notebooks"
                   className="mx-20"
                 />

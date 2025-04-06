@@ -1,8 +1,7 @@
 import { Button } from "flowbite-react";
 import { Search, Menu, X } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
-import { NavLink } from "react-router";
-import { useNavigate } from "react-router";
+import { NavLink, useNavigate } from "react-router-dom"; // Updated import
 import { Modal, ModalBody, ModalHeader } from "flowbite-react";
 import PopUpModalComponent from "../pop-up-modal/PopUpModal";
 import Login from "../../pages/AuthPage/Login";
@@ -28,7 +27,16 @@ export default function NavbarComponents({ setSelectedCategory }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // For Login Form
+  // Check authToken for navigation
+  const handleProfileNavigation = () => {
+    const authToken = localStorage.getItem("authToken");
+    if (!authToken) {
+      navigate("/login");
+    } else {
+      navigate("/profile");
+    }
+  };
+
   const handleCreatePost = () => {
     const authToken = localStorage.getItem("authToken");
     if (!authToken) {
@@ -44,10 +52,9 @@ export default function NavbarComponents({ setSelectedCategory }) {
   };
 
   const handleLogout = () => {
-    setShowSignOutModal(true); // Just show modal
+    setShowSignOutModal(true);
   };
 
-  // For Drop Down Profile
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const mobileMenuRef = useRef(null);
@@ -86,7 +93,6 @@ export default function NavbarComponents({ setSelectedCategory }) {
     fetchCategories();
   }, []);
 
-  // Close mobile menu when navigating
   useEffect(() => {
     setMobileMenuOpen(false);
   }, [navigate]);
@@ -99,7 +105,6 @@ export default function NavbarComponents({ setSelectedCategory }) {
         <nav className="w-full max-w-7xl flex items-center justify-between px-4 sm:px-6 md:px-12 lg:px-16 h-14 sm:h-16 md:h-18 lg:h-20">
           {/* Left Section */}
           <div className="flex items-center space-x-2 sm:space-x-4">
-            {/* Logo */}
             <div className="h-full flex items-center hover:cursor-pointer">
               <NavLink to="/">
                 <img
@@ -109,7 +114,6 @@ export default function NavbarComponents({ setSelectedCategory }) {
                 />
               </NavLink>
             </div>
-            {/* Search Bar - Hidden on mobile */}
             <div className="relative hidden sm:block">
               <input
                 type="text"
@@ -165,9 +169,7 @@ export default function NavbarComponents({ setSelectedCategory }) {
               Create Post
             </Button>
 
-            {/* Profile Picture */}
             <div className="relative" ref={dropdownRef}>
-              {/* Profile Image */}
               <img
                 src="https://img.freepik.com/premium-vector/avatar-profile-icon-flat-style-male-user-profile-vector-illustration-isolated-background-man-profile-sign-business-concept_157943-38764.jpg"
                 alt="Profile"
@@ -175,16 +177,15 @@ export default function NavbarComponents({ setSelectedCategory }) {
                 onClick={() => setIsOpen(!isOpen)}
               />
 
-              {/* Dropdown Menu */}
               {isOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 z-10">
                   <div className="p-2 border-b border-gray-200">
-                    <NavLink
-                      to="/profile"
-                      className="block text-blue-600 font-medium"
+                    <button
+                      onClick={handleProfileNavigation} // Use button instead of NavLink for custom navigation
+                      className="block text-blue-600 font-medium w-full text-left"
                     >
                       Your Profile
-                    </NavLink>
+                    </button>
                   </div>
 
                   <nav className="py-1">
@@ -221,7 +222,6 @@ export default function NavbarComponents({ setSelectedCategory }) {
             ref={mobileMenuRef}
             className="fixed inset-0 top-14 sm:top-16 bg-white z-40 flex flex-col"
           >
-            {/* Search Bar - Mobile Only */}
             <div className="relative px-4 py-4 border-b border-gray-200">
               <input
                 type="text"
@@ -254,16 +254,12 @@ export default function NavbarComponents({ setSelectedCategory }) {
                 About Us
               </NavLink>
 
-              <NavLink
-                to="/profile"
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-yellow-400 text-lg py-2"
-                    : "text-gray-700 hover:text-[#A27B5C] text-lg py-2"
-                }
+              <button
+                onClick={handleProfileNavigation} // Use button instead of NavLink for custom navigation
+                className="text-gray-700 hover:text-[#A27B5C] text-lg py-2 text-left"
               >
                 Your Profile
-              </NavLink>
+              </button>
 
               <button
                 onClick={handleCreatePost}
@@ -294,7 +290,6 @@ export default function NavbarComponents({ setSelectedCategory }) {
         )}
       </div>
 
-      {/* Alert Component */}
       <PopUpModalComponent
         show={showLoginModal}
         onClose={() => setShowLoginModal(false)}
@@ -338,7 +333,7 @@ export default function NavbarComponents({ setSelectedCategory }) {
               <Button 
                 color="gray" 
                 onClick={() => setShowSignOutModal(false)}
-                className="text-sm sm:text-base"
+                className="text-sm sm  sm:text-base"
               >
                 Cancel
               </Button>

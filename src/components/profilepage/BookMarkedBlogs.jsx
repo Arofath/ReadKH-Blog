@@ -2,36 +2,100 @@ import React, { useState, useEffect } from "react";
 import DOMPurify from "dompurify";
 
 const ArticleCard = ({ thumbnail, title, content, id, bookmarked, toggleBookmark }) => {
+  const [author, setAuthor] = useState(null);
+
+  const datalist = [
+    {
+      profileimage: "https://capecoraltech.edu/wp-content/uploads/2016/01/tutor-8-3.jpg",
+      name: "John Doe",
+      date: "14 Jan 2025",
+    },
+    {
+      profileimage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMYR0TAT4xCZgg-7cvDs2gH02sMGHAIbFDYQ&s",
+      name: "Jane Smith",
+      date: "12 Nov 2024",
+    },
+    {
+      profileimage: "https://preview.redd.it/colorized-photo-of-19-year-old-delta-blues-musician-robert-v0-abpi1m140mma1.jpg?width=640&crop=smart&auto=webp&s=6cc2af177b4adf38df3974b263d383aeb00e7290",
+      name: "Robert Johnson",
+      date: "10 June 2025",
+    },
+    {
+      profileimage: "https://www.emilydavismusic.com/images/emily_davis_music_living_in_the_past_tense.jpg",
+      name: "Emily Davis",
+      date: "01 July 2025",
+    },
+    {
+      profileimage: "https://images.rivals.com/image/upload/f_auto,q_auto,t_large/bzd4dr1966m2f50b36vm",
+      name: "Michael Wilson",
+      date: "22 Feb 2025",
+    },
+    {
+      profileimage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6es7_u3ETPtLpPHgN3c7RGgFI2bq4rcr4pg&s",
+      name: "Sarah Brown",
+      date: "21 Jan 2025",
+    },
+    {
+      profileimage: "https://img.olympics.com/images/image/private/t_social_share_thumb/f_auto/v1694950107/primary/ass1qd5m3qe39sammqrz",
+      name: "David Taylor",
+      date: "22 June 2025",
+    },
+    {
+      profileimage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwykXmHb6GiTQkKosL3u9VYoORjRwmeUyovA&s",
+      name: "Jennifer Martinez",
+      date: "19 June 2025",
+    },
+    {
+      profileimage: "https://upload.wikimedia.org/wikipedia/commons/c/c0/ThomasAnderson%281819-1874%29.jpg",
+      name: "Thomas Anderson",
+      date: "14 June 2025",
+    },
+    {
+      profileimage: "https://www.jlgroup.net/wp-content/uploads/2023/07/LISA-T.jpg",
+      name: "Lisa Thomas",
+      date: "10 Dec 2024",
+    },
+  ];
+
+  useEffect(() => {
+    // Pick a random author on every render
+    const random = datalist[Math.floor(Math.random() * datalist.length)];
+    setAuthor(random);
+  }, [id]); // Still depends on `id` to re-run if the article changes
+
+  if (!author) {
+    return null; // Prevent rendering until author is set
+  }
+
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden w-full max-w-sm transition-shadow hover:shadow-md">
-      {/* Article Image */}
       <div className="w-full h-48 overflow-hidden">
         <img
-          src={thumbnail || "/api/placeholder/400/320"}
+          src={thumbnail || "https://cdn1.iconfinder.com/data/icons/business-company-1/500/image-512.png"}
           alt="article"
           className="w-full h-full object-cover"
         />
       </div>
 
-      {/* Content */}
       <div className="p-5">
-        {/* Author and Date */}
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center space-x-3">
             <div className="h-10 w-10 rounded-full overflow-hidden">
               <img
-                src="https://marketplace.canva.com/EAFOWUXOOvs/1/0/1600w/canva-green-gradient-minimalist-simple-instagram-profile-picture-tBlf3wVYGhg.jpg"
+                src={
+                  author.profileimage ||
+                  "https://www.shutterstock.com/image-vector/user-profile-icon-vector-avatar-600nw-2247726673.jpg"
+                }
                 alt="author"
                 className="h-full w-full object-cover"
               />
             </div>
             <div>
-              <p className="font-medium text-gray-800">Yuna Min</p>
-              <p className="text-sm text-gray-500">12 Jun 2024</p>
+              <p className="font-medium text-gray-800">{author.name}</p>
+              <p className="text-sm text-gray-500">{author.date}</p>
             </div>
           </div>
 
-          {/* Bookmark icon */}
           <button onClick={() => toggleBookmark(id)} className="p-1 flex items-start justify-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -50,12 +114,10 @@ const ArticleCard = ({ thumbnail, title, content, id, bookmarked, toggleBookmark
           </button>
         </div>
 
-        {/* Title with line clamp */}
         <h2 className="text-xl font-bold text-gray-800 mb-2 overflow-hidden line-clamp-2">
           {title}
         </h2>
 
-        {/* Excerpt with line clamp */}
         <p
           className="text-gray-600 mb-4 overflow-hidden line-clamp-3"
           dangerouslySetInnerHTML={{
@@ -67,6 +129,7 @@ const ArticleCard = ({ thumbnail, title, content, id, bookmarked, toggleBookmark
   );
 };
 
+// Rest of your BookmarkedBlogs component remains unchanged
 const BookmarkedBlogs = () => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);

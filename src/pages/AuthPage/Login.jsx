@@ -131,7 +131,7 @@ export default function Login() {
                   htmlFor="remember"
                   className="ml-2 text-sm text-gray-600"
                 >
-                  Remembebr me
+                  Remember me
                 </label>
               </div>
 

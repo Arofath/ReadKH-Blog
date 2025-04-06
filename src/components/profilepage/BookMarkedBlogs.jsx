@@ -298,7 +298,7 @@ const BookmarkedBlogs = () => {
           ))
         ) : (
           <p className="col-span-3 text-center text-gray-500">
-            Your bookmaeks is nothing
+            Your bookmaeks is empty
           </p>
         )}
       </div>

@@ -8,73 +8,61 @@ const ArticleCard = ({ thumbnail, title, content, id }) => {
   const datalist = [
     {
       profileimage:
-        "../public/images/Profile/img1.jpg",
+        "https://capecoraltech.edu/wp-content/uploads/2016/01/tutor-8-3.jpg",
       name: "John Doe",
       date: "14 Jan 2025",
     },
     {
       profileimage:
-        "../../public/images/Profile/img2.jpg",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMYR0TAT4xCZgg-7cvDs2gH02sMGHAIbFDYQ&s",
       name: "Jane Smith",
       date: "12 Nov 2024",
     },
     {
       profileimage:
-        "../../public/images/Profile/img3.jpg",
+        "https://preview.redd.it/colorized-photo-of-19-year-old-delta-blues-musician-robert-v0-abpi1m140mma1.jpg?width=640&crop=smart&auto=webp&s=6cc2af177b4adf38df3974b263d383aeb00e7290",
       name: "Robert Johnson",
       date: "10 June 2025",
     },
     {
       profileimage:
-        "../../public/images/Profile/img4.jpg",
+        "https://www.emilydavismusic.com/images/emily_davis_music_living_in_the_past_tense.jpg",
       name: "Emily Davis",
       date: "01 July 2025",
     },
     {
       profileimage:
-        "../../public/images/Profile/img5.jpg",
+        "https://images.rivals.com/image/upload/f_auto,q_auto,t_large/bzd4dr1966m2f50b36vm",
       name: "Michael Wilson",
       date: "22 Fab 2025",
     },
     {
       profileimage:
-        "../../public/images/Profile/img6.jpg",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6es7_u3ETPtLpPHgN3c7RGgFI2bq4rcr4pg&s",
       name: "Sarah Brown",
       date: "21 Jan 2025",
     },
     {
       profileimage:
-        "../../public/images/Profile/img7.jpg",
+        "https://img.olympics.com/images/image/private/t_social_share_thumb/f_auto/v1694950107/primary/ass1qd5m3qe39sammqrz",
       name: "David Taylor",
       date: "22 June 2025",
     },
     {
       profileimage:
-        "../../public/images/Profile/img8.jpg",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwykXmHb6GiTQkKosL3u9VYoORjRwmeUyovA&s",
       name: "Jennifer Martinez",
       date: "19 June 2025",
     },
     {
       profileimage:
-        "../../public/images/Profile/img9.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/c/c0/ThomasAnderson%281819-1874%29.jpg",
       name: "Thomas Anderson",
       date: "14 June 2025",
     },
     {
       profileimage:
-        "../../public/images/Profile/img10.jpg",
-      name: "Lisa Thomas",
-      date: "10 Dec 2024",
-    },
-    {
-      profileimage:
-        "../../public/images/Profile/img11.jpg",
-      name: "Lisa Thomas",
-      date: "10 Dec 2024",
-    },
-    {
-      profileimage:
-        "../../public/images/Profile/img12.jpg",
+        "https://www.jlgroup.net/wp-content/uploads/2023/07/LISA-T.jpg",
       name: "Lisa Thomas",
       date: "10 Dec 2024",
     },
@@ -179,7 +167,7 @@ const ArticleCard = ({ thumbnail, title, content, id }) => {
               <img
                 src={
                   author?.profileimage ||
-                  "https://newprofilepic.photo-cdn.net//assets/images/article/profile.jpg?90af0c8"
+                  "https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0="
                 }
                 alt="avatar"
                 className="h-full w-full object-cover"

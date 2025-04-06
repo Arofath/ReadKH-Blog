@@ -12,7 +12,7 @@ export default function PopUpModalComponent({
       <ModalBody className="bg-white">
         <div className="text-center">
           <img
-            src="src/img/logo.png"
+            src="/images/logo/logo.png"
             alt="Login Required"
             className="mx-auto mb-4 h-20 w-20 sm:h-24 sm:w-24 md:h-28 md:w-28 object-contain transition-transform duration-300"
           />

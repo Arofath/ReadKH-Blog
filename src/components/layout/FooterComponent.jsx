@@ -7,6 +7,7 @@ import {
   FaTelegram,
 } from "react-icons/fa6";
 import { FaChevronDown } from "react-icons/fa";
+import { NavLink } from "react-router";
 
 export default function FooterComponents() {
   const [open, setOpen] = useState(null);
@@ -35,24 +36,24 @@ export default function FooterComponents() {
               <h3 className="font-semibold text-gray-900 mb-3">Quick Links</h3>
               <ul className="space-y-2 text-gray-600">
                 <li>
-                  <a href="/" className="hover:text-[#A27B5C]">
+                  <NavLink to="/" className="hover:text-[#A27B5C]">
                     Home
-                  </a>
+                  </NavLink>
                 </li>
                 <li>
-                  <a href="/profile" className="hover:text-[#A27B5C]">
+                  <NavLink to="/profile" className="hover:text-[#A27B5C]">
                     Profile
-                  </a>
+                  </NavLink>
                 </li>
                 <li>
-                  <a href="/about" className="hover:text-[#A27B5C]">
+                  <NavLink to="/about" className="hover:text-[#A27B5C]">
                     About Us
-                  </a>
+                  </NavLink>
                 </li>
                 <li>
-                  <a href="/create-post" className="hover:text-[#A27B5C]">
+                  <NavLink to="/create-post" className="hover:text-[#A27B5C]">
                     Create Post
-                  </a>
+                  </NavLink>
                 </li>
               </ul>
             </div>
@@ -117,24 +118,24 @@ export default function FooterComponents() {
             {open === "quick" && (
               <ul className="space-y-2 text-gray-600 mt-2 pl-2">
                 <li>
-                  <a href="/" className="hover:text-[#A27B5C]">
+                  <NavLink to="/" className="hover:text-[#A27B5C]">
                     Home
-                  </a>
+                  </NavLink>
                 </li>
                 <li>
-                  <a href="/profile" className="hover:text-[#A27B5C]">
+                  <NavLink to="/profile" className="hover:text-[#A27B5C]">
                     Profile
-                  </a>
+                  </NavLink>
                 </li>
                 <li>
-                  <a href="/about" className="hover:text-[#A27B5C]">
+                  <NavLink to="/about" className="hover:text-[#A27B5C]">
                     About Us
-                  </a>
+                  </NavLink>
                 </li>
                 <li>
-                  <a href="/create-post" className="hover:text-[#A27B5C]">
+                  <NavLink to="/create-post" className="hover:text-[#A27B5C]">
                     Create Post
-                  </a>
+                  </NavLink>
                 </li>
               </ul>
             )}

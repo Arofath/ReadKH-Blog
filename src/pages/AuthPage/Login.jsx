@@ -5,19 +5,15 @@ import { NavLink } from "react-router";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
+  const [errorMessage, setErrorMessage] = useState(""); // State for error message
+  const [validationError, setValidationError] = useState(""); // State for validation errors
 
   const navigate = useNavigate();
 
   // State to manage form inputs
   const [formData, setFormData] = useState({
-    username: "", // Using "username" instead of "email"
+    username: "",
     password: "",
   });
 
@@ -30,13 +26,42 @@ export default function Login() {
     });
   };
 
+  // Toggle password visibility
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  // Validate form inputs
+  const validateInputs = () => {
+    if (!formData.username.trim()) {
+      return "Username is required.";
+    }
+    // if (formData.username.length < 3) {
+    //   return "Username must be at least 3 characters long.";
+    // }
+    if (!formData.password.trim()) {
+      return "Password is required.";
+    }
+    // if (formData.password.length < 6) {
+    //   return "Password must be at least 6 characters long.";
+    // }
+    return "";
+  };
+
+  // Handle form submission
   const handleLogin = async (e) => {
     e.preventDefault();
-    // Handle login logic here
-    console.log("Login attempt with:", { username, password, rememberMe });
-    // Prepare login data
+    setErrorMessage(""); // Clear any existing error messages
+    setValidationError(""); // Clear validation errors
+
+    const validationMessage = validateInputs();
+    if (validationMessage) {
+      setValidationError(validationMessage);
+      return;
+    }
+
     const loginData = {
-      username: formData.username, // Using "username"
+      username: formData.username,
       password: formData.password,
     };
 
@@ -48,15 +73,14 @@ export default function Login() {
       });
 
       if (!response.ok) {
-        throw new Error("Login failed");
+        throw new Error("Invalid username or password");
       }
 
       const result = await response.json();
-      console.log("Login successful:", result);
       localStorage.setItem("authToken", result.access_token);
       navigate("/");
     } catch (error) {
-      console.error("Error during login:", error);
+      setErrorMessage(error.message); // Set error message state
     }
   };
 
@@ -66,15 +90,24 @@ export default function Login() {
         {/* Login Form */}
         <div className="bg-white p-8 rounded-lg shadow-sm border border-gray-100">
           <div className="mb-8">
-            <h2 className="text-2xl font-medium text-gray-700">Welcome !</h2>
-
+            <h2 className="text-2xl font-medium text-gray-700">Welcome!</h2>
             <div className="mt-6">
-              <h1 className="text-3xl font-semibold text-gray-700">
-                Sign in to
-              </h1>
+              <h1 className="text-3xl font-semibold text-gray-700">Sign in to</h1>
               <p className="text-lg font-medium text-gray-600 mt-1">READKH</p>
             </div>
           </div>
+
+          {validationError && (
+            <div className="mb-4 text-red-500 text-sm">
+              {validationError}
+            </div>
+          )}
+
+          {errorMessage && (
+            <div className="mb-4 text-red-500 text-sm">
+              {errorMessage}
+            </div>
+          )}
 
           <form onSubmit={handleLogin}>
             <div className="mb-6">
@@ -135,8 +168,8 @@ export default function Login() {
                 </label>
               </div>
 
-              <a href="#" className="text-sm text-gray-600 hover:underline">
-                Forgot Password ?
+              <a href="#" className="text-sm text-gray-600 hover:underline font-bold">
+                Forgot Password?
               </a>
             </div>
 
@@ -150,8 +183,9 @@ export default function Login() {
 
           <div className="mt-6 text-center">
             <p className="text-gray-600">
-              Don't have an Account ?{" "}
-              <NavLink to="/register"
+              Don't have an Account?{" "}
+              <NavLink
+                to="/register"
                 className="text-[#A27B5C] hover:underline font-medium"
               >
                 Register
@@ -166,7 +200,6 @@ export default function Login() {
             <div className="flex justify-center mb-6">
               <div className="relative">
                 <img
-                  // src="src\img\logo.png"
                   src="/images/logo/logo.png"
                   alt="ReadKH Notebooks"
                   className="mx-20"

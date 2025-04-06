@@ -1,10 +1,11 @@
 import { Button } from "flowbite-react";
 import { Search, Menu, X } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
-import { NavLink, useNavigate } from "react-router-dom"; // Updated import
+import { NavLink, useNavigate } from "react-router-dom";
 import { Modal, ModalBody, ModalHeader } from "flowbite-react";
 import PopUpModalComponent from "../pop-up-modal/PopUpModal";
-import Login from "../../pages/AuthPage/Login";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function NavbarComponents({ setSelectedCategory }) {
   const [bgColor, setBgColor] = useState("bg-white");
@@ -49,7 +50,20 @@ export default function NavbarComponents({ setSelectedCategory }) {
   const confirmLogout = () => {
     localStorage.removeItem("authToken");
     navigate("/");
+    setShowSignOutModal(false);
+    toast.success("Successfully signed out!", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
   };
+  // const confirmLogout = () => {
+  //   localStorage.removeItem("authToken");
+  //   navigate("/");
+  // };
 
   const handleLogout = () => {
     setShowSignOutModal(true);
@@ -181,8 +195,8 @@ export default function NavbarComponents({ setSelectedCategory }) {
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 z-10">
                   <div className="p-2 border-b border-gray-200">
                     <button
-                      onClick={handleProfileNavigation} // Use button instead of NavLink for custom navigation
-                      className="block text-blue-600 font-medium w-full text-left"
+                      onClick={handleProfileNavigation}
+                      className="block text-[#A27B5C] font-medium w-full text-left"
                     >
                       Your Profile
                     </button>
@@ -195,22 +209,19 @@ export default function NavbarComponents({ setSelectedCategory }) {
                     >
                       Create Post
                     </a>
-                    <div className="border-t border-gray-200 mt-1"></div>
-                    <a
-                      onClick={handleLogout}
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                    >
-                      Sign Out
-                    </a>
-                    {/* <div className="border-t border-gray-200 mt-1"></div>
-                    <a
-                      onClick={() => setShowLoginModal(true)}
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                    >
-                      Log in
-                    </a> */}
-                    {/* Only show login if user is NOT logged in */}
-                    {!localStorage.getItem("authToken") && (
+                    
+                    {/* Conditionally render Sign Out or Log in based on authToken */}
+                    {localStorage.getItem("authToken") ? (
+                      <>
+                        <div className="border-t border-gray-200 mt-1"></div>
+                        <a
+                          onClick={handleLogout}
+                          className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                        >
+                          Sign Out
+                        </a>
+                      </>
+                    ) : (
                       <>
                         <div className="border-t border-gray-200 mt-1"></div>
                         <a
@@ -267,7 +278,7 @@ export default function NavbarComponents({ setSelectedCategory }) {
               </NavLink>
 
               <button
-                onClick={handleProfileNavigation} // Use button instead of NavLink for custom navigation
+                onClick={handleProfileNavigation}
                 className="text-gray-700 hover:text-[#A27B5C] text-lg py-2 text-left"
               >
                 Your Profile
@@ -345,7 +356,7 @@ export default function NavbarComponents({ setSelectedCategory }) {
               <Button
                 color="gray"
                 onClick={() => setShowSignOutModal(false)}
-                className="text-sm sm  sm:text-base"
+                className="text-sm sm:text-base"
               >
                 Cancel
               </Button>
@@ -353,6 +364,8 @@ export default function NavbarComponents({ setSelectedCategory }) {
           </div>
         </ModalBody>
       </Modal>
+
+      <ToastContainer />
     </>
   );
 }

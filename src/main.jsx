@@ -21,6 +21,7 @@ createRoot(document.getElementById("root")).render(
           <Route path="/about" element={<AboutUs />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/create-post" element={<CreatePost />} />
+          <Route path="/edit-post/:id" element={<CreatePost />} /> {/* ← ✅ Add this */}
 
         </Route>
         <Route path="/login" element={<Login />} />

@@ -242,18 +242,19 @@ export default function ButtonYourPost() {
                     }}
                   ></p>
 
-                  <div className="flex justify-between items-center">
+                  <div className="flex gap-4 items-center">
                     <button
                       onClick={() => openDeleteModal(post.id)}
                       className="text-sm text-red-500 hover:text-red-600"
                     >
-                      Delete
+                      <img src="/images/cards-images/delete.png" alt="delete" className="w-5 h-5" />
                     </button>
                     <button
                       onClick={() => navigate(`/edit-post/${post.id}`)}
                       className="cursor-pointer text-sm text-blue-500 hover:text-blue-600 transition-colors"
                     >
-                      Update
+                      {/* Update */}
+                      <img src="/images/cards-images/edit-text.png" alt="update" className="w-5 h-5" />
                     </button>
                     <button className="text-gray-400 hover:text-gray-700">
                       <svg

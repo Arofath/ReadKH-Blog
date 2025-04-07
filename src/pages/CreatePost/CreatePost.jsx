@@ -3,7 +3,9 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "./TextEditor.css";
 import Select from "react-select";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+
+
 
 const CreatePost = () => {
   const [value, setValue] = useState("");
@@ -17,6 +19,7 @@ const CreatePost = () => {
   const [setPosts] = useState([]); // Added state for posts
   const [errors, setErrors] = useState({});
   const [notification, setNotification] = useState({ message: "", type: "" });
+  const { id } = useParams();
 
   const navigate = useNavigate();
 
@@ -65,25 +68,31 @@ const CreatePost = () => {
 
   // Fetch posts when the component loads
   useEffect(() => {
-    const fetchPosts = async () => {
+    const fetchPost = async () => {
+      if (!id) return;
+  
       try {
-        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/blogs`);
-        const posts = await response.json();
-
-        // Sort posts by publish date (descending)
-        const sortedPosts = posts.sort(
-          (a, b) => new Date(b.publish_date) - new Date(a.publish_date)
+        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/blogs/${id}`);
+        if (!response.ok) throw new Error("Failed to fetch post");
+  
+        const data = await response.json();
+  
+        setTitle(data.title);
+        setValue(data.content);
+        setSelectedCategories(
+          data.categories?.map((cat) => ({ value: cat.id, label: cat.name })) || []
         );
-
-        // Update posts state with sorted posts
-        setPosts(sortedPosts);
-      } catch (error) {
-        console.error("Error fetching posts:", error);
+        if (data.thumbnail) {
+          setCoverImage({ preview: data.thumbnail, uploadedUrl: data.thumbnail });
+        }
+      } catch (err) {
+        console.error(err);
+        showNotification("Failed to load post for editing.", "error");
       }
     };
-
-    fetchPosts();
-  }, []); // Empty dependency array ensures it runs on component mount
+  
+    fetchPost();
+  }, [id]);
 
   // Show notifications
   const showNotification = (message, type = "info") => {
@@ -201,9 +210,9 @@ const CreatePost = () => {
       }
   
       const blogResponse = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/blogs`,
+        `${import.meta.env.VITE_BASE_URL}/blogs${id ? `/${id}` : ""}`,
         {
-          method: "POST",
+          method: id ? "PUT" : "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -211,6 +220,7 @@ const CreatePost = () => {
           body: JSON.stringify(postData),
         }
       );
+      
   
       if (!blogResponse.ok) {
         const errorBody = await blogResponse.text();

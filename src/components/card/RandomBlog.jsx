@@ -109,6 +109,14 @@ const ArticleCard = ({ thumbnail, title, content, id }) => {
       setBookmarked(!newBookmarked); // Revert state
       return;
     }
+
+    // const toggleBookmark = () => {
+    //   // Check if user is authenticated first
+    //   const authToken = localStorage.getItem("authToken");
+    //   if (!authToken) {
+    //     navigate("/register");
+    //     return;
+    //   }
   
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");

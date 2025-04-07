@@ -99,13 +99,18 @@ export default function Register() {
         <div className="flex items-center justify-center min-h-screen bg-gray-50">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl p-4">
                 <div className="bg-white p-8 rounded-lg shadow-sm border border-gray-100">
-                    <div className="mb-8">
-                        <h2 className="text-2xl font-medium text-gray-700">Welcome!</h2>
-                        <div className="mt-6">
-                            <h1 className="text-3xl font-semibold text-gray-700">Sign Up to</h1>
-                            <p className="text-lg font-medium text-gray-600 mt-1">READKH</p>
-                        </div>
+                    {/* Logo Header */}
+                    <div className="text-center -mt-15 md:-mt-15">
+                        <img
+                            src="/images/logo/logo.png"
+                            alt="ReadKH Logo"
+                            className=" mx-auto h-40 sm:h-24 md:h-40 w-auto object-contain"
+                        />
+                        <h1 className="mb-10 text-2xl font-semibold text-gray-700 -mt-10  md:-mt-10">
+                            Join The ReadKH Community
+                        </h1>
                     </div>
+
 
                     <form onSubmit={handleSubmit}>
                         <div className="mb-6">
@@ -202,20 +207,22 @@ export default function Register() {
                 </div>
 
                 {/* Logo Section */}
-                <div className="hidden md:flex items-center justify-center">
+                <div className="hidden md:flex items-center justify-center -mt-50 ml-10">
                     <div className="text-center">
                         <div className="flex justify-center mb-6">
-                            <div className="relative">
-                                <img
-                                    // src="src/img/logo.png"
-                                    src="/images/logo/logo.png"
-                                    alt="ReadKH Notebooks"
-                                    className="mx-20"
-                                />
-                            </div>
+                            <img
+                                src="/images/logo/logo.png"
+                                alt="ReadKH Notebooks"
+                                className="mx-20"
+                            />
                         </div>
+                        <p className="text-gray-700 text-base md:text-lg max-w-xl mx-auto px-4 -mt-40">
+                            A modern blog for sharing ideas, stories, and insights from
+                            writers around the world.
+                        </p>
                     </div>
                 </div>
+
             </div>
         </div>
     );

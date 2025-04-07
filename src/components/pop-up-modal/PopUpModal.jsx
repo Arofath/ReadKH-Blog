@@ -24,10 +24,10 @@ export default function PopUpModalComponent({
             Please log in or register to create a post on ReadKH.
           </p>
           <div className="flex justify-center gap-4 ">
-            <Button color="dark" onClick={onLogin} className="hover:cursor-pointer">
+            <Button onClick={onLogin} className="hover:cursor-pointer hover:bg-[#A27B5C] hover:text-white text-[#A27B5C] border border-[#A27B5C] bg-transparent">
               Login
             </Button>
-            <Button color="gray" onClick={onRegister} className="hover:cursor-pointer">
+            <Button onClick={onRegister} className="hover:cursor-pointer hover:bg-gray-700 bg-[#A27B5C]">
               Register
             </Button>
           </div>

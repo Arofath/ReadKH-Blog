@@ -96,7 +96,7 @@ const ContentCardComponent = ({ thumbnail, title, content, id }) => {
     // Check if user is authenticated first
     const authToken = localStorage.getItem("authToken");
     if (!authToken) {
-      // navigate("/register");
+      navigate("/register");
       return;
     }
 

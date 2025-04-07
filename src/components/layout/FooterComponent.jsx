@@ -198,7 +198,7 @@ export default function FooterComponents() {
         <div className="lg:my-20 ml-0">
           <h3 className="font-semibold text-gray-900 mb-3">Contact Us</h3>
           <p className="text-gray-600">ReadKh@gmail.com</p>
-          <p className="text-gray-600">0 123 456 789</p>
+          <p className="text-gray-600">+855 974 716 039</p>
           <p className="text-gray-600">ReadKh.com</p>
 
           {/* Social Icons */}

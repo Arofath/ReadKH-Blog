@@ -18,7 +18,8 @@ export default function NavbarComponents({ setSelectedCategory }) {
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 0) {
-        setBgColor("bg-[#ECECEE]");
+        // setBgColor("bg-[#ECECEE]");
+        setBgColor("bg-white");
       } else {
         setBgColor("bg-white");
       }
@@ -158,7 +159,7 @@ export default function NavbarComponents({ setSelectedCategory }) {
               to="/"
               className={({ isActive }) =>
                 isActive
-                  ? "text-yellow-400 text-sm md:text-base"
+                  ? "text-[#A27B5C] text-sm md:text-base"
                   : "text-gray-700 hover:text-[#A27B5C] text-sm md:text-base"
               }
             >
@@ -169,7 +170,7 @@ export default function NavbarComponents({ setSelectedCategory }) {
               to="/about"
               className={({ isActive }) =>
                 isActive
-                  ? "text-yellow-400 text-sm md:text-base"
+                  ? "text-[#A27B5C] text-sm md:text-base"
                   : "text-gray-700 hover:text-[#A27B5C] text-sm md:text-base"
               }
             >
@@ -185,7 +186,7 @@ export default function NavbarComponents({ setSelectedCategory }) {
 
             <div className="relative" ref={dropdownRef}>
               <img
-                src="https://img.freepik.com/premium-vector/avatar-profile-icon-flat-style-male-user-profile-vector-illustration-isolated-background-man-profile-sign-business-concept_157943-38764.jpg"
+                src="https://static.vecteezy.com/system/resources/thumbnails/036/280/651/small_2x/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-illustration-vector.jpg"
                 alt="Profile"
                 className="h-8 w-8 rounded-full hover:cursor-pointer"
                 onClick={() => setIsOpen(!isOpen)}

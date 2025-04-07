@@ -14,19 +14,20 @@ export default function PopUpModalComponent({
           <img
             src="/images/logo/logo.png"
             alt="Login Required"
-            className="mx-auto mb-4 h-20 w-20 sm:h-24 sm:w-24 md:h-28 md:w-28 object-contain transition-transform duration-300"
+            className="mx-auto mb-2 h-32 w-32 sm:h-36 sm:w-36 md:h-60 md:w-60 object-contain transition-transform duration-300 hover:scale-110"
           />
-          <h3 className="mb-4 text-lg font-semibold text-gray-700">
+
+          <h3 className="mb-2 text-lg font-semibold text-gray-700">
             You need to log in first
           </h3>
-          <p className="mb-6 text-sm text-gray-500">
+          <p className="mb-4 text-sm text-gray-500">
             Please log in or register to create a post on ReadKH.
           </p>
-          <div className="flex justify-center gap-4">
-            <Button color="dark" onClick={onLogin}>
+          <div className="flex justify-center gap-4 ">
+            <Button color="dark" onClick={onLogin} className="hover:cursor-pointer">
               Login
             </Button>
-            <Button color="gray" onClick={onRegister}>
+            <Button color="gray" onClick={onRegister} className="hover:cursor-pointer">
               Register
             </Button>
           </div>

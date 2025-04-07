@@ -18,6 +18,7 @@ dist-ssr
 .idea
 .DS_Store
 .README.md
+ReadKH.rar
 *.suo
 *.ntvs*
 *.njsproj

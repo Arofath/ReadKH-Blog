@@ -87,7 +87,7 @@ function AboutUs() {
                   profile={"/images/team-member/sles_rofath.JPG"}
                   name={"Sles Rofath"}
                   team={"Member"}
-                  role={"Front-end developer"}
+                  role={"API consumer"}
                   facebook={"https://www.facebook.com/arofath.stn"}
                   github={"https://github.com/Arofath"}
                 />

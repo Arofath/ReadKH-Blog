@@ -248,7 +248,8 @@ const RandomBlog = () => {
 
         // Step 4: Fetch blogs from random page
         const res = await fetch(
-          `https://readkh-api.istad.co/blogs?page=${randomPage}&page_size=${pageSize}`
+          `https://readkh-api.istad.co/blogs?page=${randomPage}&page_size=${pageSize}&sort_by=created_at&sort_desc=true
+`
         );
         const data = await res.json();
         setArticles(data.blogs || []);

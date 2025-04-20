@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import DOMPurify from "dompurify";
+import { IoMdMore } from "react-icons/io";
 
 export default function ButtonYourPost() {
   const [blogs, setBlogs] = useState([]);
@@ -12,6 +13,9 @@ export default function ButtonYourPost() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [postToDelete, setPostToDelete] = useState(null);
   const navigate = useNavigate();
+  const [author, setAuthor] = useState(null);
+  const dropdownRef = useRef(null);
+  const [openDropdown, setOpenDropdown] = useState(null);
 
   const openDeleteModal = (blogId) => {
     setPostToDelete(blogId);
@@ -93,7 +97,11 @@ export default function ButtonYourPost() {
       }
 
       const data = await response.json();
-      const profileId = data.profile?.id;
+      const profile = data.profile || {};
+
+      // Set the author data, including profile image (previewImage)
+      setAuthor(profile);
+      const profileId = profile?.id;
 
       if (profileId) {
         localStorage.setItem("userId", profileId);
@@ -121,28 +129,28 @@ export default function ButtonYourPost() {
       return { blogs: [] };
     }
   };
-  
+
   const fetchAllBlogs = async () => {
     try {
       if (!authorId || categories.length === 0) return;
-  
+
       const allBlogs = [];
-  
+
       for (const category of categories) {
         const data = await fetchBlogs(authorId, category);
         if (data.blogs?.length) {
           allBlogs.push(...data.blogs);
         }
       }
-  
+
       // Deduplicate blogs by ID
       const uniqueBlogsMap = new Map();
       allBlogs.forEach((blog) => {
         uniqueBlogsMap.set(blog.id, blog);
       });
-  
+
       const uniqueBlogs = Array.from(uniqueBlogsMap.values());
-  
+
       setBlogs(uniqueBlogs);
     } catch (err) {
       console.error("Error fetching all blogs:", err);
@@ -150,7 +158,6 @@ export default function ButtonYourPost() {
       setLoading(false);
     }
   };
-  
 
   useEffect(() => {
     fetchCategories();
@@ -161,6 +168,7 @@ export default function ButtonYourPost() {
     if (authorId && categories.length > 0) {
       fetchAllBlogs();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authorId, categories]);
 
   const displayedBlogs = blogs.slice(0, 5);
@@ -172,6 +180,19 @@ export default function ButtonYourPost() {
   if (error)
     return <p className="text-center text-gray-500 text-lg">Error: {error}</p>;
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      // weekday: "short",
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  };
+
+  const toggleDropdown = (postId) => {
+    setOpenDropdown(openDropdown === postId ? null : postId); // Toggle dropdown for each post
+  };
 
   return (
     <>
@@ -182,96 +203,106 @@ export default function ButtonYourPost() {
           </span>
         </div>
       </div>
-
-      <div className="container mx-auto px-4 py-6">
+      <div className="w-full mx-auto my-4 sm:my-6 md:my-8 hover:cursor-pointer ">
         {displayedBlogs.length === 0 ? (
           <p className="text-center text-gray-500 text-lg">
             No posts available.
           </p>
         ) : (
-          <div className="space-y-6">
+          <div className="flex flex-col">
             {displayedBlogs.map((post) => (
               <div
                 key={post.id}
-                className="flex flex-col sm:flex-row gap-4 pb-6 border-b border-gray-200"
+                className="flex flex-col sm:flex-col md:flex-row md:space-x-4 mb-6 p-4 bg-white border-b border-gray-300"
               >
-                <div className="w-full sm:w-1/3 md:w-1/4">
-                  <NavLink
-                    to={`/blog/${post.id}`}
-                    className="block aspect-[4/3] rounded-lg overflow-hidden"
-                  >
+                <NavLink
+                  to={`/blog/${post.id}`}
+                  className="w-full md:w-auto md:flex-shrink-0"
+                >
+                  <div className="w-full h-48 sm:h-56 md:h-64 md:w-64 lg:w-96">
                     <img
                       src={
                         post.thumbnail ||
-                        "https://via.placeholder.com/300x200?text=No+Image"
+                        "https://cdn1.iconfinder.com/data/icons/business-company-1/500/image-512.png"
                       }
-                      alt="thumbnail"
-                      className="w-full h-full object-cover"
+                      alt="Image"
+                      className="w-full h-full object-cover rounded-lg"
                     />
-                  </NavLink>
-                </div>
-
-                <div className="flex-1">
-                  <div className="flex items-center mb-2">
-                    <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-200">
-                      <img
-                        src="https://static.vecteezy.com/system/resources/thumbnails/036/280/651/small_2x/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-illustration-vector.jpg"
-                        alt="Author"
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <span className="ml-2 text-sm font-medium text-gray-700">
-                      John Nora
-                    </span>
-                    <span className="ml-2 text-xs text-gray-500">
-                      25 Jan 2025
-                    </span>
                   </div>
+                </NavLink>
 
-                  <h3
-                    onClick={() => navigate(`/blog/${post.id}`)}
-                    className="text-lg sm:text-xl font-semibold cursor-pointer text-gray-900 mb-2 hover:text-[#3f4e4f]"
-                  >
-                    {post.title || "Untitled Post"}
-                  </h3>
+                <div className="flex-1 flex flex-col justify-between mt-4 md:mt-0">
+                  <div className="flex flex-col sm:flex-col md:flex-row md:space-x-4 mb-4 justify-between">
+                    <NavLink to={`/blog/${post.id}`}>
+                      <div>
+                        {author && (
+                          <div className="flex items-center mb-2">
+                            <img
+                              src={
+                                author.profileUrl ||
+                                "https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0="
+                              }
+                              alt="profile"
+                              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full mr-3 object-cover"
+                            />
+                            <div>
+                              <div className="font-medium text-gray-900 text-sm sm:text-base">
+                                {author.username || "Unknown"}
+                              </div>
+                              <div className="text-gray-500 text-xs sm:text-sm">
+                                {`${formatDate(post.created_at)}`}
+                              </div>
+                              {post.updatedAt && (
+                                <div className="text-gray-500 text-xs sm:text-sm">
+                                  {`${formatDate(post.updated_at)}`}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        )}
 
-                  <p
-                    className="text-sm text-gray-600 line-clamp-4 mb-3"
-                    dangerouslySetInnerHTML={{
-                      __html: DOMPurify.sanitize(post.content),
-                    }}
-                  ></p>
+                        <h2 className="text-xl sm:text-xl md:text-2xl font-bold text-gray-900 mb-2">
+                          {post.title || "No title"}
+                        </h2>
 
-                  <div className="flex gap-4 items-center">
-                    <button
-                      onClick={() => openDeleteModal(post.id)}
-                      className="text-sm text-red-500 hover:text-red-600"
-                    >
-                      <img src="/images/cards-images/delete.png" alt="delete" className="w-5 h-5" />
-                    </button>
-                    <button
-                      onClick={() => navigate(`/edit-post/${post.id}`)}
-                      className="cursor-pointer text-sm text-blue-500 hover:text-blue-600 transition-colors"
-                    >
-                      {/* Update */}
-                      <img src="/images/cards-images/edit-text.png" alt="update" className="w-5 h-5" />
-                    </button>
-                    <button className="text-gray-400 hover:text-gray-700">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
+                        <p
+                          className="text-gray-600 mb-4 text-sm sm:text-base line-clamp-3 sm:line-clamp-3 md:line-clamp-4"
+                          dangerouslySetInnerHTML={{
+                            __html: DOMPurify.sanitize(
+                              post.content || "No content"
+                            ),
+                          }}
+                        ></p>
+                      </div>
+                    </NavLink>
+
+                    <div className="relative">
+                      <button onClick={() => toggleDropdown(post.id)}>
+                        <IoMdMore
+                          className="text-gray-500 w-6 h-6 hover:text-gray-700 hover:cursor-pointer"
+                          aria-label="More options"
                         />
-                      </svg>
-                    </button>
+                      </button>
+                      {openDropdown === post.id && (
+                        <div
+                          ref={dropdownRef}
+                          className="absolute right-0 w-48 py-2 mt-2 bg-white shadow-lg rounded-md border-2 border-gray-200"
+                        >
+                          <button
+                            onClick={() => navigate(`/edit-post/${post.id}`)}
+                            className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:cursor-pointer"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => openDeleteModal(post.id)}
+                            className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-gray-100 hover:cursor-pointer"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -280,7 +311,7 @@ export default function ButtonYourPost() {
         )}
 
         {isModalOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="fixed inset-0 bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white rounded-lg p-6 max-w-sm mx-4 shadow-xl">
               <h3 className="text-lg font-medium text-gray-900 mb-4">
                 Confirm Deletion

@@ -4,22 +4,30 @@ import { useState, useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Modal, ModalBody, ModalHeader } from "flowbite-react";
 import PopUpModalComponent from "../pop-up-modal/PopUpModal";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-export default function NavbarComponents({ setSelectedCategory }) {
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+export default function NavbarComponents({ onSearchSubmit }) {
   const [bgColor, setBgColor] = useState("bg-white");
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignOutModal, setShowSignOutModal] = useState(false);
   const [categories, setCategories] = useState([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [author, setAuthor] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [authorId, setAuthorId] = useState("");
+  const [token, setToken] = useState(null);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  const mobileMenuRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 0) {
-        // setBgColor("bg-[#ECECEE]");
-        setBgColor("bg-white");
+        //setBgColor("bg-[#ECECEE]");
       } else {
         setBgColor("bg-white");
       }
@@ -28,6 +36,17 @@ export default function NavbarComponents({ setSelectedCategory }) {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      onSearchSubmit(searchQuery.trim()); // Pass search query to parent
+    }
+  };
 
   // Check authToken for navigation
   const handleProfileNavigation = () => {
@@ -49,9 +68,22 @@ export default function NavbarComponents({ setSelectedCategory }) {
   };
 
   const confirmLogout = () => {
+    // Clear authentication token and user ID from local storage
     localStorage.removeItem("authToken");
+    localStorage.removeItem("userId");
+
+    // Reset application state
+    setToken(null);
+    setAuthor(null);
+    setAuthorId(null);
+
+    // Navigate to the home page
     navigate("/");
+
+    // Close the sign-out modal
     setShowSignOutModal(false);
+
+    // Display a success toast notification
     toast.success("Successfully signed out!", {
       position: "top-right",
       autoClose: 3000,
@@ -61,25 +93,19 @@ export default function NavbarComponents({ setSelectedCategory }) {
       draggable: true,
     });
   };
-  // const confirmLogout = () => {
-  //   localStorage.removeItem("authToken");
-  //   navigate("/");
-  // };
-
   const handleLogout = () => {
     setShowSignOutModal(true);
   };
-
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null);
-  const mobileMenuRef = useRef(null);
 
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsOpen(false);
       }
-      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target)) {
+      if (
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(event.target)
+      ) {
         setMobileMenuOpen(false);
       }
     }
@@ -89,6 +115,52 @@ export default function NavbarComponents({ setSelectedCategory }) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const fetchProfile = async () => {
+    try {
+      setLoading(true);
+      const storedToken = localStorage.getItem("authToken");
+      if (!storedToken) {
+        // No token? Just skip the fetch and clear profile-related state
+        setAuthor(null);
+        setAuthorId(null);
+        return;
+      }
+
+      setToken(storedToken);
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/users/profile`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${storedToken}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Profile fetch error:", errorText);
+        throw new Error("Failed to fetch profile");
+      }
+
+      const data = await response.json();
+      const profile = data.profile || {};
+
+      setAuthor(profile);
+      const profileId = profile?.id;
+
+      if (profileId) {
+        localStorage.setItem("userId", profileId);
+        setAuthorId(profileId);
+      }
+    } catch (err) {
+      console.error("Error fetching profile:", err);
+      setError(null); // prevent "please log in" message in UI
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -106,11 +178,19 @@ export default function NavbarComponents({ setSelectedCategory }) {
     };
 
     fetchCategories();
+    fetchProfile();
   }, []);
 
   useEffect(() => {
     setMobileMenuOpen(false);
   }, [navigate]);
+
+  if (loading)
+    return (
+      <p className="text-center text-gray-600 text-lg">Loading blogs...</p>
+    );
+  if (error)
+    return <p className="text-center text-gray-500 text-lg">Error: {error}</p>;
 
   return (
     <>
@@ -129,12 +209,21 @@ export default function NavbarComponents({ setSelectedCategory }) {
                 />
               </NavLink>
             </div>
+            {/* Search */}
             <div className="relative hidden sm:block">
-              <input
-                type="text"
-                placeholder="Search..."
-                className="w-32 sm:w-40 md:w-64 lg:w-80 pl-8 sm:pl-10 pr-4 py-1 sm:py-2 text-sm border rounded-full border-[#B9B28A] focus:outline-none focus:ring-2 focus:ring-gray-300"
-              />
+              <form
+                onSubmit={handleSearchSubmit}
+                className="relative hidden sm:block"
+              >
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                  className="w-32 sm:w-40 md:w-64 lg:w-80 pl-8 sm:pl-10 pr-4 py-1 sm:py-2 text-sm border rounded-full border-[#B9B28A] focus:outline-none focus:ring-2 focus:ring-gray-300"
+                />
+                <Search className="absolute left-2 sm:left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-gray-500" />
+              </form>
               <Search className="absolute left-2 sm:left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-gray-500" />
             </div>
           </div>
@@ -159,7 +248,7 @@ export default function NavbarComponents({ setSelectedCategory }) {
               to="/"
               className={({ isActive }) =>
                 isActive
-                  ? "text-[#A27B5C] text-sm md:text-base"
+                  ? "text-yellow-400 text-sm md:text-base"
                   : "text-gray-700 hover:text-[#A27B5C] text-sm md:text-base"
               }
             >
@@ -170,7 +259,7 @@ export default function NavbarComponents({ setSelectedCategory }) {
               to="/about"
               className={({ isActive }) =>
                 isActive
-                  ? "text-[#A27B5C] text-sm md:text-base"
+                  ? "text-yellow-400 text-sm md:text-base"
                   : "text-gray-700 hover:text-[#A27B5C] text-sm md:text-base"
               }
             >
@@ -184,20 +273,35 @@ export default function NavbarComponents({ setSelectedCategory }) {
               Create Post
             </Button>
 
-            <div className="relative" ref={dropdownRef}>
-              <img
-                src="https://static.vecteezy.com/system/resources/thumbnails/036/280/651/small_2x/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-illustration-vector.jpg"
-                alt="Profile"
-                className="h-8 w-8 rounded-full hover:cursor-pointer"
-                onClick={() => setIsOpen(!isOpen)}
-              />
+            <div className="relative hover:cursor-pointer" ref={dropdownRef}>
+              {/* Profile */}
+              <div>
+                {author ? (
+                  <img
+                    src={
+                      author.profileUrl ||
+                      "https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small_2x/default-avatar-profile-icon-of-social-media-user-vector.jpg"
+                    }
+                    alt="Profile"
+                    className="h-8 w-8 rounded-full"
+                    onClick={() => setIsOpen(!isOpen)}
+                  />
+                ) : (
+                  <img
+                    src="https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
+                    alt="Default Profile"
+                    className="h-8 w-8 rounded-full"
+                    onClick={() => setIsOpen(!isOpen)}
+                  />
+                )}
+              </div>
 
               {isOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 z-10">
+                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 z-10 ">
                   <div className="p-2 border-b border-gray-200">
                     <button
                       onClick={handleProfileNavigation}
-                      className="block text-[#A27B5C] font-medium w-full text-left"
+                      className="block text-[#A27B5C] font-medium w-full text-left hover:cursor-pointer"
                     >
                       Your Profile
                     </button>
@@ -210,7 +314,7 @@ export default function NavbarComponents({ setSelectedCategory }) {
                     >
                       Create Post
                     </a>
-                    
+
                     {/* Conditionally render Sign Out or Log in based on authToken */}
                     {localStorage.getItem("authToken") ? (
                       <>

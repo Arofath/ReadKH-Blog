@@ -67,34 +67,31 @@ export default function NavbarComponents({ onSearchSubmit }) {
     }
   };
 
+  const isLoggingOutRef = useRef(false);
+
   const confirmLogout = () => {
-    // Clear authentication token and user ID from local storage
+    if (isLoggingOutRef.current) return;
+    isLoggingOutRef.current = true;
+
     localStorage.removeItem("authToken");
     localStorage.removeItem("userId");
 
-    // Reset application state
     setToken(null);
     setAuthor(null);
     setAuthorId(null);
 
-    // Navigate to the home page
     navigate("/");
-
-    // Close the sign-out modal
     setShowSignOutModal(false);
 
-    // Display a success toast notification
     toast.success("Successfully signed out!", {
-      position: "top-right",
+      position: "top-center",
       autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
     });
-  };
-  const handleLogout = () => {
-    setShowSignOutModal(true);
+
+    setTimeout(() => {
+      isLoggingOutRef.current = false;
+      setShowSignOutModal(false);
+    }, 1000);
   };
 
   useEffect(() => {
@@ -320,7 +317,7 @@ export default function NavbarComponents({ onSearchSubmit }) {
                       <>
                         <div className="border-t border-gray-200 mt-1"></div>
                         <a
-                          onClick={handleLogout}
+                          onClick={confirmLogout}
                           className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                         >
                           Sign Out
@@ -398,7 +395,7 @@ export default function NavbarComponents({ onSearchSubmit }) {
 
               <div className="border-t border-gray-200 pt-2">
                 <button
-                  onClick={handleLogout}
+                  onClick={confirmLogout}
                   className="text-gray-700 hover:text-[#A27B5C] text-lg py-2 w-full text-left"
                 >
                   Sign Out
@@ -451,17 +448,16 @@ export default function NavbarComponents({ onSearchSubmit }) {
               <Button
                 color="failure"
                 onClick={() => {
-                  setShowSignOutModal(false);
                   confirmLogout();
                 }}
-                className="text-sm sm:text-base"
+                className="text-sm sm:text-base hover:cursor-pointer"
               >
                 Yes, Sign Out
               </Button>
               <Button
                 color="gray"
                 onClick={() => setShowSignOutModal(false)}
-                className="text-sm sm:text-base"
+                className="text-sm sm:text-base hover:cursor-pointer"
               >
                 Cancel
               </Button>

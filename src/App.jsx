@@ -70,54 +70,28 @@ function App() {
   }, [selectedCategory]);
 
   // Handle search across categories
-  const handleSearchSubmit = async (query) => {
-    if (!query) {
-      setIsSearchMode(false);
-      setFilteredBlogs(blogs);
-      return;
-    }
-
-    setIsSearchMode(true);
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      const response = await fetch(
-        `${
-          import.meta.env.VITE_BASE_URL
-        }/blogs/search?query=${encodeURIComponent(query)}`
+  const handleSearchSubmit = (query) => {
+    if (query) {
+      const filtered = blogs.filter((blog) =>
+        blog.title.toLowerCase().includes(query.toLowerCase())
       );
-      if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
-
-      const result = await response.json();
-      if (result?.blogs && Array.isArray(result.blogs)) {
-        setFilteredBlogs(result.blogs);
-
-        // Automatically navigate to category of first result (if any)
-        if (result.blogs.length > 0) {
-          const firstCategoryId = result.blogs[0].category_id;
-          setSelectedCategory(firstCategoryId);
-          setIsSearchMode(false); // Let useEffect trigger fetch for new category
-        }
-      } else {
-        throw new Error("Invalid response format");
-      }
-    } catch (err) {
-      setError(err.message);
-      setFilteredBlogs([]);
-    } finally {
-      setIsLoading(false);
+      setFilteredBlogs(filtered); // Set filtered blogs based on the search query
+    } else {
+      setFilteredBlogs(blogs); // Show all blogs if query is empty
     }
   };
 
   const blogList = filteredBlogs.map((data) => (
     <ContentCardComponent
       key={data.id}
+      id={data.id}
       title={data.title}
       content={data.content}
       thumbnail={data.thumbnail}
-      id={data.id}
-      date={data.created_at}
+      username={data.author?.username}
+      profileUrl={data.author?.profileUrl}
+      created_at={data.created_at}
+      update_at={data.author?.updated_at}
     />
   ));
 
@@ -126,6 +100,7 @@ function App() {
       <NavbarComponents
         onSearchSubmit={handleSearchSubmit}
         setSelectedCategory={setSelectedCategory}
+        blogs={blogs}
       />
       <div className="ml-4">
         <ScrollableCategories

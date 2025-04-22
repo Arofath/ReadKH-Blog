@@ -9,13 +9,14 @@ import "react-toastify/dist/ReactToastify.css";
 export default function NavbarComponents({
   onSearchSubmit,
   setSelectedCategory,
+  blogs,
 }) {
   const [bgColor, setBgColor] = useState("bg-white");
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignOutModal, setShowSignOutModal] = useState(false);
   const [categories, setCategories] = useState([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const navigate = useNavigate();
+  const [suggestions, setSuggestions] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [author, setAuthor] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -26,6 +27,7 @@ export default function NavbarComponents({
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const mobileMenuRef = useRef(null);
+  const navigate = useNavigate();
 
   const handleHomeClick = () => {
     setSelectedCategory("all");
@@ -45,8 +47,30 @@ export default function NavbarComponents({
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // const handleSearchChange = (e) => {
+  //   setSearchQuery(e.target.value);
+  // };
   const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
+    const value = e.target.value;
+    setSearchQuery(value);
+
+    // Generate suggestions
+    if (value.trim() !== "") {
+      const filtered = blogs.filter((blog) =>
+        blog.title.toLowerCase().includes(value.toLowerCase())
+      );
+      setSuggestions(filtered.slice(0, 5)); // Show top 5 suggestions
+    } else {
+      setSuggestions([]);
+    }
+  };
+
+  const handleSuggestionClick = (title) => {
+    setSearchQuery(title);
+    setSuggestions([]);
+    if (onSearchSubmit) {
+      onSearchSubmit(title);
+    }
   };
 
   const handleSearchSubmit = (e) => {
@@ -54,6 +78,7 @@ export default function NavbarComponents({
     if (onSearchSubmit) {
       onSearchSubmit(searchQuery);
     }
+    setSuggestions([]);
   };
 
   // Check authToken for navigation
@@ -228,6 +253,19 @@ export default function NavbarComponents({
                   onChange={handleSearchChange}
                   className="w-32 sm:w-40 md:w-64 lg:w-80 pl-8 sm:pl-10 pr-4 py-1 sm:py-2 text-sm border rounded-full border-[#B9B28A] focus:outline-none focus:ring-2 focus:ring-gray-300"
                 />
+                {suggestions.length > 0 && (
+                  <ul className="absolute z-10 w-full bg-white border rounded shadow mt-1">
+                    {suggestions.map((blog) => (
+                      <li
+                        key={blog.id}
+                        className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+                        onClick={() => handleSuggestionClick(blog.title)}
+                      >
+                        {blog.title}
+                      </li>
+                    ))}
+                  </ul>
+                )}
                 <Search className="absolute left-2 sm:left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-gray-500" />
               </form>
               <Search className="absolute left-2 sm:left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-gray-500" />

@@ -5,8 +5,6 @@ import "./TextEditor.css";
 import Select from "react-select";
 import { useNavigate, useParams } from "react-router-dom";
 
-
-
 const CreatePost = () => {
   const [value, setValue] = useState("");
   const [isEditing, setIsEditing] = useState(true);
@@ -70,27 +68,33 @@ const CreatePost = () => {
   useEffect(() => {
     const fetchPost = async () => {
       if (!id) return;
-  
+
       try {
-        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/blogs/${id}`);
+        const response = await fetch(
+          `${import.meta.env.VITE_BASE_URL}/blogs/${id}`
+        );
         if (!response.ok) throw new Error("Failed to fetch post");
-  
+
         const data = await response.json();
-  
+
         setTitle(data.title);
         setValue(data.content);
         setSelectedCategories(
-          data.categories?.map((cat) => ({ value: cat.id, label: cat.name })) || []
+          data.categories?.map((cat) => ({ value: cat.id, label: cat.name })) ||
+            []
         );
         if (data.thumbnail) {
-          setCoverImage({ preview: data.thumbnail, uploadedUrl: data.thumbnail });
+          setCoverImage({
+            preview: data.thumbnail,
+            uploadedUrl: data.thumbnail,
+          });
         }
       } catch (err) {
         console.error(err);
         showNotification("Failed to load post for editing.", "error");
       }
     };
-  
+
     fetchPost();
   }, [id]);
 
@@ -186,29 +190,29 @@ const CreatePost = () => {
     if (!validateForm()) {
       return;
     }
-  
+
     setIsSubmitting(true);
-  
+
     try {
       // Step 1: Upload image if available
       let imageUrl = null;
       if (coverImage && coverImage.file) {
         imageUrl = coverImage.uploadedUrl;
       }
-  
+
       // Step 2: Create blog post with the image URL if available
       const token = localStorage.getItem("authToken");
-  
+
       const postData = {
         title,
         content: value,
         category_ids: selectedCategories.map((cat) => cat.value),
       };
-  
+
       if (imageUrl) {
         postData.thumbnail = imageUrl;
       }
-  
+
       const blogResponse = await fetch(
         `${import.meta.env.VITE_BASE_URL}/blogs${id ? `/${id}` : ""}`,
         {
@@ -220,8 +224,7 @@ const CreatePost = () => {
           body: JSON.stringify(postData),
         }
       );
-      
-  
+
       if (!blogResponse.ok) {
         const errorBody = await blogResponse.text();
         console.error("Blog creation error:", errorBody);
@@ -229,27 +232,28 @@ const CreatePost = () => {
           `Blog creation failed: ${blogResponse.status} ${errorBody}`
         );
       }
-  
+
       const blogResult = await blogResponse.json();
       console.log("Blog created successfully:", blogResult);
-  
+
       // Step 3: Re-fetch posts after publishing
       const response = await fetch(`${import.meta.env.VITE_BASE_URL}/blogs`);
       const posts = await response.json();
-  
+
       // Check if the response is an array before trying to sort
       if (Array.isArray(posts)) {
-        const sortedPosts = posts.sort((a, b) => new Date(b.publish_date) - new Date(a.publish_date));
+        const sortedPosts = posts.sort(
+          (a, b) => new Date(b.publish_date) - new Date(a.publish_date)
+        );
         setPosts(sortedPosts);
       } else {
         console.error("Expected posts to be an array, but received:", posts);
         showNotification("Failed to load posts. Please try again.", "error");
       }
-  
+
       setIsPublished(true);
       showNotification("Post published successfully!", "success");
       navigate("/");
-  
     } catch (error) {
       console.error("Failed to publish post:", error);
       showNotification(`Failed to publish: ${error.message}`, "error");
@@ -257,7 +261,6 @@ const CreatePost = () => {
       setIsSubmitting(false);
     }
   };
-  
 
   const modules = {
     toolbar: {
@@ -328,11 +331,35 @@ const CreatePost = () => {
         <div>
           <div className="mb-4">
             {coverImage ? (
-              <img
-                src={coverImage.preview}
-                alt="Cover"
-                className="w-full max-w-lg h-auto md:h-64 object-fill rounded-md mx-auto"
-              />
+              <div className="relative">
+                <img
+                  src={coverImage.preview}
+                  alt="Cover"
+                  className="w-full max-w-lg h-auto md:h-64 object-fill rounded-md mx-auto"
+                />
+                {/* Change and Remove buttons */}
+                <div className="absolute top-2 right-2">
+                  <button
+                    onClick={() => setCoverImage(null)} // Function to remove the image
+                    className="px-3 py-1 bg-red-500 text-white rounded-full mr-2"
+                  >
+                    Remove
+                  </button>
+                  <label
+                    htmlFor="change-cover"
+                    className="px-3 py-1 bg-blue-500 text-white rounded-full cursor-pointer"
+                  >
+                    Change
+                  </label>
+                  <input
+                    type="file"
+                    id="change-cover"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="hidden"
+                  />
+                </div>
+              </div>
             ) : (
               <label className="px-4 py-2 border border-gray-300 rounded-full cursor-pointer">
                 Add a cover image
@@ -402,7 +429,7 @@ const CreatePost = () => {
                   color: "#000",
                   minHeight: "100px",
                   height: "auto",
-                  maxHeight: "500px",
+                  maxHeight: "600px",
                   overflow: "auto",
                 }}
               />

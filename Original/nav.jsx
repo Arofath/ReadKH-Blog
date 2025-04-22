@@ -6,10 +6,7 @@ import { Modal, ModalBody, ModalHeader } from "flowbite-react";
 import PopUpModalComponent from "../pop-up-modal/PopUpModal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-export default function NavbarComponents({
-  onSearchSubmit,
-  setSelectedCategory,
-}) {
+export default function NavbarComponents({ onSearchSubmit }) {
   const [bgColor, setBgColor] = useState("bg-white");
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignOutModal, setShowSignOutModal] = useState(false);
@@ -26,11 +23,6 @@ export default function NavbarComponents({
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const mobileMenuRef = useRef(null);
-
-  const handleHomeClick = () => {
-    setSelectedCategory("all");
-    navigate("/");
-  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -51,8 +43,8 @@ export default function NavbarComponents({
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    if (onSearchSubmit) {
-      onSearchSubmit(searchQuery);
+    if (searchQuery.trim()) {
+      onSearchSubmit(searchQuery.trim()); // Pass search query to parent
     }
   };
 
@@ -211,7 +203,6 @@ export default function NavbarComponents({
                   src="../images/logo/logo.png"
                   alt="Logo"
                   className=" h-27 object-contain"
-                  onClick={handleHomeClick}
                 />
               </NavLink>
             </div>
@@ -252,7 +243,6 @@ export default function NavbarComponents({
           <div className="hidden md:flex items-center space-x-4 md:space-x-6">
             <NavLink
               to="/"
-              onClick={handleHomeClick}
               className={({ isActive }) =>
                 isActive
                   ? "text-yellow-400 text-sm md:text-base"
@@ -374,7 +364,6 @@ export default function NavbarComponents({
                     ? "text-yellow-400 text-lg py-2"
                     : "text-gray-700 hover:text-[#A27B5C] text-lg py-2"
                 }
-                onClick={handleHomeClick}
               >
                 Home
               </NavLink>

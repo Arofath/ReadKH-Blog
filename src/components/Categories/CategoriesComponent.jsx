@@ -25,7 +25,7 @@ const ScrollableCategories = ({ setSelectedCategory, selectedCategory }) => {
               }))
             : [];
 
-          setCategories(formatted);
+          setCategories([{ value: "all", label: "All" }, ...formatted]);
         } else {
           console.error("Failed to fetch categories");
         }

@@ -11,42 +11,38 @@ function App() {
   const [selectedCategory, setSelectedCategory] = useState(""); // Category ID
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [isSearchMode, setIsSearchMode] = useState(false);
 
-  // Set default category to "Lifestyle"
+  // Set default category
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const categoryParam = params.get("category");
-
-    if (categoryParam) {
-      setSelectedCategory(categoryParam);
-    } else {
-      const defaultCategoryId = "5aa8924c-7cf0-4916-b104-51c56607b56d";
-      setSelectedCategory(defaultCategoryId);
-    }
+    setSelectedCategory(categoryParam || "all");
   }, []);
 
+  // Fetch blogs for selected category (only if not in search mode)
   useEffect(() => {
-    const fetchBlogs = async () => {
-      if (!selectedCategory) return; // Don't fetch if no category selected
+    if (!selectedCategory || isSearchMode) return;
 
+    const fetchBlogs = async () => {
       setIsLoading(true);
       setError(null);
 
       try {
-        const response = await fetch(
-          `${
-            import.meta.env.VITE_BASE_URL
-          }/blogs?category_id=${selectedCategory}`
-        );
+        const url =
+          selectedCategory === "all"
+            ? `${import.meta.env.VITE_BASE_URL}/blogs`
+            : `${
+                import.meta.env.VITE_BASE_URL
+              }/blogs?category_id=${selectedCategory}`;
 
-        if (!response.ok) {
-          throw new Error(`HTTP Error: ${response.status}`);
-        }
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
 
         const result = await response.json();
         if (result?.blogs && Array.isArray(result.blogs)) {
           setBlogs(result.blogs);
-          setFilteredBlogs(result.blogs); // Set filtered blogs to all blogs initially
+          setFilteredBlogs(result.blogs);
         } else {
           throw new Error("Invalid response format");
         }
@@ -58,18 +54,59 @@ function App() {
     };
 
     fetchBlogs();
+  }, [selectedCategory, isSearchMode]);
+
+  // Sync category in URL
+  useEffect(() => {
+    if (selectedCategory) {
+      const params = new URLSearchParams(window.location.search);
+      params.set("category", selectedCategory);
+      window.history.replaceState(
+        {},
+        "",
+        `${window.location.pathname}?${params}`
+      );
+    }
   }, [selectedCategory]);
 
-  const handleSearchSubmit = (query) => {
-    if (query) {
-      const filtered = blogs.filter(
-        (blog) =>
-          blog.title.toLowerCase().includes(query.toLowerCase()) ||
-          blog.content.toLowerCase().includes(query.toLowerCase())
+  // Handle search across categories
+  const handleSearchSubmit = async (query) => {
+    if (!query) {
+      setIsSearchMode(false);
+      setFilteredBlogs(blogs);
+      return;
+    }
+
+    setIsSearchMode(true);
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch(
+        `${
+          import.meta.env.VITE_BASE_URL
+        }/blogs/search?query=${encodeURIComponent(query)}`
       );
-      setFilteredBlogs(filtered); // Set filtered blogs based on the search query
-    } else {
-      setFilteredBlogs(blogs); // Show all blogs if query is empty
+      if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+
+      const result = await response.json();
+      if (result?.blogs && Array.isArray(result.blogs)) {
+        setFilteredBlogs(result.blogs);
+
+        // Automatically navigate to category of first result (if any)
+        if (result.blogs.length > 0) {
+          const firstCategoryId = result.blogs[0].category_id;
+          setSelectedCategory(firstCategoryId);
+          setIsSearchMode(false); // Let useEffect trigger fetch for new category
+        }
+      } else {
+        throw new Error("Invalid response format");
+      }
+    } catch (err) {
+      setError(err.message);
+      setFilteredBlogs([]);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -86,29 +123,36 @@ function App() {
 
   return (
     <>
-      <NavbarComponents onSearchSubmit={handleSearchSubmit} />
+      <NavbarComponents
+        onSearchSubmit={handleSearchSubmit}
+        setSelectedCategory={setSelectedCategory}
+      />
       <div className="ml-4">
-        <div>
-          <ScrollableCategories
-            setSelectedCategory={setSelectedCategory}
-            selectedCategory={selectedCategory}
-          />
-        </div>
+        <ScrollableCategories
+          setSelectedCategory={(id) => {
+            setIsSearchMode(false);
+            setSelectedCategory(id);
+          }}
+          selectedCategory={selectedCategory}
+        />
         <div>
           {isLoading ? (
             <div>Loading...</div>
           ) : error ? (
             <div>Error: {error}</div>
+          ) : filteredBlogs.length === 0 ? (
+            <div className="text-center text-gray-500 mt-6">
+              <p>No blogs found.</p>
+              <p className="text-sm m-10">
+                Try a different keyword or category.
+              </p>
+            </div>
           ) : (
             blogList
           )}
         </div>
-        <div>
-          <ReadKHBanner />
-        </div>
-        <div>
-          <RandomBlog />
-        </div>
+        <ReadKHBanner />
+        <RandomBlog />
       </div>
     </>
   );

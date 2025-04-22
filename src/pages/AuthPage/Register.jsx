@@ -26,15 +26,15 @@ export default function Register() {
     validationSchema: Yup.object({
       username: Yup.string()
         .min(3, "At least 3 characters")
-        .required("Required"),
+        .required("Please Enter Username"),
       email: Yup.string().email("Invalid email").required("Required"),
       password: Yup.string()
         .min(8, "Min 8 characters")
         .matches(/[!@#$%^&*]/, "One special character required")
-        .required("Required"),
+        .required("Please Enter Password"),
       confirmPassword: Yup.string()
         .oneOf([Yup.ref("password")], "Passwords must match")
-        .required("Required"),
+        .required("Please Enter Confirm Password"),
     }),
     onSubmit: async (values) => {
       setError("");

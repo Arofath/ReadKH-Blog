@@ -10,6 +10,7 @@ import { AlertCircle } from "lucide-react";
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -61,29 +62,28 @@ export default function Register() {
       if (Object.keys(errors).length > 0) return;
 
       setLoading(true);
-
       try {
         const response = await fetch("https://readkh-api.istad.co/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            username: values.username,
-            email: values.email,
-            password: values.password,
-          }),
+          body: JSON.stringify(values),
         });
 
         const result = await response.json();
+        console.log("API response:", result); // Keep this for debugging
 
         if (!response.ok) {
-          throw new Error(result.message || "Registration failed.");
+          // This line makes sure you show the exact error
+          throw new Error(result.error || "Registration failed.");
         }
+        setSuccess(true);
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000); // Show success alert for 2 seconds
 
-        navigate("/login");
+        formik.resetForm();
       } catch (err) {
         setError(err.message);
-      } finally {
-        setLoading(false);
       }
     },
   });
@@ -107,11 +107,36 @@ export default function Register() {
           {error && (
             <div className="mb-4 text-red-600 text-sm bg-red-50 border border-red-200 p-3 rounded-lg flex items-start gap-2">
               <AlertCircle className="mt-0.5 text-red-500" size={18} />
-              <span>
-                <strong className="font-semibold"></strong> {error}
-              </span>
+              <span>{error}</span>
             </div>
           )}
+
+          <AnimatePresence>
+            {success && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="mb-4 text-green-600 text-sm bg-green-50 border border-green-200 p-3 rounded-lg flex items-start gap-2"
+              >
+                <svg
+                  className="mt-0.5 text-green-500"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M20 6L9 17l-5-5" />
+                </svg>
+                <span>Registration successful! Redirecting to login...</span>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           <form onSubmit={formik.handleSubmit}>
             <div className="mb-6">

@@ -26,13 +26,13 @@ export default function PopUpModalComponent({
           <div className="flex justify-center gap-4 ">
             <Button
               onClick={onLogin}
-              className="hover:cursor-pointer hover:bg-[#A27B5C] hover:text-white font-bold bg-transparent"
+              className="hover:cursor-pointer hover:!bg-gray-700 font-bold !bg-[#A27B5C] text-white"
             >
               Login
             </Button>
             <Button
               onClick={onRegister}
-              className="hover:cursor-pointer hover:bg-gray-700 bg-[#A27B5C]"
+              className="hover:cursor-pointer hover:!bg-gray-700 !bg-[#A27B5C] text-white"
             >
               Register
             </Button>

@@ -106,24 +106,32 @@ export default function NavbarComponents({
     if (isLoggingOutRef.current) return;
     isLoggingOutRef.current = true;
 
+    // Remove tokens
     localStorage.removeItem("authToken");
     localStorage.removeItem("userId");
 
+    // Update state
     setToken(null);
     setAuthor(null);
     setAuthorId(null);
 
-    navigate("/");
+    // Close modal first
     setShowSignOutModal(false);
 
+    // Single toast notification
+    toast.dismiss(); // Dismiss any existing toasts first
     toast.success("Successfully signed out!", {
       position: "top-center",
-      autoClose: 3000,
+      autoClose: 2000,
+      toastId: "logout-success", // Add a unique ID to prevent duplicates
     });
 
+    // Navigate after toast appears
+    navigate("/");
+
+    // Reset logout ref
     setTimeout(() => {
       isLoggingOutRef.current = false;
-      setShowSignOutModal(false);
     }, 1000);
   };
 

@@ -17,7 +17,7 @@ export default function FooterComponents() {
   };
 
   return (
-    <footer className="bg-white py-12">
+    <footer className="bg-white dark:bg-gray-950 py-12">
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 grid grid-cols-1 md:grid-cols-4 gap-8 text-left">
         {/* Logo Section */}
         <div className="flex flex-col items-center md:items-end md:flex-row md:justify-end">
@@ -27,12 +27,15 @@ export default function FooterComponents() {
             className="h-auto w-auto max-w-xs md:max-w-sm lg:max-w-md transition-transform duration-300 hover:-translate-y-2"
           />
         </div>
+
         {/* Quick Links */}
         <div className="w-full lg:py-20">
           <div className="flex justify-between space-x-10 max-md:hidden">
             <div>
-              <h3 className="font-semibold text-gray-900 mb-3">Quick Links</h3>
-              <ul className="space-y-2 text-gray-600">
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-3">
+                Quick Links
+              </h3>
+              <ul className="space-y-2 text-gray-600 dark:text-gray-300">
                 <li>
                   <NavLink to="/" className="hover:text-[#A27B5C]">
                     Home
@@ -57,13 +60,16 @@ export default function FooterComponents() {
             </div>
           </div>
 
-          {/* Mobile version - Collapsible */}
+          {/* Mobile Collapsibles */}
           <div className="md:hidden">
+            {/* Quick Links Toggle */}
             <div
               onClick={() => toggle("quick")}
-              className="cursor-pointer flex justify-between items-center py-2 border-b"
+              className="cursor-pointer flex justify-between items-center py-2 border-b dark:border-gray-700"
             >
-              <h3 className="font-semibold text-gray-900">Quick Links</h3>
+              <h3 className="font-semibold text-gray-900 dark:text-white">
+                Quick Links
+              </h3>
               <FaChevronDown
                 className={`transition-transform ${
                   open === "quick" ? "rotate-180" : ""
@@ -71,7 +77,7 @@ export default function FooterComponents() {
               />
             </div>
             {open === "quick" && (
-              <ul className="space-y-2 text-gray-600 mt-2 pl-2">
+              <ul className="space-y-2 text-gray-600 dark:text-gray-300 mt-2 pl-2">
                 <li>
                   <NavLink to="/" className="hover:text-[#A27B5C]">
                     Home
@@ -95,12 +101,14 @@ export default function FooterComponents() {
               </ul>
             )}
 
-            {/* Categories Collapsible */}
+            {/* Categories Toggle */}
             <div
               onClick={() => toggle("categories")}
-              className="cursor-pointer flex justify-between items-center py-2 mt-4 border-b"
+              className="cursor-pointer flex justify-between items-center py-2 mt-4 border-b dark:border-gray-700"
             >
-              <h3 className="font-semibold text-gray-900">Categories</h3>
+              <h3 className="font-semibold text-gray-900 dark:text-white">
+                Categories
+              </h3>
               <FaChevronDown
                 className={`transition-transform ${
                   open === "categories" ? "rotate-180" : ""
@@ -108,97 +116,58 @@ export default function FooterComponents() {
               />
             </div>
             {open === "categories" && (
-              <ul className="space-y-2 text-gray-600 mt-2 pl-2">
-                <li>
-                  <a href="#" className="hover:text-[#A27B5C]">
-                    Lifestyle
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-[#A27B5C]">
-                    Technology
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-[#A27B5C]">
-                    Education
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-[#A27B5C]">
-                    Pop Culture
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-[#A27B5C]">
-                    Personal Finance & Budgeting
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-[#A27B5C]">
-                    Programming Languages
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-[#A27B5C]">
-                    Cooking Skills & Techniques
-                  </a>
-                </li>
+              <ul className="space-y-2 text-gray-600 dark:text-gray-300 mt-2 pl-2">
+                {[
+                  "Lifestyle",
+                  "Technology",
+                  "Education",
+                  "Pop Culture",
+                  "Personal Finance & Budgeting",
+                  "Programming Languages",
+                  "Cooking Skills & Techniques",
+                ].map((category, idx) => (
+                  <li key={idx}>
+                    <a href="#" className="hover:text-[#A27B5C]">
+                      {category}
+                    </a>
+                  </li>
+                ))}
               </ul>
             )}
           </div>
         </div>
-        {/* Categories */}
+
+        {/* Categories (Desktop) */}
         <div className="lg:my-20 max-md:hidden">
-          <h3 className="font-semibold text-gray-900 mb-3 max-md:hidden">
+          <h3 className="font-semibold text-gray-900 dark:text-white mb-3">
             Categories
           </h3>
-          <ul className="space-y-2 text-gray-600 mb-4">
-            <li>
-              <a href="#" className="hover:text-[#A27B5C]">
-                Lifestyle
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-[#A27B5C]">
-                Technology
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-[#A27B5C]">
-                Education
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-[#A27B5C]">
-                Pop Culture
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-[#A27B5C]">
-                Personal Finance & Budgeting
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-[#A27B5C]">
-                Programming Languages
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-[#A27B5C]">
-                Cooking Skills & Techniques
-              </a>
-            </li>
+          <ul className="space-y-2 text-gray-600 dark:text-gray-300 mb-4">
+            {[
+              "Lifestyle",
+              "Technology",
+              "Education",
+              "Pop Culture",
+              "Personal Finance & Budgeting",
+              "Programming Languages",
+              "Cooking Skills & Techniques",
+            ].map((category, idx) => (
+              <li key={idx}>
+                <a href="#" className="hover:text-[#A27B5C]">
+                  {category}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
 
         {/* Contact Us */}
         <div className="w-full lg:py-20 lg:flex lg:items-end lg:flex-col">
           <div className="text-left">
-            {" "}
-            {/* Text container */}
-            <h3 className="font-semibold text-gray-900 mb-2">Contact Us</h3>
-            <p className="text-gray-600">
+            <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
+              Contact Us
+            </h3>
+            <p className="text-gray-600 dark:text-gray-300">
               <a
                 href="mailto:ReadKh@gmail.com"
                 className="hover:text-[#A27B5C]"
@@ -206,13 +175,12 @@ export default function FooterComponents() {
                 ReadKh@gmail.com
               </a>
             </p>
-            <p className="text-gray-600">
+            <p className="text-gray-600 dark:text-gray-300">
               <a href="tel:+855974716039" className="hover:text-[#A27B5C]">
                 +855 974 716 039
               </a>
             </p>
-            <p className="text-gray-600">ReadKh.com</p>
-            {/* Social Icons */}
+            <p className="text-gray-600 dark:text-gray-300">ReadKh.com</p>
             <div className="flex justify-start space-x-4 mt-4 mb-4">
               {[
                 FaFacebookSquare,
@@ -224,7 +192,7 @@ export default function FooterComponents() {
                 <a
                   key={index}
                   href="#"
-                  className="text-gray-600 hover:text-gray-900"
+                  className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
                 >
                   <Icon size={20} />
                 </a>
@@ -233,8 +201,9 @@ export default function FooterComponents() {
           </div>
         </div>
       </div>
-      {/* Copyright */}
-      <div className="text-center text-gray-500 text-sm mt-5">
+
+      {/* Footer bottom */}
+      <div className="text-center text-gray-500 dark:text-gray-400 text-sm mt-5">
         © {new Date().getFullYear()} ReadKh. All Rights Reserved.
       </div>
     </footer>

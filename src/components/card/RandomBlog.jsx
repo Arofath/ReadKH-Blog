@@ -187,7 +187,7 @@ const ArticleCard = ({
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden w-full max-w-sm transition-shadow hover:shadow-md">
+    <div className="bg-white dark:bg-neutral-900 rounded-xl shadow-sm border border-gray-100 dark:border-neutral-800 overflow-hidden w-full max-w-sm transition-shadow hover:shadow-md">
       <div className="w-full h-48 overflow-hidden">
         <img
           src={
@@ -212,10 +212,10 @@ const ArticleCard = ({
               />
             </div>
             <div>
-              <p className="font-medium text-gray-800">
+              <p className="font-medium text-gray-800 dark:text-white">
                 {username || "Loading..."}
               </p>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
                 {getDisplayDateLabel(created_at, update_at)}
               </p>
             </div>
@@ -234,19 +234,23 @@ const ArticleCard = ({
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className={bookmarked ? "text-yellow-400" : "text-gray-400"}
+              className={
+                bookmarked
+                  ? "text-yellow-400"
+                  : "text-gray-400 dark:text-gray-500"
+              }
             >
               <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
             </svg>
           </button>
         </div>
 
-        <h2 className="text-xl font-bold text-gray-800 mb-2 overflow-hidden line-clamp-2">
+        <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-2 overflow-hidden line-clamp-2">
           {title}
         </h2>
 
         <p
-          className="text-gray-600 mb-4 overflow-hidden line-clamp-3"
+          className="text-gray-600 dark:text-gray-300 mb-4 overflow-hidden line-clamp-3"
           dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }}
         ></p>
       </div>
@@ -296,7 +300,7 @@ const RandomBlog = () => {
   }
 
   return (
-    <div className="pt-6 bg-white w-full">
+    <div className="pt-6 bg-white dark:bg-neutral-950 w-full">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
         {articles.length > 0 ? (
           articles.map((article) => (
@@ -311,14 +315,16 @@ const RandomBlog = () => {
                 content={article.content}
                 thumbnail={article.thumbnail}
                 created_at={article.created_at}
-                updated_at={article.updated_at}
+                update_at={article.updated_at}
                 username={article.author?.username}
                 profileUrl={article.author?.profileUrl}
               />
             </NavLink>
           ))
         ) : (
-          <p className="text-gray-500 col-span-3">Not found!</p>
+          <p className="text-gray-500 dark:text-gray-400 col-span-3">
+            Not found!
+          </p>
         )}
       </div>
     </div>

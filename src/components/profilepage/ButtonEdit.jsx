@@ -90,8 +90,6 @@ export default function ButtonEdit() {
       throw new Error(`Image upload failed: ${error.message}`);
     }
   };
-  
-  
 
   const handleSave = async () => {
     try {
@@ -100,8 +98,7 @@ export default function ButtonEdit() {
       if (selectedImage) {
         profileUrl = await handleImageUpload(selectedImage);
       }
-      console.log("profileUrl:", profileUrl);	
-      
+      console.log("profileUrl:", profileUrl);
 
       const response = await fetch(
         `${import.meta.env.VITE_BASE_URL}/users/profile`,
@@ -143,7 +140,7 @@ export default function ButtonEdit() {
   return (
     <div className="flex flex-col items-center mt-10 px-4 sm:px-0">
       <img
-        className="h-24 w-24 rounded-full border border-gray-300 object-cover"
+        className="h-24 w-24 rounded-full border border-gray-300 dark:border-gray-600 object-cover"
         src={
           previewImage ||
           "https://img.freepik.com/premium-vector/avatar-profile-icon-flat-style-male-user-profile-vector-illustration-isolated-background-man-profile-sign-business-concept_157943-38764.jpg"
@@ -152,24 +149,24 @@ export default function ButtonEdit() {
       />
 
       <div className="flex items-center justify-center gap-3 mt-3">
-        <h1 className="text-xl font-medium text-gray-800">
+        <h1 className="text-xl font-medium text-gray-800 dark:text-gray-100">
           {profileData.profile?.username}
         </h1>
         <button
           onClick={() => setIsEditing(!isEditing)}
-          className="text-gray-600 hover:text-gray-800 transition-all"
+          className="text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white transition-all"
           aria-label="Edit profile"
         >
-          <SquarePen className="w-5 h-5 text-gray-500 hover:text-[#A27B5C]" />
+          <SquarePen className="w-5 h-5 text-gray-500 hover:text-[#A27B5C] dark:text-gray-400 dark:hover:text-[#A27B5C]" />
         </button>
       </div>
 
-      <p className="text-sm text-gray-600 mt-2 text-center max-w-md">
+      <p className="text-sm text-gray-600 dark:text-gray-300 mt-2 text-center max-w-md">
         {profileData.profile?.bio || "No bio added yet."}
       </p>
 
       {successMessage && (
-        <div className="text-green-600 mt-2 text-sm font-medium">
+        <div className="text-green-600 dark:text-green-400 mt-2 text-sm font-medium">
           ✅ {successMessage}
         </div>
       )}
@@ -177,7 +174,7 @@ export default function ButtonEdit() {
       {isEditing && (
         <div className="mt-4 w-full max-w-md">
           <textarea
-            className="w-full p-2 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-[#A27B5C]"
+            className="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-[#A27B5C]"
             rows={4}
             placeholder="Write your bio..."
             value={bioInput}
@@ -196,7 +193,7 @@ export default function ButtonEdit() {
 
           <div className="flex justify-end gap-3 mt-2">
             <button
-              className="px-4 py-1 rounded border border-gray-400 text-gray-700 hover:bg-gray-100"
+              className="px-4 py-1 rounded border border-gray-400 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
               onClick={() => setIsEditing(false)}
             >
               Cancel

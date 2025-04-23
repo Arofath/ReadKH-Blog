@@ -197,15 +197,16 @@ export default function ButtonYourPost() {
   return (
     <>
       <div className="mt-8 sm:mt-12 md:mt-16 lg:mt-20">
-        <div className="flex items-center justify-between w-full max-w-6xl mx-auto px-4 sm:px-6 py-3 sm:py-4 border-2 rounded-xl border-gray-300">
-          <span className="text-lg sm:text-xl md:text-2xl font-medium text-gray-800">
+        <div className="flex items-center justify-between w-full max-w-6xl mx-auto px-4 sm:px-6 py-3 sm:py-4 border-2 rounded-xl border-gray-300 dark:border-gray-600">
+          <span className="text-lg sm:text-xl md:text-2xl font-medium text-gray-800 dark:text-gray-100">
             Your Post
           </span>
         </div>
       </div>
-      <div className="w-full mx-auto my-4 sm:my-6 md:my-8 hover:cursor-pointer ">
+
+      <div className="w-full mx-auto my-4 sm:my-6 md:my-8 hover:cursor-pointer">
         {displayedBlogs.length === 0 ? (
-          <p className="text-center text-gray-500 text-lg">
+          <p className="text-center text-gray-500 dark:text-gray-400 text-lg">
             No posts available.
           </p>
         ) : (
@@ -213,7 +214,7 @@ export default function ButtonYourPost() {
             {displayedBlogs.map((post) => (
               <div
                 key={post.id}
-                className="flex flex-col sm:flex-col md:flex-row md:space-x-4 mb-6 p-4 bg-white border-b border-gray-300"
+                className="flex flex-col sm:flex-col md:flex-row md:space-x-4 mb-6 p-4 bg-white dark:bg-gray-950 border-b border-gray-300 dark:border-gray-600"
               >
                 <NavLink
                   to={`/blog/${post.id}`}
@@ -246,14 +247,14 @@ export default function ButtonYourPost() {
                               className="w-10 h-10 sm:w-12 sm:h-12 rounded-full mr-3 object-cover"
                             />
                             <div>
-                              <div className="font-medium text-gray-900 text-sm sm:text-base">
+                              <div className="font-medium text-gray-900 dark:text-white text-sm sm:text-base">
                                 {author.username || "Unknown"}
                               </div>
-                              <div className="text-gray-500 text-xs sm:text-sm">
+                              <div className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm">
                                 {`${formatDate(post.created_at)}`}
                               </div>
                               {post.updatedAt && (
-                                <div className="text-gray-500 text-xs sm:text-sm">
+                                <div className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm">
                                   {`${formatDate(post.updated_at)}`}
                                 </div>
                               )}
@@ -261,12 +262,12 @@ export default function ButtonYourPost() {
                           </div>
                         )}
 
-                        <h2 className="text-xl sm:text-xl md:text-2xl font-bold text-gray-900 mb-2">
+                        <h2 className="text-xl sm:text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-2">
                           {post.title || "No title"}
                         </h2>
 
                         <p
-                          className="text-gray-600 mb-4 text-sm sm:text-base line-clamp-3 sm:line-clamp-3 md:line-clamp-4"
+                          className="text-gray-600 dark:text-gray-300 mb-4 text-sm sm:text-base line-clamp-3 sm:line-clamp-3 md:line-clamp-4"
                           dangerouslySetInnerHTML={{
                             __html: DOMPurify.sanitize(
                               post.content || "No content"
@@ -279,24 +280,24 @@ export default function ButtonYourPost() {
                     <div className="relative">
                       <button onClick={() => toggleDropdown(post.id)}>
                         <IoMdMore
-                          className="text-gray-500 w-6 h-6 hover:text-gray-700 hover:cursor-pointer"
+                          className="text-gray-500 dark:text-gray-300 w-6 h-6 hover:text-gray-700 dark:hover:text-white hover:cursor-pointer"
                           aria-label="More options"
                         />
                       </button>
                       {openDropdown === post.id && (
                         <div
                           ref={dropdownRef}
-                          className="absolute right-0 w-48 py-2 mt-2 bg-white shadow-lg rounded-md border-2 border-gray-200"
+                          className="absolute right-0 w-48 py-2 mt-2 bg-white dark:bg-gray-700 shadow-lg rounded-md border-2 border-gray-200 dark:border-gray-600"
                         >
                           <button
                             onClick={() => navigate(`/edit-post/${post.id}`)}
-                            className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:cursor-pointer"
+                            className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600"
                           >
                             Edit
                           </button>
                           <button
                             onClick={() => openDeleteModal(post.id)}
-                            className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-gray-100 hover:cursor-pointer"
+                            className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-gray-100 dark:hover:bg-gray-600"
                           >
                             Delete
                           </button>
@@ -311,19 +312,19 @@ export default function ButtonYourPost() {
         )}
 
         {isModalOpen && (
-          <div className="fixed inset-0 bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 max-w-sm mx-4 shadow-xl">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-sm mx-4 shadow-xl">
+              <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
                 Confirm Deletion
               </h3>
-              <p className="text-sm text-gray-600 mb-6">
+              <p className="text-sm text-gray-600 dark:text-gray-300 mb-6">
                 Are you sure you want to delete this post? This action cannot be
                 undone.
               </p>
               <div className="flex justify-end gap-3">
                 <button
                   onClick={cancelDelete}
-                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
+                  className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600"
                 >
                   Cancel
                 </button>

@@ -124,21 +124,21 @@ const ContentCardComponent = ({
                     className="w-10 h-10 sm:w-12 sm:h-12 rounded-full mr-3 object-cover"
                   />
                   <div>
-                    <div className="font-medium text-gray-900 text-sm sm:text-base">
+                    <div className="font-medium text-gray-900 text-sm sm:text-base dark:text-white">
                       {username || "Unknown"}
                     </div>
-                    <div className="text-gray-500 text-xs sm:text-sm">
+                    <div className="text-gray-500 text-xs sm:text-sm dark:text-gray-400">
                       {getDisplayDateLabel(created_at, update_at)}
                     </div>
                   </div>
                 </div>
 
-                <h2 className="text-xl sm:text-xl md:text-2xl font-bold text-gray-900 mb-2">
+                <h2 className="dark:text-white text-xl sm:text-xl md:text-2xl font-bold text-gray-900 mb-2">
                   {title || "No title"}
                 </h2>
 
                 <p
-                  className="text-gray-600 mb-4 text-sm sm:text-base line-clamp-3 sm:line-clamp-3 md:line-clamp-4"
+                  className="dark:text-white text-gray-600 mb-4 text-sm sm:text-base line-clamp-3 sm:line-clamp-3 md:line-clamp-4"
                   dangerouslySetInnerHTML={{
                     __html: DOMPurify.sanitize(content || "No content"),
                   }}
@@ -162,7 +162,9 @@ const ContentCardComponent = ({
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   className={`${
-                    bookmarked ? "text-yellow-400" : "text-gray-400"
+                    bookmarked
+                      ? "text-yellow-400"
+                      : "text-gray-400 dark:text-gray-500"
                   } sm:w-5 sm:h-5 md:w-6 md:h-6`}
                 >
                   <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
@@ -172,7 +174,7 @@ const ContentCardComponent = ({
           </div>
         </div>
 
-        <div className="border-b border-gray-200 mt-2"></div>
+        <div className="border-b border-gray-200 mt-2 dark:border-gray-700"></div>
       </div>
     </div>
   );

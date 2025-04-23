@@ -89,24 +89,27 @@ export default function Register() {
   });
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50">
+    <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-950">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl p-4">
-        <div className="bg-white p-8 rounded-lg shadow-sm border border-gray-100">
+        <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700">
           {/* Logo Header */}
           <div className="text-center -mt-15 md:-mt-15">
             <img
               src="/images/logo/logo.png"
               alt="ReadKH Logo"
-              className=" mx-auto h-40 sm:h-24 md:h-40 w-auto object-contain"
+              className="mx-auto h-40 sm:h-24 md:h-40 w-auto object-contain"
             />
-            <h1 className="mb-10 text-2xl font-semibold text-gray-700 -mt-10  md:-mt-10">
+            <h1 className="mb-10 text-2xl font-semibold text-gray-700 dark:text-gray-100 -mt-10 md:-mt-10">
               Join The ReadKH Community
             </h1>
           </div>
 
           {error && (
-            <div className="mb-4 text-red-600 text-sm bg-red-50 border border-red-200 p-3 rounded-lg flex items-start gap-2">
-              <AlertCircle className="mt-0.5 text-red-500" size={18} />
+            <div className="mb-4 text-red-600 dark:text-red-300 text-sm bg-red-50 dark:bg-red-800 border border-red-200 dark:border-red-700 p-3 rounded-lg flex items-start gap-2">
+              <AlertCircle
+                className="mt-0.5 text-red-500 dark:text-red-400"
+                size={18}
+              />
               <span>{error}</span>
             </div>
           )}
@@ -117,10 +120,10 @@ export default function Register() {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="mb-4 text-green-600 text-sm bg-green-50 border border-green-200 p-3 rounded-lg flex items-start gap-2"
+                className="mb-4 text-green-600 dark:text-green-400 text-sm bg-green-50 dark:bg-green-800 border border-green-200 dark:border-green-700 p-3 rounded-lg flex items-start gap-2"
               >
                 <svg
-                  className="mt-0.5 text-green-500"
+                  className="mt-0.5 text-green-500 dark:text-green-300"
                   xmlns="http://www.w3.org/2000/svg"
                   width="18"
                   height="18"
@@ -140,7 +143,10 @@ export default function Register() {
 
           <form onSubmit={formik.handleSubmit}>
             <div className="mb-6">
-              <label htmlFor="email" className="block text-gray-700 mb-2">
+              <label
+                htmlFor="email"
+                className="block text-gray-700 dark:text-gray-300 mb-2"
+              >
                 Email
               </label>
               <input
@@ -148,13 +154,13 @@ export default function Register() {
                 id="email"
                 name="email"
                 placeholder="Enter your email"
-                className="w-full px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brown-300"
+                className="placeholder-gray-500 dark:placeholder-gray-400 w-full px-4 py-3 rounded-full border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-brown-300"
                 {...formik.getFieldProps("email")}
               />
               <AnimatePresence>
                 {formik.touched.email && formik.errors.email && (
                   <motion.div
-                    className="text-red-500 text-sm mt-1"
+                    className="text-red-500 dark:text-red-400 text-sm mt-1"
                     initial={{ opacity: 0, y: -5 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -5 }}
@@ -166,7 +172,10 @@ export default function Register() {
             </div>
 
             <div className="mb-6">
-              <label htmlFor="username" className="block text-gray-700 mb-2">
+              <label
+                htmlFor="username"
+                className="block text-gray-700 dark:text-gray-300 mb-2"
+              >
                 Username
               </label>
               <input
@@ -174,13 +183,13 @@ export default function Register() {
                 id="username"
                 name="username"
                 placeholder="Enter your username"
-                className="w-full px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brown-300"
+                className="placeholder-gray-500 dark:placeholder-gray-400 w-full px-4 py-3 rounded-full border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-brown-300"
                 {...formik.getFieldProps("username")}
               />
               <AnimatePresence>
                 {formik.touched.username && formik.errors.username && (
                   <motion.div
-                    className="text-red-500 text-sm mt-1"
+                    className="text-red-500 dark:text-red-400 text-sm mt-1"
                     initial={{ opacity: 0, y: -5 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -5 }}
@@ -192,7 +201,10 @@ export default function Register() {
             </div>
 
             <div className="mb-6">
-              <label htmlFor="password" className="block text-gray-700 mb-2">
+              <label
+                htmlFor="password"
+                className="block text-gray-700 dark:text-gray-300 mb-2"
+              >
                 Password
               </label>
               <div className="relative">
@@ -201,12 +213,12 @@ export default function Register() {
                   id="password"
                   name="password"
                   placeholder="Enter your password"
-                  className="w-full px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brown-300"
+                  className="placeholder-gray-500 dark:placeholder-gray-400 w-full px-4 py-3 rounded-full border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-brown-300"
                   {...formik.getFieldProps("password")}
                 />
                 <button
                   type="button"
-                  className="absolute right-4 top-3 text-gray-500"
+                  className="absolute right-4 top-3 text-gray-500 dark:text-gray-400"
                   onClick={togglePasswordVisibility}
                 >
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
@@ -215,7 +227,7 @@ export default function Register() {
               <AnimatePresence>
                 {formik.touched.password && formik.errors.password && (
                   <motion.div
-                    className="text-red-500 text-sm mt-1"
+                    className="text-red-500 dark:text-red-400 text-sm mt-1"
                     initial={{ opacity: 0, y: -5 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -5 }}
@@ -229,7 +241,7 @@ export default function Register() {
             <div className="mb-6">
               <label
                 htmlFor="confirmPassword"
-                className="block text-gray-700 mb-2"
+                className="block text-gray-700 dark:text-gray-300 mb-2"
               >
                 Confirm Password
               </label>
@@ -239,12 +251,12 @@ export default function Register() {
                   id="confirmPassword"
                   name="confirmPassword"
                   placeholder="Confirm your password"
-                  className="w-full px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brown-300"
+                  className="placeholder-gray-500 dark:placeholder-gray-400 w-full px-4 py-3 rounded-full border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-brown-300"
                   {...formik.getFieldProps("confirmPassword")}
                 />
                 <button
                   type="button"
-                  className="absolute right-4 top-3 text-gray-500"
+                  className="absolute right-4 top-3 text-gray-500 dark:text-gray-400"
                   onClick={toggleConfirmPasswordVisibility}
                 >
                   {showConfirmPassword ? (
@@ -258,7 +270,7 @@ export default function Register() {
                 {formik.touched.confirmPassword &&
                   formik.errors.confirmPassword && (
                     <motion.div
-                      className="text-red-500 text-sm mt-1"
+                      className="text-red-500 dark:text-red-400 text-sm mt-1"
                       initial={{ opacity: 0, y: -5 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -5 }}
@@ -274,14 +286,14 @@ export default function Register() {
                 id="agreeToTerms"
                 name="agreeToTerms"
                 type="checkbox"
-                className="w-4 h-4 text-brown-500 bg-gray-100 border-gray-300 rounded focus:ring-brown-500"
+                className="w-4 h-4 text-brown-500 bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded focus:ring-brown-500"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 checked={formik.values.agreeToTerms}
               />
               <label
                 htmlFor="agreeToTerms"
-                className="ml-2 text-sm text-gray-600"
+                className="ml-2 text-sm text-gray-600 dark:text-gray-300"
               >
                 I agree to the{" "}
                 <a
@@ -293,7 +305,7 @@ export default function Register() {
               </label>
             </div>
             {formik.submitCount > 0 && formik.errors.agreeToTerms && (
-              <p className="text-red-500 text-sm mb-3">
+              <p className="text-red-500 dark:text-red-400 text-sm mb-3">
                 {formik.errors.agreeToTerms}
               </p>
             )}
@@ -301,7 +313,7 @@ export default function Register() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#A27B5C] hover:bg-gray-500 text-white py-3 rounded-full transition-colors flex justify-center items-center gap-2"
+              className="w-full bg-[#A27B5C] hover:bg-gray-500 dark:hover:bg-gray-700 text-white py-3 rounded-full transition-colors flex justify-center items-center gap-2"
             >
               {loading ? (
                 <>
@@ -332,11 +344,11 @@ export default function Register() {
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-gray-600">
+            <p className="text-gray-600 dark:text-gray-300">
               Have an account?{" "}
               <NavLink
                 to="/login"
-                className="text-[#A27B5C] hover:underline font-medium"
+                className="text-[#A27B5C] dark:text-[#A27B5C] hover:underline font-medium"
               >
                 Login
               </NavLink>
@@ -354,7 +366,7 @@ export default function Register() {
                 className="mx-20"
               />
             </div>
-            <p className="text-gray-700 text-base md:text-lg max-w-xl mx-auto px-4 -mt-40">
+            <p className="text-gray-700 dark:text-gray-300 text-base md:text-lg max-w-xl mx-auto px-4 -mt-40">
               A modern blog for sharing ideas, stories, and insights from
               writers around the world.
             </p>

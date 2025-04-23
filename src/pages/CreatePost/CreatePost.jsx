@@ -295,14 +295,14 @@ const CreatePost = () => {
   ];
 
   return (
-    <div className="mt-10 p-6 max-w-7xl mx-auto border rounded-lg shadow-md bg-white relative">
+    <div className="mt-10 p-6 max-w-7xl mx-auto border rounded-lg shadow-md bg-white dark:bg-gray-900 dark:border-gray-700 relative">
       {/* Notification Component */}
       {notification.message && (
         <div
           className={`absolute top-2 right-2 left-2 p-3 rounded-lg shadow-md ${
             notification.type === "error"
-              ? "bg-red-100 text-red-800 border border-red-300"
-              : "bg-green-100 text-green-800 border border-green-300"
+              ? "bg-red-100 text-red-800 border border-red-300 dark:bg-red-800 dark:text-red-100"
+              : "bg-green-100 text-green-800 border border-green-300 dark:bg-green-800 dark:text-green-100"
           }`}
         >
           {notification.message}
@@ -318,12 +318,14 @@ const CreatePost = () => {
               className="w-full max-w-lg h-auto md:h-64 object-cover rounded-md mx-auto"
             />
           )}
-          <h1 className="text-2xl font-bold my-2">{title}</h1>
-          <div className="text-gray-600 mb-4">
+          <h1 className="text-2xl font-bold my-2 text-gray-900 dark:text-white">
+            {title}
+          </h1>
+          <div className="text-gray-600 dark:text-gray-300 mb-4">
             Categories: {selectedCategories.map((cat) => cat.label).join(", ")}
           </div>
           <div
-            className="p-2 text-black"
+            className="p-2 text-gray-900 dark:text-gray-200"
             dangerouslySetInnerHTML={{ __html: value }}
           />
         </div>
@@ -337,10 +339,9 @@ const CreatePost = () => {
                   alt="Cover"
                   className="w-full max-w-lg h-auto md:h-64 object-fill rounded-md mx-auto"
                 />
-                {/* Change and Remove buttons */}
                 <div className="absolute top-2 right-2">
                   <button
-                    onClick={() => setCoverImage(null)} // Function to remove the image
+                    onClick={() => setCoverImage(null)}
                     className="px-3 py-1 bg-red-500 text-white rounded-full mr-2"
                   >
                     Remove
@@ -361,7 +362,7 @@ const CreatePost = () => {
                 </div>
               </div>
             ) : (
-              <label className="px-4 py-2 border border-gray-300 rounded-full cursor-pointer">
+              <label className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 rounded-full cursor-pointer">
                 Add a cover image
                 <input
                   type="file"
@@ -379,8 +380,10 @@ const CreatePost = () => {
               placeholder="New post title here..."
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className={`w-full text-2xl font-bold border-b-2 outline-none py-2 ${
-                errors.title ? "border-red-500" : "border-gray-200"
+              className={`w-full text-2xl font-bold border-b-2 outline-none py-2 bg-transparent text-gray-900 dark:text-white ${
+                errors.title
+                  ? "border-red-500"
+                  : "border-gray-200 dark:border-gray-600"
               }`}
             />
             {errors.title && (
@@ -395,13 +398,31 @@ const CreatePost = () => {
               value={selectedCategories}
               onChange={setSelectedCategories}
               placeholder="Add categories..."
-              className={`w-full text-sm text-gray-600 outline-none py-4 ${
-                errors.categories ? "border-red-500" : ""
-              }`}
+              className="text-sm"
+              classNamePrefix="react-select"
               styles={{
-                control: (base) => ({
+                control: (base, state) => ({
                   ...base,
-                  borderColor: errors.categories ? "#f56565" : base.borderColor,
+                  backgroundColor: "transparent",
+                  borderColor: errors.categories
+                    ? "#f56565"
+                    : state.isFocused
+                    ? "#ccc"
+                    : "#ddd",
+                  color: "white",
+                }),
+                menu: (base) => ({
+                  ...base,
+                  backgroundColor: "#1F2937", // Tailwind dark bg
+                  color: "white",
+                }),
+                singleValue: (base) => ({
+                  ...base,
+                  color: "white",
+                }),
+                multiValueLabel: (base) => ({
+                  ...base,
+                  color: "white",
                 }),
               }}
             />
@@ -412,7 +433,7 @@ const CreatePost = () => {
 
           <div
             className={`border p-6 rounded-md ${
-              errors.content ? "border-red-500" : ""
+              errors.content ? "border-red-500" : "dark:border-gray-600"
             }`}
           >
             {isEditing ? (
@@ -423,10 +444,10 @@ const CreatePost = () => {
                 modules={modules}
                 formats={formats}
                 placeholder="Write your post content here..."
-                className="text-black m-2 responsive-editor"
+                className="text-black dark:text-white responsive-editor"
                 style={{
-                  backgroundColor: "#FFF",
-                  color: "#000",
+                  backgroundColor: "transparent",
+                  color: "#FFF",
                   minHeight: "100px",
                   height: "auto",
                   maxHeight: "600px",
@@ -435,7 +456,7 @@ const CreatePost = () => {
               />
             ) : (
               <div
-                className="p-2 text-black"
+                className="p-2 text-gray-900 dark:text-gray-200"
                 dangerouslySetInnerHTML={{ __html: value }}
               />
             )}
@@ -451,7 +472,7 @@ const CreatePost = () => {
                 className={`px-3 py-1 border rounded-full ${
                   isEditing
                     ? "bg-[#A27B5C] text-white"
-                    : "bg-white text-[#A27B5C] border-[#A27B5C]"
+                    : "bg-transparent text-[#A27B5C] border-[#A27B5C]"
                 }`}
               >
                 Edit
@@ -461,7 +482,7 @@ const CreatePost = () => {
                 className={`px-3 py-1 border rounded-full ${
                   !isEditing
                     ? "bg-[#A27B5C] text-white"
-                    : "bg-white text-[#A27B5C] border-[#A27B5C]"
+                    : "bg-transparent text-[#A27B5C] border-[#A27B5C]"
                 }`}
               >
                 Preview

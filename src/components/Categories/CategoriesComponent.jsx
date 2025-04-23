@@ -97,7 +97,7 @@ const ScrollableCategories = ({ setSelectedCategory, selectedCategory }) => {
           onClick={() => scroll("left")}
           className="rounded-full z-10 flex hover:cursor-pointer"
         >
-          <ChevronLeft className="w-5 h-5 text-[#3f4e4f]" />
+          <ChevronLeft className="w-5 h-5 text-[#3f4e4f] dark:text-gray-300" />
         </button>
       )}
 
@@ -114,8 +114,8 @@ const ScrollableCategories = ({ setSelectedCategory, selectedCategory }) => {
               className={`px-4 py-1 rounded-full cursor-pointer transition whitespace-nowrap 
               ${
                 selectedCategory === category.value
-                  ? "text-[#a27b5c] bg-white"
-                  : "text-[#3f4e4f] hover:text-[#a27b5c]"
+                  ? "text-[#a27b5c] dark:text-yellow-400 bg-white dark:bg-gray-950"
+                  : "text-[#3f4e4f] dark:text-white hover:text-[#a27b5c] dark:hover:text-yellow-400"
               }`}
             >
               {/* ✅ Safe label rendering */}

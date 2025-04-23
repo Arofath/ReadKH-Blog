@@ -1,10 +1,8 @@
-
 import React from "react";
 import AboutUsIntro from "../components/greeting/AboutUsIntro";
 import Mentors from "../components/mentors/Mentors";
 import Card from "../components/card/Card";
 import Members from "../components/team-member/Members";
-
 
 function AboutUs() {
   return (
@@ -24,7 +22,7 @@ function AboutUs() {
 
           {/* Mentor */}
           <section className="flex flex-col items-center mt-6">
-            <h4 className="text-3xl sm:text-3xl font-medium text-[#A27B5C] mb-15">
+            <h4 className="text-3xl sm:text-3xl font-medium text-[#A27B5C] dark:text-yellow-400 mb-15">
               Mentors
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-15">
@@ -49,7 +47,7 @@ function AboutUs() {
 
           {/* Team Member */}
           <section className="flex flex-col items-center mt-18">
-            <h4 className="text-3xl font-medium text-[#A27B5C]">
+            <h4 className="text-3xl font-medium text-[#A27B5C] dark:text-yellow-400">
               Team Members
             </h4>
             <div className="flex flex-col item-center">
@@ -60,7 +58,9 @@ function AboutUs() {
                   name={"San Monysereyvathana"}
                   team={"General Leader"}
                   role={"ux/ui designer"}
-                  facebook={"https://www.facebook.com/profile.php?id=100065689605041"}
+                  facebook={
+                    "https://www.facebook.com/profile.php?id=100065689605041"
+                  }
                   github={"https://github.com/vathanavath"}
                 />
                 <Members
@@ -76,7 +76,9 @@ function AboutUs() {
                   name={"Vy Hourtong"}
                   team={"Member"}
                   role={"API consumer"}
-                  facebook={"https://www.facebook.com/share/1Bea3eAiZz/?mibextid=wwXIfr"}
+                  facebook={
+                    "https://www.facebook.com/share/1Bea3eAiZz/?mibextid=wwXIfr"
+                  }
                   github={"https://github.com/Vyhourtong"}
                 />
               </div>
@@ -104,7 +106,9 @@ function AboutUs() {
                   name={"Chhay Davin"}
                   team={"Member"}
                   role={"Front-end Developer"}
-                  facebook={"https://www.facebook.com/share/15JJ8AZQpA/?mibextid=qi2Omg"}
+                  facebook={
+                    "https://www.facebook.com/share/15JJ8AZQpA/?mibextid=qi2Omg"
+                  }
                   github={"https://github.com/ArthurLeyVin"}
                 />
               </div>
@@ -118,14 +122,15 @@ function AboutUs() {
                   role={"Front-end developer"}
                   facebook={"https://www.facebook.com/jasmine.jessica462"}
                   github={"https://github.com/hengmeymey15"}
-                  
                 />
                 <Members
                   profile={"/images/team-member/broem_panha.JPG"}
                   name={"Broem Panha"}
                   team={"Member"}
                   role={"ux/ui designer"}
-                  facebook={"https://www.facebook.com/share/1Bc1gnkna3/?mibextid=wwXIfr"}
+                  facebook={
+                    "https://www.facebook.com/share/1Bc1gnkna3/?mibextid=wwXIfr"
+                  }
                   github={"https://github.com/PaNha-7685"}
                 />
                 <Members
@@ -133,7 +138,9 @@ function AboutUs() {
                   name={"Khann Kanhchana"}
                   team={"Member"}
                   role={"Front-end developer"}
-                  facebook={"https://www.facebook.com/kanh.chana.9277?mibextid=LQQJ4d"}
+                  facebook={
+                    "https://www.facebook.com/kanh.chana.9277?mibextid=LQQJ4d"
+                  }
                   github={"https://github.com/khannkanhchana"}
                 />
               </div>
@@ -144,5 +151,5 @@ function AboutUs() {
     </>
   );
 }
-  
-  export default AboutUs;
+
+export default AboutUs;

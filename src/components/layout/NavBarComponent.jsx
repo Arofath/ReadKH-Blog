@@ -1,11 +1,13 @@
 import { Button } from "flowbite-react";
-import { Search, Menu, X } from "lucide-react";
+import { Search, Menu, X, LogOut } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Modal, ModalBody, ModalHeader } from "flowbite-react";
 import PopUpModalComponent from "../pop-up-modal/PopUpModal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import DarkModeToggle from "../dark-mode/DarkMode";
+
 export default function NavbarComponents({
   onSearchSubmit,
   setSelectedCategory,
@@ -233,7 +235,7 @@ export default function NavbarComponents({
   return (
     <>
       <div
-        className={`fixed top-0 left-0 w-full flex justify-center z-50 transition-colors duration-300 ${bgColor} shadow-sm`}
+        className={`dark:bg-gray-950 dark:shadow-gray-600 fixed top-0 left-0 w-full flex justify-center z-50 transition-colors duration-300 ${bgColor} shadow-sm`}
       >
         <nav className="w-full max-w-7xl flex items-center justify-between px-4 sm:px-6 md:px-12 lg:px-16 h-14 sm:h-16 md:h-18 lg:h-20">
           {/* Left Section */}
@@ -243,30 +245,28 @@ export default function NavbarComponents({
                 <img
                   src="../images/logo/logo.png"
                   alt="Logo"
-                  className=" h-27 object-contain"
+                  className="h-27 object-contain"
                   onClick={handleHomeClick}
                 />
               </NavLink>
             </div>
+
             {/* Search */}
             <div className="relative hidden sm:block">
-              <form
-                onSubmit={handleSearchSubmit}
-                className="relative hidden sm:block"
-              >
+              <form onSubmit={handleSearchSubmit} className="relative">
                 <input
                   type="text"
                   placeholder="Search..."
                   value={searchQuery}
                   onChange={handleSearchChange}
-                  className="w-32 sm:w-40 md:w-64 lg:w-80 pl-8 sm:pl-10 pr-4 py-1 sm:py-2 text-sm border rounded-full border-[#B9B28A] focus:outline-none focus:ring-2 focus:ring-gray-300"
+                  className="w-32 sm:w-40 md:w-64 lg:w-80 pl-8 sm:pl-10 pr-4 py-1 sm:py-2 text-sm border rounded-full border-[#B9B28A] focus:outline-none focus:ring-2 focus:ring-gray-300 dark:bg-gray-900 dark:text-white dark:border-gray-600 dark:placeholder-gray-400"
                 />
                 {suggestions.length > 0 && (
-                  <ul className="absolute z-10 w-full bg-white border rounded shadow mt-1">
+                  <ul className="absolute z-10 w-full bg-white dark:bg-gray-800 border rounded shadow mt-1 dark:border-gray-700">
                     {suggestions.map((blog) => (
                       <li
                         key={blog.id}
-                        className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+                        className="px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer text-gray-800 dark:text-white"
                         onClick={() => handleSuggestionClick(blog.title)}
                       >
                         {blog.title}
@@ -274,9 +274,8 @@ export default function NavbarComponents({
                     ))}
                   </ul>
                 )}
-                <Search className="absolute left-2 sm:left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-gray-500" />
+                <Search className="absolute left-2 sm:left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-gray-500 dark:text-gray-400" />
               </form>
-              <Search className="absolute left-2 sm:left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-gray-500" />
             </div>
           </div>
 
@@ -284,7 +283,7 @@ export default function NavbarComponents({
           <div className="flex md:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-gray-700"
+              className="p-2 text-gray-700 dark:text-gray-300"
             >
               {mobileMenuOpen ? (
                 <X className="h-6 w-6" />
@@ -302,7 +301,7 @@ export default function NavbarComponents({
               className={({ isActive }) =>
                 isActive
                   ? "text-yellow-400 text-sm md:text-base"
-                  : "text-gray-700 hover:text-[#A27B5C] text-sm md:text-base"
+                  : "text-gray-700 hover:text-[#A27B5C] dark:text-gray-300 text-sm md:text-base"
               }
             >
               Home
@@ -313,11 +312,13 @@ export default function NavbarComponents({
               className={({ isActive }) =>
                 isActive
                   ? "text-yellow-400 text-sm md:text-base"
-                  : "text-gray-700 hover:text-[#A27B5C] text-sm md:text-base"
+                  : "text-gray-700 hover:text-[#A27B5C] dark:text-gray-300 text-sm md:text-base"
               }
             >
               About Us
             </NavLink>
+
+            <DarkModeToggle />
 
             <Button
               onClick={handleCreatePost}
@@ -327,34 +328,24 @@ export default function NavbarComponents({
             </Button>
 
             <div className="relative hover:cursor-pointer" ref={dropdownRef}>
-              {/* Profile */}
               <div>
-                {author ? (
-                  <img
-                    src={
-                      author.profileUrl ||
-                      "https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small_2x/default-avatar-profile-icon-of-social-media-user-vector.jpg"
-                    }
-                    alt="Profile"
-                    className="h-8 w-8 rounded-full"
-                    onClick={() => setIsOpen(!isOpen)}
-                  />
-                ) : (
-                  <img
-                    src="https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
-                    alt="Default Profile"
-                    className="h-8 w-8 rounded-full"
-                    onClick={() => setIsOpen(!isOpen)}
-                  />
-                )}
+                <img
+                  src={
+                    author?.profileUrl ||
+                    "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
+                  }
+                  alt="Profile"
+                  className="h-8 w-8 rounded-full"
+                  onClick={() => setIsOpen(!isOpen)}
+                />
               </div>
 
               {isOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 z-10 ">
-                  <div className="p-2 border-b border-gray-200">
+                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-900 rounded-md shadow-lg border border-gray-200 dark:border-gray-700 z-10">
+                  <div className="p-2 border-b border-gray-200 dark:border-gray-700">
                     <button
                       onClick={handleProfileNavigation}
-                      className="block text-[#A27B5C] font-medium w-full text-left hover:cursor-pointer"
+                      className="block text-[#A27B5C] font-medium w-full text-left"
                     >
                       Your Profile
                     </button>
@@ -363,28 +354,27 @@ export default function NavbarComponents({
                   <nav className="py-1">
                     <a
                       onClick={handleCreatePost}
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                      className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                     >
                       Create Post
                     </a>
 
-                    {/* Conditionally render Sign Out or Log in based on authToken */}
                     {localStorage.getItem("authToken") ? (
                       <>
-                        <div className="border-t border-gray-200 mt-1"></div>
+                        <div className="border-t border-gray-200 dark:border-gray-700 mt-1"></div>
                         <a
                           onClick={confirmLogout}
-                          className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                          className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                         >
                           Sign Out
                         </a>
                       </>
                     ) : (
                       <>
-                        <div className="border-t border-gray-200 mt-1"></div>
+                        <div className="border-t border-gray-200 dark:border-gray-700 mt-1"></div>
                         <a
                           onClick={() => setShowLoginModal(true)}
-                          className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                          className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                         >
                           Log in
                         </a>
@@ -397,30 +387,30 @@ export default function NavbarComponents({
           </div>
         </nav>
 
-        {/* Mobile Menu - Full screen overlay */}
+        {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div
             ref={mobileMenuRef}
-            className="fixed inset-0 top-14 sm:top-16 bg-white z-40 flex flex-col"
+            className="fixed inset-0 top-14 sm:top-16 bg-white dark:bg-gray-950 z-40 flex flex-col"
           >
-            <div className="relative px-4 py-4 border-b border-gray-200">
+            <div className="relative px-4 py-4 border-b border-gray-200 dark:border-gray-700">
               <input
                 type="text"
                 placeholder="Search..."
-                className="w-full pl-10 pr-4 py-2 text-sm border rounded-full border-[#B9B28A] focus:outline-none focus:ring-2 focus:ring-gray-300"
+                className="w-full pl-10 pr-4 py-2 text-sm border rounded-full border-[#B9B28A] focus:outline-none focus:ring-2 focus:ring-gray-300 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:placeholder-gray-400"
               />
-              <Search className="absolute left-8 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-500" />
+              <Search className="absolute left-8 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-500 dark:text-gray-400" />
             </div>
 
             <div className="flex flex-col px-4 py-2 space-y-4">
               <NavLink
                 to="/"
+                onClick={handleHomeClick}
                 className={({ isActive }) =>
                   isActive
                     ? "text-yellow-400 text-lg py-2"
-                    : "text-gray-700 hover:text-[#A27B5C] text-lg py-2"
+                    : "text-gray-700 dark:text-gray-300 hover:text-[#A27B5C] text-lg py-2"
                 }
-                onClick={handleHomeClick}
               >
                 Home
               </NavLink>
@@ -430,7 +420,7 @@ export default function NavbarComponents({
                 className={({ isActive }) =>
                   isActive
                     ? "text-yellow-400 text-lg py-2"
-                    : "text-gray-700 hover:text-[#A27B5C] text-lg py-2"
+                    : "text-gray-700 dark:text-gray-300 hover:text-[#A27B5C] text-lg py-2"
                 }
               >
                 About Us
@@ -438,10 +428,12 @@ export default function NavbarComponents({
 
               <button
                 onClick={handleProfileNavigation}
-                className="text-gray-700 hover:text-[#A27B5C] text-lg py-2 text-left"
+                className="text-gray-700 dark:text-gray-300 hover:text-[#A27B5C] text-lg py-2 text-left"
               >
                 Your Profile
               </button>
+
+              <DarkModeToggle />
 
               <button
                 onClick={handleCreatePost}
@@ -450,19 +442,19 @@ export default function NavbarComponents({
                 Create Post
               </button>
 
-              <div className="border-t border-gray-200 pt-2">
+              <div className="border-t border-gray-200 dark:border-gray-700 pt-2">
                 <button
                   onClick={confirmLogout}
-                  className="text-gray-700 hover:text-[#A27B5C] text-lg py-2 w-full text-left"
+                  className="text-gray-700 dark:text-gray-300 hover:text-[#A27B5C] text-lg py-2 w-full text-left"
                 >
                   Sign Out
                 </button>
               </div>
 
-              <div className="border-t border-gray-200 pt-2">
+              <div className="border-t border-gray-200 dark:border-gray-700 pt-2">
                 <button
                   onClick={() => setShowLoginModal(true)}
-                  className="text-gray-700 hover:text-[#A27B5C] text-lg py-2 w-full text-left"
+                  className="text-gray-700 dark:text-gray-300 hover:text-[#A27B5C] text-lg py-2 w-full text-left"
                 >
                   Log in
                 </button>
@@ -490,23 +482,21 @@ export default function NavbarComponents({
         onClose={() => setShowSignOutModal(false)}
         popup
       >
-        <ModalHeader className="bg-white" />
-        <ModalBody className="bg-white">
+        <ModalHeader className="bg-white dark:bg-gray-900" />
+        <ModalBody className="bg-white dark:bg-gray-900">
           <div className="text-center">
             <img
               src="https://cdn-icons-png.flaticon.com/512/1828/1828479.png"
               alt="Logout"
               className="mx-auto mb-4 h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 lg:h-24 lg:w-24 object-contain transition-transform duration-300"
             />
-            <h3 className="mb-4 text-base sm:text-lg font-semibold text-gray-700">
+            <h3 className="mb-4 text-base sm:text-lg font-semibold text-gray-700 dark:text-gray-200">
               Are you sure you want to sign out?
             </h3>
             <div className="flex justify-center gap-2 sm:gap-4">
               <Button
                 color="failure"
-                onClick={() => {
-                  confirmLogout();
-                }}
+                onClick={confirmLogout}
                 className="text-sm sm:text-base hover:cursor-pointer"
               >
                 Yes, Sign Out

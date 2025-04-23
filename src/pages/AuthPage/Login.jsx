@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, AlertCircle } from "lucide-react";
 import { useNavigate } from "react-router";
 import { NavLink } from "react-router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { FaSpinner } from "react-icons/fa";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -25,8 +24,8 @@ export default function Login() {
       password: "",
     },
     validationSchema: Yup.object({
-      username: Yup.string().required("Username is required"),
-      password: Yup.string().required("Password is required"),
+      username: Yup.string().required("Please enter username"),
+      password: Yup.string().required("Please enter password"),
     }),
     onSubmit: async (values) => {
       setErrorMessage("");
@@ -43,7 +42,11 @@ export default function Login() {
         }
 
         const result = await response.json();
-        localStorage.setItem("authToken", result.access_token);
+        if (rememberMe) {
+          localStorage.setItem("authToken", result.access_token);
+        } else {
+          sessionStorage.setItem("authToken", result.access_token);
+        }
         navigate("/");
       } catch (error) {
         setErrorMessage(error.message);
@@ -70,19 +73,14 @@ export default function Login() {
             </h1>
           </div>
 
-          {formik.touched.username && formik.errors.username && (
-            <div className="mb-2 text-red-500 text-sm">
-              {formik.errors.username}
-            </div>
-          )}
-          {formik.touched.password && formik.errors.password && (
-            <div className="mb-2 text-red-500 text-sm">
-              {formik.errors.password}
-            </div>
-          )}
-
           {errorMessage && (
-            <div className="mb-4 text-red-500 text-sm">{errorMessage}</div>
+            <div className="mb-4 text-red-600 text-sm bg-red-50 border border-red-200 p-3 rounded-lg flex items-start gap-2">
+              <AlertCircle className="mt-0.5 text-red-500" size={18} />
+              <span>
+                <strong className="font-semibold">Login failed:</strong>{" "}
+                {errorMessage}
+              </span>
+            </div>
           )}
 
           <form onSubmit={formik.handleSubmit}>
@@ -90,17 +88,31 @@ export default function Login() {
               <label htmlFor="username" className="block text-gray-700 mb-2">
                 Username
               </label>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                required
-                placeholder="Enter your username"
-                className="w-full px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brown-300"
-                value={formik.values.username}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-              />
+              <div className="relative">
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  required
+                  placeholder="Enter your username"
+                  className={`w-full px-4 py-3 pr-10 rounded-full border focus:outline-none focus:ring-2 ${
+                    formik.touched.username && formik.errors.username
+                      ? "border-red-500 focus:ring-red-300"
+                      : formik.touched.username
+                      ? "border-green-500 focus:ring-green-300"
+                      : "border-gray-300 focus:ring-brown-300"
+                  }`}
+                  value={formik.values.username}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
+              </div>
+              {formik.touched.username && formik.errors.username && (
+                <div className="mt-1 text-sm text-red-500 flex items-center gap-1">
+                  <AlertCircle size={16} />
+                  {formik.errors.username}
+                </div>
+              )}
             </div>
 
             <div className="mb-6">
@@ -114,19 +126,31 @@ export default function Login() {
                   name="password"
                   required
                   placeholder="Enter your Password"
-                  className="w-full px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brown-300"
+                  className={`w-full px-4 py-3 pr-12 rounded-full border focus:outline-none focus:ring-2 ${
+                    formik.touched.password && formik.errors.password
+                      ? "border-red-500 focus:ring-red-300"
+                      : formik.touched.password
+                      ? "border-green-500 focus:ring-green-300"
+                      : "border-gray-300 focus:ring-brown-300"
+                  }`}
                   value={formik.values.password}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
                 <button
                   type="button"
-                  className="absolute right-4 top-3 text-gray-500"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
                   onClick={togglePasswordVisibility}
                 >
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
               </div>
+              {formik.touched.password && formik.errors.password && (
+                <div className="mt-1 text-sm text-red-500 flex items-center gap-1">
+                  <AlertCircle size={16} />
+                  {formik.errors.password}
+                </div>
+              )}
             </div>
 
             <div className="flex items-center justify-between mb-8">

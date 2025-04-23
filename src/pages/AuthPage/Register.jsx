@@ -3,6 +3,9 @@ import { Eye, EyeOff } from "lucide-react";
 import { NavLink, useNavigate } from "react-router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+// eslint-disable-next-line no-unused-vars
+import { motion, AnimatePresence } from "framer-motion";
+import { AlertCircle } from "lucide-react";
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
@@ -22,22 +25,41 @@ export default function Register() {
       email: "",
       password: "",
       confirmPassword: "",
+      agreeToTerms: false,
     },
     validationSchema: Yup.object({
       username: Yup.string()
         .min(3, "At least 3 characters")
         .required("Please Enter Username"),
-      email: Yup.string().email("Invalid email").required("Required"),
+      email: Yup.string().email("Invalid email").required("Please Enter Email"),
       password: Yup.string()
-        .min(8, "Min 8 characters")
-        .matches(/[!@#$%^&*]/, "One special character required")
+        .min(8, "Must be at least 8 characters ")
+        .matches(/[!@#$%^&*]/, "Include 1 special character.")
         .required("Please Enter Password"),
       confirmPassword: Yup.string()
         .oneOf([Yup.ref("password")], "Passwords must match")
         .required("Please Enter Confirm Password"),
+      agreeToTerms: Yup.bool()
+        .oneOf([true], "You must agree to the terms and conditions")
+        .required("You must agree to the terms and conditions"),
     }),
-    onSubmit: async (values) => {
+    onSubmit: async (values, { setTouched, validateForm }) => {
       setError("");
+
+      // Mark all fields as touched
+      setTouched({
+        username: true,
+        email: true,
+        password: true,
+        confirmPassword: true,
+        agreeToTerms: true, // 👈 Important
+      });
+
+      // Validate form
+      const errors = await validateForm();
+
+      if (Object.keys(errors).length > 0) return;
+
       setLoading(true);
 
       try {
@@ -82,6 +104,15 @@ export default function Register() {
             </h1>
           </div>
 
+          {error && (
+            <div className="mb-4 text-red-600 text-sm bg-red-50 border border-red-200 p-3 rounded-lg flex items-start gap-2">
+              <AlertCircle className="mt-0.5 text-red-500" size={18} />
+              <span>
+                <strong className="font-semibold"></strong> {error}
+              </span>
+            </div>
+          )}
+
           <form onSubmit={formik.handleSubmit}>
             <div className="mb-6">
               <label htmlFor="email" className="block text-gray-700 mb-2">
@@ -95,11 +126,18 @@ export default function Register() {
                 className="w-full px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brown-300"
                 {...formik.getFieldProps("email")}
               />
-              {formik.touched.email && formik.errors.email && (
-                <div className="text-red-500 text-sm mt-1">
-                  {formik.errors.email}
-                </div>
-              )}
+              <AnimatePresence>
+                {formik.touched.email && formik.errors.email && (
+                  <motion.div
+                    className="text-red-500 text-sm mt-1"
+                    initial={{ opacity: 0, y: -5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -5 }}
+                  >
+                    {formik.errors.email}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             <div className="mb-6">
@@ -114,11 +152,18 @@ export default function Register() {
                 className="w-full px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brown-300"
                 {...formik.getFieldProps("username")}
               />
-              {formik.touched.username && formik.errors.username && (
-                <div className="text-red-500 text-sm mt-1">
-                  {formik.errors.username}
-                </div>
-              )}
+              <AnimatePresence>
+                {formik.touched.username && formik.errors.username && (
+                  <motion.div
+                    className="text-red-500 text-sm mt-1"
+                    initial={{ opacity: 0, y: -5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -5 }}
+                  >
+                    {formik.errors.username}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             <div className="mb-6">
@@ -142,11 +187,18 @@ export default function Register() {
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
               </div>
-              {formik.touched.password && formik.errors.password && (
-                <div className="text-red-500 text-sm mt-1">
-                  {formik.errors.password}
-                </div>
-              )}
+              <AnimatePresence>
+                {formik.touched.password && formik.errors.password && (
+                  <motion.div
+                    className="text-red-500 text-sm mt-1"
+                    initial={{ opacity: 0, y: -5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -5 }}
+                  >
+                    {formik.errors.password}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             <div className="mb-6">
@@ -177,16 +229,48 @@ export default function Register() {
                   )}
                 </button>
               </div>
-              {formik.touched.confirmPassword &&
-                formik.errors.confirmPassword && (
-                  <div className="text-red-500 text-sm mt-1">
-                    {formik.errors.confirmPassword}
-                  </div>
-                )}
+              <AnimatePresence>
+                {formik.touched.confirmPassword &&
+                  formik.errors.confirmPassword && (
+                    <motion.div
+                      className="text-red-500 text-sm mt-1"
+                      initial={{ opacity: 0, y: -5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -5 }}
+                    >
+                      {formik.errors.confirmPassword}
+                    </motion.div>
+                  )}
+              </AnimatePresence>
             </div>
 
-            {error && (
-              <div className="text-red-500 text-center mb-4">{error}</div>
+            <div className="flex items-center mb-6">
+              <input
+                id="agreeToTerms"
+                name="agreeToTerms"
+                type="checkbox"
+                className="w-4 h-4 text-brown-500 bg-gray-100 border-gray-300 rounded focus:ring-brown-500"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                checked={formik.values.agreeToTerms}
+              />
+              <label
+                htmlFor="agreeToTerms"
+                className="ml-2 text-sm text-gray-600"
+              >
+                I agree to the{" "}
+                <a
+                  href=""
+                  className="underline text-brown-600 hover:text-brown-800"
+                >
+                  terms and conditions
+                </a>
+              </label>
+            </div>
+            {formik.submitCount > 0 && formik.errors.agreeToTerms && (
+              <p className="text-red-500 text-sm mb-3">
+                {formik.errors.agreeToTerms}
+              </p>
             )}
 
             <button

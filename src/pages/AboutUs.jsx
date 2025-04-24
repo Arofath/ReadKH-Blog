@@ -12,8 +12,13 @@ function AboutUs() {
       </header>
       <main>
         <section className="max-w-7xl mx-auto text-center sm:px-8 lg:px-16">
-          <div className="w-full max-w-7xl mt-20 mx-auto flex flex-col items-center px-10 md:px-16 lg:px-16">
-            <img src="/images/readKh/readKh.png" alt="ReadKh" />
+          <div className="w-full max-w-7xl  mx-auto flex flex-col items-center  md:px-16 lg:px-16">
+            <img
+              src="/images/readKh/readKh.png"
+              alt="ReadKh"
+              //className="-w-3/4 sm:w-1/2 md:w-auto"
+              className="w-full h-full object-cover "
+            />
           </div>
 
           <AboutUsIntro />

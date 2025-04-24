@@ -9,6 +9,7 @@ function BlogDetail() {
   const [blog, setBlog] = useState(null);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const fetchBlogDetails = async () => {
       try {
         const response = await fetch(`${BASE_URL}/blogs/${id}`); // ✅ Fetch by ID

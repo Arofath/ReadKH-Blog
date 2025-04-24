@@ -340,52 +340,43 @@ export default function NavbarComponents({
             >
               <Search className="h-6 w-6" />
             </button>
-
-            {/* Search Input Below Header */}
-            {mobileSearchOpen && (
-              <div className="absolute top-full left-0 w-screen z-40 bg-[#111827] border-t border-gray-700 px-4 py-3 shadow-md">
-                <div className="relative">
-                  <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => {
-                      const query = e.target.value;
-                      setSearchQuery(query);
-                      setSuggestions(
-                        query
-                          ? [
-                              { id: 1, title: "Search Result One" },
-                              { id: 2, title: "Search Result Two" },
-                            ]
-                          : []
-                      );
-                    }}
-                    placeholder="Search..."
-                    className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-600 bg-gray-900 text-white placeholder-gray-400"
-                  />
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-
-                  {suggestions.length > 0 && (
-                    <ul className="mt-2 w-full bg-[#1f2937] rounded-md shadow-lg border border-gray-700 text-white z-50">
-                      {suggestions.map((s) => (
-                        <li
-                          key={s.id}
-                          className="px-4 py-2 hover:bg-gray-700 cursor-pointer"
-                          onClick={() => {
-                            setSearchQuery(s.title);
-                            setMobileSearchOpen(false);
-                            setSuggestions([]);
-                          }}
-                        >
-                          {s.title}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              </div>
-            )}
           </div>
+
+          {/* Search Input Below Header */}
+          {mobileSearchOpen && (
+            <div className="absolute top-full left-0 w-full z-40 bg-[#111827] border-t border-gray-700 px-4 py-3 shadow-md">
+              {/* Input wrapper with icon */}
+              <div className="relative">
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                  placeholder="Search..."
+                  className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-600 bg-gray-900 text-white placeholder-gray-400"
+                />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              </div>
+
+              {/* Suggestions dropdown (outside input wrapper) */}
+              {suggestions.length > 0 && (
+                <ul className="mt-2 w-full bg-[#1f2937] rounded-md shadow-lg border border-gray-700 text-white z-50">
+                  {suggestions.map((s) => (
+                    <li
+                      key={s.id}
+                      className="px-4 py-2 hover:bg-gray-700 cursor-pointer"
+                      onClick={() => {
+                        handleSuggestionClick(s.title);
+                        setMobileSearchOpen(false);
+                        setSuggestions([]);
+                      }}
+                    >
+                      {s.title}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          )}
 
           {/* Right Section - Desktop */}
           <div className="hidden md:flex items-center space-x-4 md:space-x-6">

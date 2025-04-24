@@ -294,60 +294,74 @@ const CreatePost = () => {
     "formula",
   ];
 
-  const isDarkMode =
+  const [isDarkMode, setIsDarkMode] = useState(
     typeof window !== "undefined" &&
-    document.documentElement.classList.contains("dark");
+      document.documentElement.classList.contains("dark")
+  );
 
-  const customStyles = (isDarkMode) => ({
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setIsDarkMode(document.documentElement.classList.contains("dark"));
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const customStyles = (isDark) => ({
     control: (base, state) => ({
       ...base,
-      backgroundColor: isDarkMode ? "#1F2937" : "#FFFFFF", // dark: gray-800, light: white
+      backgroundColor: isDark ? "#1F2937" : "#FFFFFF",
       borderColor: state.isFocused
-        ? isDarkMode
+        ? isDark
           ? "#93C5FD"
           : "#3B82F6"
-        : isDarkMode
+        : isDark
         ? "#374151"
         : "#D1D5DB",
-      color: isDarkMode ? "#F9FAFB" : "#111827", // light text for dark, dark text for light
+      color: isDark ? "#F9FAFB" : "#111827",
       boxShadow: "none",
       "&:hover": {
-        borderColor: isDarkMode ? "#93C5FD" : "#3B82F6", // blue highlight
+        borderColor: isDark ? "#93C5FD" : "#3B82F6",
       },
     }),
     menu: (base) => ({
       ...base,
-      backgroundColor: isDarkMode ? "#111827" : "#FFFFFF", // gray-900 or white
-      color: isDarkMode ? "#F9FAFB" : "#111827",
+      backgroundColor: isDark ? "#111827" : "#FFFFFF",
+      color: isDark ? "#F9FAFB" : "#111827",
     }),
     option: (base, state) => ({
       ...base,
       backgroundColor: state.isSelected
-        ? isDarkMode
+        ? isDark
           ? "#2563EB"
           : "#DBEAFE"
         : state.isFocused
-        ? isDarkMode
+        ? isDark
           ? "#1E3A8A"
           : "#EFF6FF"
         : "transparent",
-      color: isDarkMode ? "#F9FAFB" : "#111827",
+      color: isDark ? "#F9FAFB" : "#111827",
       cursor: "pointer",
     }),
     multiValue: (base) => ({
       ...base,
-      backgroundColor: isDarkMode ? "#374151" : "#E5E7EB", // gray-700 / gray-200
+      backgroundColor: isDark ? "#374151" : "#E5E7EB",
     }),
     multiValueLabel: (base) => ({
       ...base,
-      color: isDarkMode ? "#F9FAFB" : "#111827",
+      color: isDark ? "#F9FAFB" : "#111827",
     }),
     multiValueRemove: (base) => ({
       ...base,
-      color: isDarkMode ? "#F9FAFB" : "#111827",
+      color: isDark ? "#F9FAFB" : "#111827",
       ":hover": {
-        backgroundColor: isDarkMode ? "#6B7280" : "#D1D5DB", // gray-500 / gray-300
-        color: isDarkMode ? "#111827" : "#000000",
+        backgroundColor: isDark ? "#6B7280" : "#D1D5DB",
+        color: isDark ? "#111827" : "#000000",
       },
     }),
   });

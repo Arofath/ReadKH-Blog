@@ -56,3 +56,28 @@
     max-height: 500px;
   }
 }
+
+/* Style the Quill toolbar buttons for dark mode *
+/* .ql-toolbar.ql-snow {
+  background-color: transparent;
+}
+
+.dark .ql-toolbar.ql-snow {
+  border: 1px solid #374151; 
+}
+
+.dark .ql-toolbar.ql-snow .ql-picker,
+.dark .ql-toolbar.ql-snow .ql-stroke,
+.dark .ql-toolbar.ql-snow .ql-fill,
+.dark .ql-toolbar.ql-snow .ql-picker-label,
+.dark .ql-toolbar.ql-snow .ql-picker-item {
+  color: white !important;
+  stroke: white !important;
+  fill: white !important;
+}
+  
+.dark .ql-toolbar.ql-snow button:hover .ql-stroke,
+.dark .ql-toolbar.ql-snow button:hover .ql-fill {
+  stroke: #93C5FD !important;
+  fill: #93C5FD !important;
+} */

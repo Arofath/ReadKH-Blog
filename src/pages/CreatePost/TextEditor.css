@@ -2,6 +2,15 @@
   min-height: 250px !important; /* Adjust the height */
 }
 
+.ql-editor {
+  color: black;
+}
+
+/* Dark mode text color */
+.dark .ql-editor {
+  color: white;
+}
+
 /* This targets the placeholder text inside the editor */
 .ql-editor::before {
   color: #9ca3af !important; /* Tailwind's gray-400 */

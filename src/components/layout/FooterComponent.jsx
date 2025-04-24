@@ -21,7 +21,10 @@ export default function FooterComponents() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 grid grid-cols-1 md:grid-cols-4 gap-8 text-left">
         {/* Logo Section */}
         <div className="flex flex-col items-center md:items-end md:flex-row md:justify-end">
-          <>
+          <NavLink
+            to="/"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          >
             {/* Light mode logo */}
             <img
               src="/images/logo/footer.png"
@@ -35,7 +38,7 @@ export default function FooterComponents() {
               alt="Logo Dark"
               className="hidden dark:block h-auto w-auto max-w-xs md:max-w-sm lg:max-w-md transition-transform duration-300 hover:-translate-y-2"
             />
-          </>
+          </NavLink>
         </div>
 
         {/* Quick Links */}
@@ -47,22 +50,46 @@ export default function FooterComponents() {
               </h3>
               <ul className="space-y-2 text-gray-600 dark:text-gray-300">
                 <li>
-                  <NavLink to="/" className="hover:text-[#A27B5C]">
+                  <NavLink
+                    to="/"
+                    onClick={() =>
+                      window.scrollTo({ top: 0, behavior: "smooth" })
+                    }
+                    className="hover:text-[#A27B5C]"
+                  >
                     Home
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/profile" className="hover:text-[#A27B5C]">
+                  <NavLink
+                    to="/profile"
+                    onClick={() =>
+                      window.scrollTo({ top: 0, behavior: "smooth" })
+                    }
+                    className="hover:text-[#A27B5C]"
+                  >
                     Profile
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/about" className="hover:text-[#A27B5C]">
+                  <NavLink
+                    to="/about"
+                    onClick={() =>
+                      window.scrollTo({ top: 0, behavior: "smooth" })
+                    }
+                    className="hover:text-[#A27B5C]"
+                  >
                     About Us
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/create-post" className="hover:text-[#A27B5C]">
+                  <NavLink
+                    to="/create-post"
+                    onClick={() =>
+                      window.scrollTo({ top: 0, behavior: "smooth" })
+                    }
+                    className="hover:text-[#A27B5C]"
+                  >
                     Create Post
                   </NavLink>
                 </li>
@@ -190,7 +217,9 @@ export default function FooterComponents() {
                 +855 974 716 039
               </a>
             </p>
-            <p className="text-gray-600 dark:text-gray-300">ReadKh.com</p>
+            <p className="text-gray-600 dark:text-gray-300 hover:text-[#A27B5C]">
+              <a href="blog-readkh.vercel.app">ReadKh.com</a>
+            </p>
             <div className="flex justify-start space-x-4 mt-4 mb-4">
               {[
                 FaFacebookSquare,

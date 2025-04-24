@@ -37,7 +37,10 @@ function BlogDetail() {
       <div className="mx-auto text-black dark:text-gray-300 mt-4 max-w-3xl">
         <img
           className="w-full rounded-md"
-          src={blog.thumbnail || "/images/default.jpg"}
+          src={
+            blog.thumbnail ||
+            "https://cdn1.iconfinder.com/data/icons/business-company-1/500/image-512.png"
+          }
           alt="Blog Header"
         />
         <h1 className="text-2xl font-bold mt-4 dark:text-white">

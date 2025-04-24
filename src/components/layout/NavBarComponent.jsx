@@ -253,7 +253,7 @@ export default function NavbarComponents({
 
           {/* Left Section */}
           <div className="flex items-center space-x-2 sm:space-x-4">
-            <div className="h-full flex items-center hover:cursor-pointer hidden md:block">
+            <div className="hidden md:flex items-center hover:cursor-pointer">
               <NavLink to="/">
                 <div onClick={handleHomeClick}>
                   <img
@@ -344,38 +344,40 @@ export default function NavbarComponents({
 
           {/* Search Input Below Header */}
           {mobileSearchOpen && (
-            <div className="absolute top-full left-0 w-full z-40 bg-[#111827] border-t border-gray-700 px-4 py-3 shadow-md">
-              {/* Input wrapper with icon */}
-              <div className="relative">
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                  placeholder="Search..."
-                  className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-600 bg-gray-900 text-white placeholder-gray-400"
-                />
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-              </div>
+            <>
+              <div className="absolute top-full left-0 w-full z-40 bg-white dark:bg-gray-950 border-t border-gray-200 dark:border-gray-700 px-4 py-3 shadow-md">
+                {/* Input wrapper with icon */}
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                    placeholder="Search..."
+                    className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                  />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400" />
+                </div>
 
-              {/* Suggestions dropdown (outside input wrapper) */}
-              {suggestions.length > 0 && (
-                <ul className="mt-2 w-full bg-[#1f2937] rounded-md shadow-lg border border-gray-700 text-white z-50">
-                  {suggestions.map((s) => (
-                    <li
-                      key={s.id}
-                      className="px-4 py-2 hover:bg-gray-700 cursor-pointer"
-                      onClick={() => {
-                        handleSuggestionClick(s.title);
-                        setMobileSearchOpen(false);
-                        setSuggestions([]);
-                      }}
-                    >
-                      {s.title}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
+                {/* Suggestions dropdown (outside input wrapper) */}
+                {suggestions.length > 0 && (
+                  <ul className="mt-2 w-full bg-white dark:bg-[#1f2937] rounded-md shadow-lg border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white z-50">
+                    {suggestions.map((s) => (
+                      <li
+                        key={s.id}
+                        className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+                        onClick={() => {
+                          handleSuggestionClick(s.title);
+                          setMobileSearchOpen(false);
+                          setSuggestions([]);
+                        }}
+                      >
+                        {s.title}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </>
           )}
 
           {/* Right Section - Desktop */}
@@ -430,7 +432,7 @@ export default function NavbarComponents({
                   <div className="p-2 border-b border-gray-200 dark:border-gray-700">
                     <button
                       onClick={handleProfileNavigation}
-                      className="block text-[#A27B5C] font-medium w-full text-left"
+                      className="block text-[#A27B5C] font-medium w-full text-left hover:cursor-pointer"
                     >
                       Your Profile
                     </button>
@@ -514,7 +516,7 @@ export default function NavbarComponents({
 
               <button
                 onClick={handleProfileNavigation}
-                className="text-gray-700 dark:text-gray-300 hover:text-[#A27B5C] text-lg py-2 text-left"
+                className="text-gray-700 dark:text-gray-300 hover:text-[#A27B5C] text-lg py-2 text-left "
               >
                 Your Profile
               </button>

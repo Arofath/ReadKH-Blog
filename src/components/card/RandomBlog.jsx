@@ -221,8 +221,12 @@ const ArticleCard = ({
             </div>
           </div>
           <button
-            className="p-1 flex items-start justify-center"
-            onClick={toggleBookmark}
+            className="p-1 flex items-start justify-center hover:cursor-pointer"
+            onClick={(e) => {
+              e.preventDefault(); // ⛔ Stop navigation
+              e.stopPropagation(); // ⛔ Stop bubbling up to NavLink
+              toggleBookmark(); // your existing function
+            }}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

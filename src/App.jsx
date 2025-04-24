@@ -108,8 +108,8 @@ function App() {
 
       {/* Wrapper for search and categories */}
       <div
-        className={`px-4 transition-all duration-300 ease-in-out ${
-          mobileSearchOpen ? "" : "pt-5"
+        className={`px-4 pt-4 transition-all duration-300 ease-in-out ${
+          mobileSearchOpen ? "" : ""
         }`}
         style={{ marginTop: mobileSearchOpen ? "64px" : "0px" }}
       >

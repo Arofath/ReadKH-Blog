@@ -576,7 +576,7 @@ export default function NavbarComponents({
             <img
               src="https://cdn-icons-png.flaticon.com/512/1828/1828479.png"
               alt="Logout"
-              className="mx-auto mb-4 h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 lg:h-24 lg:w-24 object-contain transition-transform duration-300 filter invert brightness-200 dark:invert dark:brightness-100"
+              className="mx-auto mb-4 h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 lg:h-24 lg:w-24 object-contain transition-transform duration-300 dark:invert dark:brightness-100"
             />
 
             <h3 className="mb-4 text-base sm:text-lg font-semibold text-gray-700 dark:text-gray-200">

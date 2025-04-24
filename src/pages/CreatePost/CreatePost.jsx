@@ -294,6 +294,64 @@ const CreatePost = () => {
     "formula",
   ];
 
+  const isDarkMode =
+    typeof window !== "undefined" &&
+    document.documentElement.classList.contains("dark");
+
+  const customStyles = (isDarkMode) => ({
+    control: (base, state) => ({
+      ...base,
+      backgroundColor: isDarkMode ? "#1F2937" : "#FFFFFF", // dark: gray-800, light: white
+      borderColor: state.isFocused
+        ? isDarkMode
+          ? "#93C5FD"
+          : "#3B82F6"
+        : isDarkMode
+        ? "#374151"
+        : "#D1D5DB",
+      color: isDarkMode ? "#F9FAFB" : "#111827", // light text for dark, dark text for light
+      boxShadow: "none",
+      "&:hover": {
+        borderColor: isDarkMode ? "#93C5FD" : "#3B82F6", // blue highlight
+      },
+    }),
+    menu: (base) => ({
+      ...base,
+      backgroundColor: isDarkMode ? "#111827" : "#FFFFFF", // gray-900 or white
+      color: isDarkMode ? "#F9FAFB" : "#111827",
+    }),
+    option: (base, state) => ({
+      ...base,
+      backgroundColor: state.isSelected
+        ? isDarkMode
+          ? "#2563EB"
+          : "#DBEAFE"
+        : state.isFocused
+        ? isDarkMode
+          ? "#1E3A8A"
+          : "#EFF6FF"
+        : "transparent",
+      color: isDarkMode ? "#F9FAFB" : "#111827",
+      cursor: "pointer",
+    }),
+    multiValue: (base) => ({
+      ...base,
+      backgroundColor: isDarkMode ? "#374151" : "#E5E7EB", // gray-700 / gray-200
+    }),
+    multiValueLabel: (base) => ({
+      ...base,
+      color: isDarkMode ? "#F9FAFB" : "#111827",
+    }),
+    multiValueRemove: (base) => ({
+      ...base,
+      color: isDarkMode ? "#F9FAFB" : "#111827",
+      ":hover": {
+        backgroundColor: isDarkMode ? "#6B7280" : "#D1D5DB", // gray-500 / gray-300
+        color: isDarkMode ? "#111827" : "#000000",
+      },
+    }),
+  });
+
   return (
     <div className="mt-10 p-6 max-w-7xl mx-auto border rounded-lg shadow-md bg-white dark:bg-gray-900 dark:border-gray-700 relative">
       {/* Notification Component */}
@@ -400,31 +458,7 @@ const CreatePost = () => {
               placeholder="Add categories..."
               className="text-sm"
               classNamePrefix="react-select"
-              styles={{
-                control: (base, state) => ({
-                  ...base,
-                  backgroundColor: "transparent",
-                  borderColor: errors.categories
-                    ? "#f56565"
-                    : state.isFocused
-                    ? "#ccc"
-                    : "#ddd",
-                  color: "white",
-                }),
-                menu: (base) => ({
-                  ...base,
-                  backgroundColor: "#1F2937", // Tailwind dark bg
-                  color: "white",
-                }),
-                singleValue: (base) => ({
-                  ...base,
-                  color: "white",
-                }),
-                multiValueLabel: (base) => ({
-                  ...base,
-                  color: "white",
-                }),
-              }}
+              styles={customStyles(isDarkMode)}
             />
             {errors.categories && (
               <p className="text-red-500 text-sm mt-1">{errors.categories}</p>

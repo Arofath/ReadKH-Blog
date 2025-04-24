@@ -97,7 +97,12 @@ export default function Register() {
             <img
               src="/images/logo/logo.png"
               alt="ReadKH Logo"
-              className="mx-auto h-40 sm:h-24 md:h-40 w-auto object-contain"
+              className="block dark:hidden mx-auto h-40 sm:h-24 md:h-40 w-auto object-contain"
+            />
+            <img
+              src="/images/logo/ReadKh-dark mode.png"
+              alt="ReadKH Logo"
+              className="hidden dark:block mx-auto h-40 sm:h-24 md:h-40 w-auto object-contain"
             />
             <h1 className="mb-10 text-2xl font-semibold text-gray-700 dark:text-gray-100 -mt-10 md:-mt-10">
               Join The ReadKH Community
@@ -218,7 +223,7 @@ export default function Register() {
                 />
                 <button
                   type="button"
-                  className="absolute right-4 top-3 text-gray-500 dark:text-gray-400"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400"
                   onClick={togglePasswordVisibility}
                 >
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
@@ -256,7 +261,7 @@ export default function Register() {
                 />
                 <button
                   type="button"
-                  className="absolute right-4 top-3 text-gray-500 dark:text-gray-400"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400"
                   onClick={toggleConfirmPasswordVisibility}
                 >
                   {showConfirmPassword ? (
@@ -363,7 +368,12 @@ export default function Register() {
               <img
                 src="/images/logo/logo.png"
                 alt="ReadKH Notebooks"
-                className="mx-20"
+                className="mx-20 dark:hidden block"
+              />
+              <img
+                src="/images/logo/ReadKh-dark mode.png"
+                alt="ReadKH Notebooks"
+                className="mx-20 hidden dark:block"
               />
             </div>
             <p className="text-gray-700 dark:text-gray-300 text-base md:text-lg max-w-xl mx-auto px-4 -mt-40">

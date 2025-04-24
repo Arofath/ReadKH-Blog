@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Modal, ModalBody, ModalHeader } from "flowbite-react";
 import PopUpModalComponent from "../pop-up-modal/PopUpModal";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DarkModeToggle from "../dark-mode/DarkMode";
 
@@ -121,20 +121,26 @@ export default function NavbarComponents({
     setShowSignOutModal(false);
 
     // Single toast notification
-    toast.dismiss(); // Dismiss any existing toasts first
-    toast.success("Successfully signed out!", {
-      position: "top-center",
-      autoClose: 2000,
-      toastId: "logout-success", // Add a unique ID to prevent duplicates
-    });
+    // toast.success("Successfully signed out!", {
+    //   position: "top-center",
+    //   autoClose: 3000,
+    //   hideProgressBar: false,
+    //   closeOnClick: true,
+    //   pauseOnHover: true,
+    //   draggable: true,
+    // });
 
     // Navigate after toast appears
     navigate("/");
-
+    alert("You have been logged out successfully!");
     // Reset logout ref
     setTimeout(() => {
       isLoggingOutRef.current = false;
     }, 1000);
+  };
+
+  const handleLogout = () => {
+    setShowSignOutModal(true);
   };
 
   useEffect(() => {
@@ -242,12 +248,18 @@ export default function NavbarComponents({
           <div className="flex items-center space-x-2 sm:space-x-4">
             <div className="h-full flex items-center hover:cursor-pointer">
               <NavLink to="/">
-                <img
-                  src="../images/logo/logo.png"
-                  alt="Logo"
-                  className="h-27 object-contain"
-                  onClick={handleHomeClick}
-                />
+                <div onClick={handleHomeClick}>
+                  <img
+                    src="../images/logo/logo.png"
+                    alt="Logo Light"
+                    className="block dark:hidden h-27 object-contain"
+                  />
+                  <img
+                    src="../images/logo/ReadKh-dark mode.png"
+                    alt="Logo Dark"
+                    className="hidden dark:block h-27 object-contain"
+                  />
+                </div>
               </NavLink>
             </div>
 
@@ -363,7 +375,8 @@ export default function NavbarComponents({
                       <>
                         <div className="border-t border-gray-200 dark:border-gray-700 mt-1"></div>
                         <a
-                          onClick={confirmLogout}
+                          //onClick={confirmLogout}
+                          onClick={handleLogout}
                           className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                         >
                           Sign Out
@@ -444,7 +457,7 @@ export default function NavbarComponents({
 
               <div className="border-t border-gray-200 dark:border-gray-700 pt-2">
                 <button
-                  onClick={confirmLogout}
+                  onClick={handleLogout}
                   className="text-gray-700 dark:text-gray-300 hover:text-[#A27B5C] text-lg py-2 w-full text-left"
                 >
                   Sign Out
@@ -496,7 +509,11 @@ export default function NavbarComponents({
             <div className="flex justify-center gap-2 sm:gap-4">
               <Button
                 color="failure"
-                onClick={confirmLogout}
+                // onClick={confirmLogout}
+                onClick={() => {
+                  setShowSignOutModal(false);
+                  confirmLogout();
+                }}
                 className="text-sm sm:text-base hover:cursor-pointer"
               >
                 Yes, Sign Out

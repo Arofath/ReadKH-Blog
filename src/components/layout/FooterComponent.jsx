@@ -21,11 +21,21 @@ export default function FooterComponents() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 grid grid-cols-1 md:grid-cols-4 gap-8 text-left">
         {/* Logo Section */}
         <div className="flex flex-col items-center md:items-end md:flex-row md:justify-end">
-          <img
-            src="/images/logo/footer.png"
-            alt="Logo"
-            className="h-auto w-auto max-w-xs md:max-w-sm lg:max-w-md transition-transform duration-300 hover:-translate-y-2"
-          />
+          <>
+            {/* Light mode logo */}
+            <img
+              src="/images/logo/footer.png"
+              alt="Logo"
+              className="block dark:hidden h-auto w-auto max-w-xs md:max-w-sm lg:max-w-md transition-transform duration-300 hover:-translate-y-2"
+            />
+
+            {/* Dark mode logo */}
+            <img
+              src="/images/logo/ReadKh-darkmode.1.png"
+              alt="Logo Dark"
+              className="hidden dark:block h-auto w-auto max-w-xs md:max-w-sm lg:max-w-md transition-transform duration-300 hover:-translate-y-2"
+            />
+          </>
         </div>
 
         {/* Quick Links */}

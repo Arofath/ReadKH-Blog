@@ -14,7 +14,12 @@ export default function PopUpModalComponent({
           <img
             src="/images/logo/logo.png"
             alt="Login Required"
-            className="mx-auto mb-2 h-32 w-32 sm:h-36 sm:w-36 md:h-60 md:w-60 object-contain transition-transform duration-300 hover:scale-110"
+            className="block dark:hidden mx-auto mb-2 h-32 w-32 sm:h-36 sm:w-36 md:h-60 md:w-60 object-contain transition-transform duration-300 hover:scale-110"
+          />
+          <img
+            src="/images/logo/ReadKh-darkmode.1.png"
+            alt="Login Required"
+            className="hidden dark:block mx-auto mb-2 h-32 w-32 sm:h-36 sm:w-36 md:h-60 md:w-60 object-contain transition-transform duration-300 hover:scale-110"
           />
 
           <h3 className="mb-2 text-lg font-semibold text-gray-700 dark:text-gray-100">

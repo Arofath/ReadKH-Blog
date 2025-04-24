@@ -66,7 +66,12 @@ export default function Login() {
             <img
               src="/images/logo/logo.png"
               alt="ReadKH Logo"
-              className="mx-auto h-40 sm:h-24 md:h-40 w-auto object-contain"
+              className="block dark:hidden mx-auto h-40 sm:h-24 md:h-40 w-auto object-contain"
+            />
+            <img
+              src="../images/logo/ReadKh-dark mode.png"
+              alt="ReadKH Logo"
+              className="hidden dark:block mx-auto h-40 sm:h-24 md:h-40 w-auto object-contain"
             />
             <h1 className="mb-10 text-2xl font-semibold text-gray-700 dark:text-gray-100 -mt-10 md:-mt-10">
               Join The ReadKH Community
@@ -244,7 +249,12 @@ export default function Login() {
               <img
                 src="/images/logo/logo.png"
                 alt="ReadKH Blog"
-                className="mx-20"
+                className="mx-20 block dark:hidden"
+              />
+              <img
+                src="../images/logo/ReadKh-dark mode.png"
+                alt="ReadKH Blog"
+                className="mx-20 hidden dark:block"
               />
             </div>
 

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { SquarePen } from "lucide-react";
+import imageCompression from "browser-image-compression";
 
 const DEFAULT_PROFILE_DATA = {
   profile: {
@@ -63,11 +64,74 @@ export default function ButtonEdit() {
   };
 
   // Handle image upload
-  const handleImageUpload = async (file) => {
-    const formData = new FormData();
-    formData.append("files", file);
+  // const handleImageUpload = async (file) => {
+  //   const formData = new FormData();
+  //   formData.append("files", file);
 
+  //   try {
+  //     const response = await fetch(`${import.meta.env.VITE_BASE_URL}/upload`, {
+  //       method: "POST",
+  //       body: formData,
+  //     });
+
+  //     if (!response.ok) {
+  //       const errorText = await response.text();
+  //       throw new Error(`Image upload failed: ${response.status} ${errorText}`);
+  //     }
+
+  //     const result = await response.json();
+  //     const imageUrl = result?.files?.[0]?.url;
+
+  //     if (!imageUrl) {
+  //       throw new Error("No image URL returned from upload");
+  //     }
+
+  //     return imageUrl;
+  //   } catch (error) {
+  //     throw new Error(`Image upload failed: ${error.message}`);
+  //   }
+  // };
+
+  const handleImageUpload = async (file) => {
     try {
+      if (!file.type.startsWith("image/")) {
+        throw new Error("File is not an image.");
+      }
+
+      // Optional pre-check
+      if (file.size > 5 * 1024 * 1024) {
+        alert("Image too large. Please choose a file under 5MB.");
+        return;
+      }
+
+      console.log("Original size:", (file.size / 1024 / 1024).toFixed(2), "MB");
+
+      const options = {
+        maxSizeMB: 0.5, // 🚀 Try to get below ~500KB
+        maxWidthOrHeight: 800,
+        useWebWorker: true,
+      };
+
+      const compressedBlob = await imageCompression(file, options);
+      const compressedFile = new File(
+        [compressedBlob],
+        file.name,
+        { type: file.type } // 👈 Ensure correct MIME type
+      );
+
+      console.log(
+        "Compressed size:",
+        (compressedFile.size / 1024 / 1024).toFixed(2),
+        "MB"
+      );
+
+      if (!compressedFile.type.startsWith("image/")) {
+        throw new Error("Compressed file is not a valid image.");
+      }
+
+      const formData = new FormData();
+      formData.append("files", compressedFile);
+
       const response = await fetch(`${import.meta.env.VITE_BASE_URL}/upload`, {
         method: "POST",
         body: formData,
@@ -82,7 +146,7 @@ export default function ButtonEdit() {
       const imageUrl = result?.files?.[0]?.url;
 
       if (!imageUrl) {
-        throw new Error("No image URL returned from upload");
+        throw new Error("No image URL returned.");
       }
 
       return imageUrl;

@@ -30,12 +30,11 @@ function App() {
       setError(null);
 
       try {
+        const baseUrl = import.meta.env.VITE_BASE_URL;
         const url =
           selectedCategory === "all"
-            ? `${import.meta.env.VITE_BASE_URL}/blogs`
-            : `${
-                import.meta.env.VITE_BASE_URL
-              }/blogs?category_id=${selectedCategory}`;
+            ? `${baseUrl}/blogs?limit=50`
+            : `${baseUrl}/blogs?category_id=${selectedCategory}&limit=50`;
 
         const response = await fetch(url);
         if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
@@ -44,6 +43,7 @@ function App() {
         if (result?.blogs && Array.isArray(result.blogs)) {
           setBlogs(result.blogs);
           setFilteredBlogs(result.blogs);
+          console.log(`Fetched ${result.blogs.length} blogs`);
         } else {
           throw new Error("Invalid response format");
         }

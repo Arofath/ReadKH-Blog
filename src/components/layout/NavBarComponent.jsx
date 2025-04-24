@@ -25,6 +25,8 @@ export default function NavbarComponents({
   const [error, setError] = useState(null);
   const [authorId, setAuthorId] = useState("");
   const [token, setToken] = useState(null);
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -61,14 +63,17 @@ export default function NavbarComponents({
       const filtered = blogs.filter((blog) =>
         blog.title.toLowerCase().includes(value.toLowerCase())
       );
+      setDropdownVisible(true);
       setSuggestions(filtered.slice(0, 5)); // Show top 5 suggestions
     } else {
       setSuggestions([]);
+      setDropdownVisible(false);
     }
   };
 
   const handleSuggestionClick = (title) => {
     setSearchQuery(title);
+    setDropdownVisible(false); // Hide the dropdown after selection
     setSuggestions([]);
     if (onSearchSubmit) {
       onSearchSubmit(title);
@@ -244,9 +249,11 @@ export default function NavbarComponents({
         className={`dark:bg-gray-950 dark:shadow-gray-600 fixed top-0 left-0 w-full flex justify-center z-50 transition-colors duration-300 ${bgColor} shadow-sm`}
       >
         <nav className="w-full max-w-7xl flex items-center justify-between px-4 sm:px-6 md:px-12 lg:px-16 h-14 sm:h-16 md:h-18 lg:h-20">
+          {/* Mobile Search Input Below Navbar */}
+
           {/* Left Section */}
           <div className="flex items-center space-x-2 sm:space-x-4">
-            <div className="h-full flex items-center hover:cursor-pointer">
+            <div className="h-full flex items-center hover:cursor-pointer hidden md:block">
               <NavLink to="/">
                 <div onClick={handleHomeClick}>
                   <img
@@ -290,6 +297,7 @@ export default function NavbarComponents({
               </form>
             </div>
           </div>
+          {/* Mobile Section */}
 
           {/* Mobile Menu Button */}
           <div className="flex md:hidden">
@@ -303,6 +311,80 @@ export default function NavbarComponents({
                 <Menu className="h-6 w-6" />
               )}
             </button>
+          </div>
+
+          {/* Mobile Logo */}
+          <div className="h-full flex items-center justify-center flex-grow md:hidden">
+            <NavLink to="/">
+              <div onClick={handleHomeClick}>
+                <img
+                  src="../images/logo/logo.png"
+                  alt="Logo Light"
+                  className="block dark:hidden h-27 object-contain"
+                />
+                <img
+                  src="../images/logo/ReadKh-dark mode.png"
+                  alt="Logo Dark"
+                  className="hidden dark:block h-27 object-contain"
+                />
+              </div>
+            </NavLink>
+          </div>
+
+          {/* Mobile Search Button */}
+          <div className="relative flex items-center justify-center md:hidden">
+            {/* Search Button */}
+            <button
+              onClick={() => setMobileSearchOpen(!mobileSearchOpen)}
+              className="p-2 text-gray-700 dark:text-gray-300"
+            >
+              <Search className="h-6 w-6" />
+            </button>
+
+            {/* Search Input Below Header */}
+            {mobileSearchOpen && (
+              <div className="absolute top-full left-0 w-screen z-40 bg-[#111827] border-t border-gray-700 px-4 py-3 shadow-md">
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => {
+                      const query = e.target.value;
+                      setSearchQuery(query);
+                      setSuggestions(
+                        query
+                          ? [
+                              { id: 1, title: "Search Result One" },
+                              { id: 2, title: "Search Result Two" },
+                            ]
+                          : []
+                      );
+                    }}
+                    placeholder="Search..."
+                    className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-600 bg-gray-900 text-white placeholder-gray-400"
+                  />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+
+                  {suggestions.length > 0 && (
+                    <ul className="mt-2 w-full bg-[#1f2937] rounded-md shadow-lg border border-gray-700 text-white z-50">
+                      {suggestions.map((s) => (
+                        <li
+                          key={s.id}
+                          className="px-4 py-2 hover:bg-gray-700 cursor-pointer"
+                          onClick={() => {
+                            setSearchQuery(s.title);
+                            setMobileSearchOpen(false);
+                            setSuggestions([]);
+                          }}
+                        >
+                          {s.title}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Right Section - Desktop */}
@@ -501,8 +583,9 @@ export default function NavbarComponents({
             <img
               src="https://cdn-icons-png.flaticon.com/512/1828/1828479.png"
               alt="Logout"
-              className="mx-auto mb-4 h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 lg:h-24 lg:w-24 object-contain transition-transform duration-300"
+              className="mx-auto mb-4 h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 lg:h-24 lg:w-24 object-contain transition-transform duration-300 filter invert brightness-200"
             />
+
             <h3 className="mb-4 text-base sm:text-lg font-semibold text-gray-700 dark:text-gray-200">
               Are you sure you want to sign out?
             </h3>
@@ -514,7 +597,7 @@ export default function NavbarComponents({
                   setShowSignOutModal(false);
                   confirmLogout();
                 }}
-                className="text-sm sm:text-base hover:cursor-pointer"
+                className="text-sm sm:text-base hover:cursor-pointer dark:text-white"
               >
                 Yes, Sign Out
               </Button>

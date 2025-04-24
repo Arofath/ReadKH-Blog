@@ -12,6 +12,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isSearchMode, setIsSearchMode] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
   // Set default category
   useEffect(() => {
@@ -101,8 +102,17 @@ function App() {
         onSearchSubmit={handleSearchSubmit}
         setSelectedCategory={setSelectedCategory}
         blogs={blogs}
+        mobileSearchOpen={mobileSearchOpen}
+        setMobileSearchOpen={setMobileSearchOpen}
       />
-      <div className="ml-4">
+
+      {/* Wrapper for search and categories */}
+      <div
+        className={`px-4 pt-5 transition-all duration-300 ease-in-out ${
+          mobileSearchOpen ? "pt-5" : ""
+        }`}
+        style={{ marginTop: mobileSearchOpen ? "64px" : "0px" }}
+      >
         <ScrollableCategories
           setSelectedCategory={(id) => {
             setIsSearchMode(false);
@@ -110,6 +120,7 @@ function App() {
           }}
           selectedCategory={selectedCategory}
         />
+
         <div>
           {isLoading ? (
             <div>Loading...</div>

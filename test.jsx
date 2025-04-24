@@ -501,8 +501,9 @@ export default function NavbarComponents({
             <img
               src="https://cdn-icons-png.flaticon.com/512/1828/1828479.png"
               alt="Logout"
-              className="mx-auto mb-4 h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 lg:h-24 lg:w-24 object-contain transition-transform duration-300"
+              className="mx-auto mb-4 h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 lg:h-24 lg:w-24 object-contain transition-transform duration-300 filter invert brightness-200"
             />
+
             <h3 className="mb-4 text-base sm:text-lg font-semibold text-gray-700 dark:text-gray-200">
               Are you sure you want to sign out?
             </h3>
@@ -514,7 +515,7 @@ export default function NavbarComponents({
                   setShowSignOutModal(false);
                   confirmLogout();
                 }}
-                className="text-sm sm:text-base hover:cursor-pointer"
+                className="text-sm sm:text-base hover:cursor-pointer dark:text-white"
               >
                 Yes, Sign Out
               </Button>

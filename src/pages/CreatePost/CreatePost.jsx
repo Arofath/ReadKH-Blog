@@ -185,7 +185,7 @@ const CreatePost = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  // Handle post publishing
+  //Handle post publishing
   const handlePublish = async () => {
     if (!validateForm()) {
       return;

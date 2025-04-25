@@ -218,7 +218,7 @@ export default function ButtonEdit() {
         </h1>
         <button
           onClick={() => setIsEditing(!isEditing)}
-          className="text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white transition-all"
+          className="text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white transition-all hover:cursor-pointer"
           aria-label="Edit profile"
         >
           <SquarePen className="w-5 h-5 text-gray-500 hover:text-[#A27B5C] dark:text-gray-400 dark:hover:text-[#A27B5C]" />
@@ -257,13 +257,13 @@ export default function ButtonEdit() {
 
           <div className="flex justify-end gap-3 mt-2">
             <button
-              className="px-4 py-1 rounded border border-gray-400 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+              className="px-4 py-1 rounded border border-gray-400 dark:border-gray-600 text-gray-700 hover:cursor-pointer dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
               onClick={() => setIsEditing(false)}
             >
               Cancel
             </button>
             <button
-              className="px-4 py-1 rounded bg-[#A27B5C] text-white hover:bg-[#8b664a]"
+              className="px-4 py-1 rounded bg-[#A27B5C] text-white hover:bg-[#8b664a] hover:cursor-pointer"
               onClick={handleSave}
             >
               Save
